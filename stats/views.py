@@ -1,14 +1,21 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Pilot
-from .models import Slmod_Total
-import json
+from .models import Aircraft
+from stats import dqueries
+
 
 def stats(request):
-	pilots = Pilot.objects
-	stats = Slmod_Total.objects
-	return render(request, 'stats/stats.html', {'pilots':pilots},
-	 {'stats':stats})
+	pilots = Pilot.objects.all()
+	totals = []
+	for pilot in pilots:
+		x = dqueries.PilotTotal(pilot.clientid)
+		totals.append(x)
+	
+	for x in totals:
+		print(x.name)
+	
+	return render(request, 'stats/stats.html', {'pilots':pilots, 'totals':totals,})
 
 def pilot_stats(request):
 	clientid = request.GET['clientid']

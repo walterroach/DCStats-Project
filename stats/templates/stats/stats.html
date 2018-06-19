@@ -17,7 +17,7 @@
 
     <!-- Custom styles for this template -->
   </head>
-  <body>
+  <body class="bg-dark">
     <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static '21logo.png' %}" width=50> 21st Virtual</a>
@@ -50,16 +50,27 @@
         <select name='clientid' class="custom-select custom-select-lg mb-3">
           <option selected>Open this select menu</option>
           {% for pilot in pilots.all %}
-          <option name='clientid' value="{{ pilot.clientid }}">{{ pilot.callsign }}</option>
+          <option name='clientid' value="{{ pilot.clientid }}">{{ pilot }}</option>
           {% endfor %}
         </select>
         <input type="submit" value="Submit" />
       </form>
-      <div class="row">
-        <div class="col-md-4">.col-md-4</div>
-        <div class="col-md-4">.col-md-4</div>
-        <div class="col-md-4">.col-md-4</div>
-      </div>
+      <table class="table mt-5 bg-light">
+        <tr>
+            <th>Name</th>
+            <th>Rank</th>
+            <th>Hours in Air</th>
+            <th>Hours on Server</th>
+        </tr>
+        {% for x in totals %}
+        <tr>
+          <td>{{ x.name }}</td>
+          <td>{{ x.rank }}</td>
+          <td>{{ x.in_air_hr|floatformat:2 }}</td>   
+          <td>{{ x.total_hr|floatformat:2}} </td>
+        </tr>
+        {% endfor %}
+
     </div> <!-- /container -->
   </main>
     <!-- Bootstrap core JavaScript

@@ -1,13 +1,14 @@
 from django.db import models
 
+
 class Pilot(models.Model):
 	clientid = models.CharField(max_length=32,
 		primary_key=True)
 	f_name = models.CharField(max_length=30)
 	l_name = models.CharField(max_length=30)
 	callsign = models.CharField(max_length=30)
-	rank_id = models.ForeignKey('Rank', null=False, 
-		on_delete=models.CASCADE)
+	rank_id = models.ForeignKey('Rank', null=True, 
+		on_delete=models.SET_NULL)
 
 	def __str__(self):
 		return f'{self.f_name} "{self.callsign}" {self.l_name}'
@@ -33,13 +34,50 @@ class Rank(models.Model):
 		return self.rank
 
 class Total(models.Model):
-	in_air = models.IntegerField()
-	total = models.IntegerField()
-	pilot = models.ForeignKey('Pilot', null=True,
-		on_delete=models.SET_NULL)
+	aircraft = models.ForeignKey('Aircraft', 
+		on_delete=models.CASCADE)
+	pilot = models.ForeignKey('Pilot',
+		on_delete=models.CASCADE)
+
+class AircraftManager(models.Manager):
+	def create_aircraft(self, aircraft, in_air_sec, total_sec, pilot):
+		aircraft = self.create(aircraft=aircraft, in_air_sec=in_air_sec,
+			total_sec=total_sec, pilot=pilot)
+		
+		return aircraft
+
+	def pilottotal(self, clientid):
+		self.name = ''
+		self.rank = ''
+		self.in_air_hr = 0
+		self.total_hr = 0
+
+		pilot = Pilot.objects.get(clientid=clientid)
+		self.name = str(pilot)
+		self.rank = pilot.rank_id
+		aircraft = Aircraft.objects.filter(pilot=clientid)
+		for a in aircraft:
+			self.in_air_hr += (a.in_air_sec / 3600)
+			self.total_hr += (a.total_sec / 3600)
+
+		return self	
+
+
+class Aircraft(models.Model):
+	aircraft = models.CharField(max_length=30)
+	in_air_sec = models.FloatField()
+	total_sec = models.FloatField()
+	pilot = models.ForeignKey('Pilot',
+		on_delete=models.CASCADE)
+	objects = models.Manager()
+	manager = AircraftManager()
+
+	def __str__(self):
+		return f"{self.aircraft} + {self.pilot}"
+
 
 class Slmod_Total(models.Model):
-	file = models.FileField(upload_to='SlmodStats/%Y/%m/')
+	file = models.FileField(upload_to='SlmodStats/')
 	name = models.CharField(max_length=30)
 
 	def __str__ (self):
