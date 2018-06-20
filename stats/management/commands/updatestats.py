@@ -5,6 +5,10 @@ import os
 import json
 import glob
 
+def clear_models():
+	aircraft = Aircraft.objects.all().delete()
+	return getdir()
+
 def getdir():
 	try:
 		dir_path = os.getcwd() + '\\slmod'
@@ -29,8 +33,9 @@ def get_clientids(stats_json):
 	pilot_list = []
 	for pilot in pilots:
 		pilot_list.append(pilot.clientid)
-	print(pilot_list)
+	print(f'Updated totals for clients {pilot_list}')
 	return update_model(stats_json, pilot_list)
+
 
 def update_model(stats_json, pilot_list):
 	for p in pilot_list:
@@ -50,7 +55,7 @@ def update_model(stats_json, pilot_list):
 
 class Command(BaseCommand):
 	def handle(self, **options):
-		return getdir()
+		return clear_models()
 
 	#totals = Total.objects.all()
 	#for pilot in totals:

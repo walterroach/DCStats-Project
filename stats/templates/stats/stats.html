@@ -48,9 +48,9 @@
       <form action="{% url 'pilot_stats' %}">
         <h3>Stats</h3>
         <select name='clientid' class="custom-select custom-select-lg mb-3">
-          <option selected>Open this select menu</option>
+          <option selected>Pilot Totals</option>
           {% for pilot in pilots.all %}
-          <option name='clientid' value="{{ pilot.clientid }}">{{ pilot }}</option>
+          <option name='clientid' value="{{ pilot.clientid }}">{{ pilot }} by aircraft</option>
           {% endfor %}
         </select>
         <input type="submit" value="Submit" />
@@ -59,6 +59,7 @@
         <tr>
             <th>Name</th>
             <th>Rank</th>
+            <th>Aircraft</th>
             <th>Hours in Air</th>
             <th>Hours on Server</th>
         </tr>
@@ -66,6 +67,7 @@
         <tr>
           <td>{{ x.name }}</td>
           <td>{{ x.rank }}</td>
+          <td>{{ x.aircraft }}</td>
           <td>{{ x.in_air_hr|floatformat:2 }}</td>   
           <td>{{ x.total_hr|floatformat:2}} </td>
         </tr>

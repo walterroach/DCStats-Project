@@ -6,14 +6,19 @@ class PilotTotal:
 	def __init__(self, clientid):
 		self.name = ''
 		self.rank = ''
-		self.in_air_hr = ''
-		self.total_hr = ''
+		self.in_air_hr = 0
+		self.total_hr = 0
 
-		x = Aircraft.manager.pilottotal(clientid)
-		self.name = x.name
-		self.rank = x.rank
-		self.in_air_hr = x.in_air_hr
-		self.total_hr = x.total_hr
+		pilot = Pilot.objects.get(clientid=clientid)
+		self.name = str(pilot)
+		self.rank = pilot.rank_id
+		aircraft = Aircraft.objects.filter(pilot=clientid)
+		for a in aircraft:
+			self.in_air_hr += (a.in_air_sec / 3600)
+			self.total_hr += (a.total_sec / 3600)
+
+
+
 
 	def __str__(self):
 		return self.name

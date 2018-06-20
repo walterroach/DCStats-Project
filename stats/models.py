@@ -46,23 +46,6 @@ class AircraftManager(models.Manager):
 		
 		return aircraft
 
-	def pilottotal(self, clientid):
-		self.name = ''
-		self.rank = ''
-		self.in_air_hr = 0
-		self.total_hr = 0
-
-		pilot = Pilot.objects.get(clientid=clientid)
-		self.name = str(pilot)
-		self.rank = pilot.rank_id
-		aircraft = Aircraft.objects.filter(pilot=clientid)
-		for a in aircraft:
-			self.in_air_hr += (a.in_air_sec / 3600)
-			self.total_hr += (a.total_sec / 3600)
-
-		return self	
-
-
 class Aircraft(models.Model):
 	aircraft = models.CharField(max_length=30)
 	in_air_sec = models.FloatField()
@@ -82,3 +65,33 @@ class Slmod_Total(models.Model):
 
 	def __str__ (self):
 		return str(self.file)
+
+class PilotTotal:
+	def __init__(self, clientid):
+		self.name = ''
+		self.rank = ''
+		self.in_air_hr = 0
+		self.total_hr = 0
+
+		pilot = Pilot.objects.get(clientid=clientid)
+		self.name = str(pilot)
+		self.rank = pilot.rank_id
+		aircraft = Aircraft.objects.filter(pilot=clientid)
+		for a in aircraft:
+			self.in_air_hr += (a.in_air_sec / 3600)
+			self.total_hr += (a.total_sec / 3600)
+
+	def __str__(self):
+		return self.name
+
+class AircraftTotal:
+	def __init__(self, acmodel):
+		self.name = ''
+		self.rank = ''
+		self.in_air_hr = 0
+		self.total_hr = 0
+		self.aircraft = acmodel.aircraft
+		self.name = acmodel.pilot
+		self.rank = acmodel.pilot.rank_id
+		self.in_air_hr += (acmodel.in_air_sec / 3600)
+		self.total_hr += (acmodel.total_sec / 3600)
