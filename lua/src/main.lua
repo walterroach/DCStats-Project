@@ -1,6 +1,7 @@
 
+json = require "/home/g21stvirtualroach/dcstats/DCStats-Project/lua/src/json"
 dofile("/home/g21stvirtualroach/dcstats/DCStats-Project/lua/src/config.lua")
-json = require "json"
+
 
 stats_path = paths["stats"]
 save_path = paths["savedir"]
