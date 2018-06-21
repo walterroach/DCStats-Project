@@ -1,6 +1,6 @@
-json = require "json"
 
 dofile("src/config.lua")
+json = require "json"
 
 stats_path = paths["stats"]
 save_path = paths["savedir"]
