@@ -1,5 +1,5 @@
 
-dofile("src/config.lua")
+dofile("/home/g21stvirtualroach/dcstats/DCStats-Project/lua/src/config.lua")
 json = require "json"
 
 stats_path = paths["stats"]
