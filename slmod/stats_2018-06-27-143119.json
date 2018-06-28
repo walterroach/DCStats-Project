@@ -1,0 +1,1868 @@
+{
+  "": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 14,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "The0celes", "TTI-Host", "Charlie Harper", "OrangePeell", "107th Topper | Condor 302", "Peally", "Rube", "NeoKirby", "Carbon-14", "[FR] iWΔx", "Comanche", "jakindabox22", "Hammer | Gryphon 2-2", "Feuerfalke", "No.54 Thurmann (KL-T)", "Stalinator", "Procxlite", "13.VLS Matic \"Maverick\"", "samdeluxe", "Sh4rk", "Flounder", "Kerrac", "WolfeCanada", "KillaCam", "SF_Kapsu", "Besibook", "Aeons", "SF_MikeMikeJuliet", "=Warlock=", "m8thieu", "WolfGirl100", "Sv1RRy", "Ja-mez", "104th_Money", "F99th-Esonub", "104th_Phoenix 1.5", "WinchesterDelta1", "R00FIES", "MaxPower50", "Sonic Temples", "Mammatus", "GTL_LeniU", "PS_MIREK_PL", "Baron Nomis", "Kilo", "Richter", "Osiris72", "33rd_AS_Corn", "=238.lbae=StarBuck.srb", "Dan", "Swebeast", "Whip", "=M2=Avalanche", "Magni", "MAKO", "Uderosa", "Prince Romours", "Sercho", "Bersagliere81", "noxyd", "PS_WODZIK_PL", "Shady 11 | Subrunner", "Bulldog 1-2 : anthon", "r3dspik3", "Stratoman", "GOOSER", "Dronin87", "PS_MOSQUITER_PL", "Shady 12 Ginger", "F900EX", "104th_Mustang", "VEAF_TrakDah", "Flame", "(ECV-56) LV-PDD", "NEO", "<51>YAGA", "Mac495", "F99th-pyromaniac4002 #24", "[161]m108s", "JG78_horΛz", "JG78_Skippa", "Greytex", "KaaK" ],
+    "times": [],
+    "weapons": []
+  },
+  "0ef908465d30dfcac51eefeecb339a17": {
+    "PvP": {
+      "kills": 0,
+      "losses": 1
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [ {
+      "objCat": "plane",
+      "objTypeName": "KC135BDA",
+      "time": 1529129786,
+      "weapon": "AIM-7F"
+    }, {
+      "objCat": "ship",
+      "objTypeName": "Stennis",
+      "time": 1529380859,
+      "weapon": "AIM-9M"
+    } ],
+    "friendlyKills": [ {
+      "objCat": "plane",
+      "objTypeName": "KC135BDA",
+      "time": 1529129786,
+      "weapon": "AIM-7F"
+    } ],
+    "id": 3,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 1,
+        "Tanks": 0,
+        "Unarmored": 11,
+        "total": 12
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 6,
+      "eject": 1,
+      "pilotDeath": 4
+    },
+    "names": [ "RAVEN 1-3 | Roach", "RAVEN | Roach", "21st | Roach", "Roach" ],
+    "times": {
+      "A-10C": {
+        "inAir": 1210.981,
+        "total": 2912.393
+      },
+      "AJS37": {
+        "inAir": 2692.362,
+        "total": 6015.065
+      },
+      "AV8BNA": {
+        "inAir": 26708.94,
+        "total": 41739.29
+      },
+      "CA": {
+        "inAir": 0,
+        "total": 7124.988
+      },
+      "F-5E-3": {
+        "inAir": 6796.114,
+        "total": 11600.441
+      },
+      "FA-18C_hornet": {
+        "inAir": 41870.834,
+        "total": 62115.526
+      },
+      "L-39C": {
+        "inAir": 6014.829,
+        "total": 13670.821
+      }
+    },
+    "weapons": {
+      "AGM-122": {
+        "hit": 0,
+        "kills": 1,
+        "numHits": 2,
+        "shot": 3
+      },
+      "AIM-7F": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 1
+      },
+      "AIM-7M": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 3
+      },
+      "AIM-9M": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 7
+      },
+      "ARAKM70BHE": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 12
+      },
+      "BDU-33": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 24
+      },
+      "CBU-99": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 4
+      },
+      "GAU_12": {
+        "gun": true,
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 69
+      },
+      "GBU-12": {
+        "hit": 0,
+        "kills": 3,
+        "numHits": 4,
+        "shot": 7
+      },
+      "GBU-16": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 2
+      },
+      "M-39": {
+        "gun": true,
+        "hit": 0,
+        "kills": 0,
+        "numHits": 41,
+        "shot": 520
+      },
+      "M-61": {
+        "gun": true,
+        "hit": 0,
+        "kills": 2,
+        "numHits": 216,
+        "shot": 1538
+      },
+      "Mk-82": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 10,
+        "shot": 15
+      },
+      "Mk-82 SnakeEye": {
+        "hit": 0,
+        "kills": 2,
+        "numHits": 2,
+        "shot": 8
+      },
+      "Mk-82AIR": {
+        "hit": 0,
+        "kills": 4,
+        "numHits": 11,
+        "shot": 12
+      },
+      "Mk-83": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 1,
+        "shot": 8
+      }
+    }
+  },
+  "11c7a467dbdc0c60fbbe8aecf7e91148": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 5,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 2,
+      "eject": 0,
+      "pilotDeath": 2
+    },
+    "names": [ "hawg 1 2", "Hawg 1-2", "Raven 2-2", "SLAPtiger" ],
+    "times": {
+      "A-10C": {
+        "inAir": 3092.81,
+        "total": 9298.562
+      },
+      "F-5E-3": {
+        "inAir": 0,
+        "total": 190.072
+      },
+      "M-2000C": {
+        "inAir": 0,
+        "total": 2231.643
+      }
+    },
+    "weapons": {
+      "GAU-8": {
+        "gun": true,
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 337
+      },
+      "GBU-12": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 2
+      },
+      "Mk-82AIR": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 1
+      }
+    }
+  },
+  "154c54ca4e2bb5d66930e781e02e8786": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 4,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 1,
+        "total": 1
+      },
+      "Ground Units": {
+        "AAA": 2,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 5,
+        "Tanks": 0,
+        "Unarmored": 5,
+        "total": 12
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 6,
+      "eject": 4,
+      "pilotDeath": 5
+    },
+    "names": [ "Raven 1-1| Shoots2k", "Raven | Shoots2k", "RAVEN | Shoots2k", "Shoots2k" ],
+    "times": {
+      "AJS37": {
+        "inAir": 5804.722,
+        "total": 9718.19
+      },
+      "AV8BNA": {
+        "inAir": 17723.922,
+        "total": 27863.102
+      },
+      "FA-18C_hornet": {
+        "inAir": 7427.111,
+        "total": 10360.071
+      }
+    },
+    "weapons": {
+      "AGM-122": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 1,
+        "shot": 4
+      },
+      "AGM-65D": {
+        "hit": 0,
+        "kills": 2,
+        "numHits": 3,
+        "shot": 2
+      },
+      "ARAKM70BHE": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 24
+      },
+      "BDU-33": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 24
+      },
+      "FFAR Mk1 HE": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 17
+      },
+      "Mk-82": {
+        "hit": 0,
+        "kills": 3,
+        "numHits": 8,
+        "shot": 10
+      },
+      "Mk-82 SnakeEye": {
+        "hit": 0,
+        "kills": 4,
+        "numHits": 5,
+        "shot": 25
+      },
+      "Mk-83": {
+        "hit": 0,
+        "kills": 4,
+        "numHits": 12,
+        "shot": 10
+      },
+      "Zuni-127": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 8
+      }
+    }
+  },
+  "2d5d9843bb40dfc32f518a613ca457de": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 9,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 1,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 2,
+        "total": 3
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 1,
+      "eject": 1,
+      "pilotDeath": 0
+    },
+    "names": [ "Raven I Zeus" ],
+    "times": {
+      "A-10C": {
+        "inAir": 1481.415,
+        "total": 2061.91
+      },
+      "AV8BNA": {
+        "inAir": 2131.9,
+        "total": 2542.175
+      }
+    },
+    "weapons": {
+      "AGM-65D": {
+        "hit": 0,
+        "kills": 3,
+        "numHits": 5,
+        "shot": 2
+      },
+      "GBU-12": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 2
+      },
+      "GBU-38": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 2
+      },
+      "Mk-82": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 4
+      }
+    }
+  },
+  "4c6358bfcbc705a79dc5825beeb9802d": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 10,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "RAVEN / MooneyDriver" ],
+    "times": {
+      "AV8BNA": {
+        "inAir": 3262.943,
+        "total": 4704.191
+      }
+    },
+    "weapons": {
+      "Mk-82": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 10
+      }
+    }
+  },
+  "521ce417c91918b488ddc46465fa38df": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 8,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "Booze" ],
+    "times": {
+      "F-15C": {
+        "inAir": 80.084,
+        "total": 80.084
+      }
+    },
+    "weapons": []
+  },
+  "b1706641b7aeff624ec691ae2fe0f62d": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 18,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "Ransom" ],
+    "times": {
+      "FA-18C_hornet": {
+        "inAir": 3883.659,
+        "total": 5274.985
+      }
+    },
+    "weapons": []
+  },
+  "b22185f13bb7670277ef3a6e4444b4bb": {
+    "PvP": {
+      "kills": 1,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 16,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 11,
+        "total": 11
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 2,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 2
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 5,
+      "eject": 0,
+      "pilotDeath": 4
+    },
+    "names": [ "Snap" ],
+    "times": {
+      "F-15C": {
+        "inAir": 1350.609,
+        "total": 1690.76
+      },
+      "FA-18C_hornet": {
+        "inAir": 25275.953,
+        "total": 35903.124
+      }
+    },
+    "weapons": {
+      "AIM-7M": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 1
+      },
+      "AIM-9M": {
+        "hit": 0,
+        "kills": 2,
+        "numHits": 2,
+        "shot": 4
+      },
+      "BDU-33": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 24
+      },
+      "CBU-99": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 2
+      },
+      "M-61": {
+        "gun": true,
+        "hit": 0,
+        "kills": 11,
+        "numHits": 223,
+        "shot": 1775
+      },
+      "Mk-82 SnakeEye": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 2,
+        "shot": 4
+      }
+    }
+  },
+  "b3d8df099480a8cbb2d7cbe5bc2dd5dc": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 12,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "fargo" ],
+    "times": [],
+    "weapons": []
+  },
+  "b517f05f81999d2f66bf7f53e55c12d5": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 2,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "RAVEN | Quad", "RAVEN 1-2 | Quad" ],
+    "times": {
+      "AJS37": {
+        "inAir": 1180.311,
+        "total": 2050.536
+      },
+      "AV8BNA": {
+        "inAir": 1710.636,
+        "total": 3671.433
+      }
+    },
+    "weapons": []
+  },
+  "bce152e9de4ea6cc61668b543a21ecc6": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 13,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 1,
+        "Tanks": 0,
+        "Unarmored": 1,
+        "total": 2
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 7,
+      "eject": 2,
+      "pilotDeath": 6
+    },
+    "names": [ "RAVEN I Apollo" ],
+    "times": {
+      "AJS37": {
+        "inAir": 3822.727,
+        "total": 12081.054
+      },
+      "AV8BNA": {
+        "inAir": 7106.362,
+        "total": 11555.773
+      },
+      "F-5E-3": {
+        "inAir": 2040.992,
+        "total": 5163.368
+      },
+      "FA-18C_hornet": {
+        "inAir": 10214.931,
+        "total": 15267.179
+      },
+      "L-39C": {
+        "inAir": 2171.439,
+        "total": 7335.389
+      }
+    },
+    "weapons": {
+      "AGM-122": {
+        "hit": 0,
+        "kills": 1,
+        "numHits": 1,
+        "shot": 2
+      },
+      "M-61": {
+        "gun": true,
+        "hit": 0,
+        "kills": 1,
+        "numHits": 8,
+        "shot": 603
+      },
+      "Mk-82 SnakeEye": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 3
+      },
+      "Mk-83": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 2
+      },
+      "Zuni-127": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 16
+      }
+    }
+  },
+  "d3e5193a19b7b4a5b3468492c7184a63": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 15,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "Admin", "admin" ],
+    "times": {
+      "CA": {
+        "inAir": 0,
+        "total": 9677.609
+      }
+    },
+    "weapons": []
+  },
+  "d80d3a6fb2b5eb51b2cf2dcca0b0ceda": {
+    "PvP": {
+      "kills": 1,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [ {
+      "human": "0ef908465d30dfcac51eefeecb339a17",
+      "objCat": "plane",
+      "objTypeName": "FA-18C_hornet",
+      "time": 1529130341,
+      "weapon": "M-61"
+    }, {
+      "human": "0ef908465d30dfcac51eefeecb339a17",
+      "objCat": "plane",
+      "objTypeName": "FA-18C_hornet",
+      "time": 1529130346,
+      "weapon": "M-61"
+    }, {
+      "objCat": "vehicle",
+      "objTypeName": "Conventional_Circle_A",
+      "time": 1529186627,
+      "weapon": "Mk-83"
+    }, {
+      "objCat": "vehicle",
+      "objTypeName": "Conventional_Circle_A",
+      "time": 1529186747,
+      "weapon": "Mk-83"
+    }, {
+      "objCat": "vehicle",
+      "objTypeName": "Conventional_Circle_A",
+      "time": 1529186913,
+      "weapon": "Mk-83"
+    }, {
+      "objCat": "vehicle",
+      "objTypeName": "Conventional_Circle_A",
+      "time": 1529187055,
+      "weapon": "CBU-99"
+    } ],
+    "friendlyKills": [ {
+      "human": "0ef908465d30dfcac51eefeecb339a17",
+      "objCat": "plane",
+      "objTypeName": "FA-18C_hornet",
+      "time": 1529131377,
+      "weapon": "M-61"
+    } ],
+    "id": 11,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 4,
+        "Tanks": 0,
+        "Unarmored": 13,
+        "total": 17
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 1,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 1,
+        "UAVs": 0,
+        "total": 2
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 1,
+        "Warships": 0,
+        "total": 1
+      }
+    },
+    "losses": {
+      "crash": 8,
+      "eject": 2,
+      "pilotDeath": 8
+    },
+    "names": [ "RAVEN | Buzzbomb", "Buzzbomb" ],
+    "times": {
+      "AJS37": {
+        "inAir": 16820.894,
+        "total": 29970.619
+      },
+      "AV8BNA": {
+        "inAir": 24038.849,
+        "total": 31224.283
+      },
+      "CA": {
+        "inAir": 0,
+        "total": 1751.469
+      },
+      "F-5E-3": {
+        "inAir": 7656.849,
+        "total": 14943.022
+      },
+      "FA-18C_hornet": {
+        "inAir": 50122.852,
+        "total": 81370.553
+      },
+      "L-39C": {
+        "inAir": 4043.499,
+        "total": 6895.953
+      }
+    },
+    "weapons": {
+      "AGM-122": {
+        "hit": 0,
+        "kills": 2,
+        "numHits": 2,
+        "shot": 4
+      },
+      "AIM-7F": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 1
+      },
+      "AIM-7M": {
+        "hit": 0,
+        "kills": 2,
+        "numHits": 2,
+        "shot": 10
+      },
+      "AIM-9M": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 11
+      },
+      "ARAKM70BHE": {
+        "hit": 0,
+        "kills": 2,
+        "numHits": 2,
+        "shot": 60
+      },
+      "BDU-33": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 24
+      },
+      "BK90MJ1": {
+        "hit": 0,
+        "kills": 5,
+        "numHits": 5,
+        "shot": 2
+      },
+      "CBU-99": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 4
+      },
+      "GBU-12": {
+        "hit": 0,
+        "kills": 1,
+        "numHits": 2,
+        "shot": 1
+      },
+      "GBU-16": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 2
+      },
+      "LUU-2B": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 1
+      },
+      "M-39": {
+        "gun": true,
+        "hit": 0,
+        "kills": 0,
+        "numHits": 185,
+        "shot": 1000
+      },
+      "M-61": {
+        "gun": true,
+        "hit": 0,
+        "kills": 6,
+        "numHits": 669,
+        "shot": 2676
+      },
+      "M/71 HE-Bomb w chute": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 16
+      },
+      "Mk-82": {
+        "hit": 0,
+        "kills": 1,
+        "numHits": 18,
+        "shot": 16
+      },
+      "Mk-82 SnakeEye": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 5
+      },
+      "Mk-83": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 8,
+        "shot": 24
+      },
+      "RB-04E": {
+        "hit": 0,
+        "kills": 1,
+        "numHits": 4,
+        "shot": 4
+      }
+    }
+  },
+  "da49550c3f8b637f6072c7e5d467e8a1": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 7,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "[Hawg 1-1] Dirty Razor", "[Raven 2-1] Dirty Razor" ],
+    "times": {
+      "A-10C": {
+        "inAir": 0,
+        "total": 320.139
+      },
+      "AV8BNA": {
+        "inAir": 2121.536,
+        "total": 5652.714
+      }
+    },
+    "weapons": {
+      "Mk-82": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 6
+      }
+    }
+  },
+  "ef12f7644455b392d425cc6f95ea5aa2": {
+    "PvP": {
+      "kills": 0,
+      "losses": 1
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [ {
+      "objCat": "plane",
+      "objTypeName": "KC130",
+      "time": 1529047713,
+      "weapon": "unknown"
+    }, {
+      "objCat": "plane",
+      "objTypeName": "KC130",
+      "time": 1529047714,
+      "weapon": "unknown"
+    }, {
+      "objCat": "plane",
+      "objTypeName": "KC130",
+      "time": 1529047714,
+      "weapon": "unknown"
+    }, {
+      "objCat": "plane",
+      "objTypeName": "KC130",
+      "time": 1529047714,
+      "weapon": "M-61"
+    }, {
+      "objCat": "plane",
+      "objTypeName": "KC130",
+      "time": 1529047715,
+      "weapon": "M-61"
+    }, {
+      "objCat": "plane",
+      "objTypeName": "KC130",
+      "time": 1529047729,
+      "weapon": "M-61"
+    }, {
+      "objCat": "plane",
+      "objTypeName": "KC130",
+      "time": 1530079067,
+      "weapon": "AIM-9M"
+    } ],
+    "friendlyKills": [ {
+      "objCat": "plane",
+      "objTypeName": "KC130",
+      "time": 1529047745,
+      "weapon": "M-61"
+    } ],
+    "id": 17,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 1,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 1
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 1,
+        "Transports": 2,
+        "UAVs": 0,
+        "total": 3
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 8,
+      "eject": 2,
+      "pilotDeath": 9
+    },
+    "names": [ "59th | Maffers" ],
+    "times": {
+      "FA-18C_hornet": {
+        "inAir": 24242.327,
+        "total": 38554.191
+      }
+    },
+    "weapons": {
+      "AIM-7M": {
+        "hit": 0,
+        "kills": 1,
+        "numHits": 1,
+        "shot": 3
+      },
+      "AIM-9M": {
+        "hit": 0,
+        "kills": 2,
+        "numHits": 2,
+        "shot": 2
+      },
+      "M-61": {
+        "gun": true,
+        "hit": 0,
+        "kills": 0,
+        "numHits": 80,
+        "shot": 1176
+      },
+      "Mk-83": {
+        "hit": 0,
+        "kills": 1,
+        "numHits": 1,
+        "shot": 4
+      },
+      "unknown": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 0
+      }
+    }
+  },
+  "fedc7d89db0ad055d13b1559c0077bb2": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 6,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 1,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 1,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 2
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 2,
+      "eject": 3,
+      "pilotDeath": 1
+    },
+    "names": [ "[RAVEN 1-4] EDawg", "[RAVEN] EDawg" ],
+    "times": {
+      "AJS37": {
+        "inAir": 3932.469,
+        "total": 7774.328
+      },
+      "AV8BNA": {
+        "inAir": 11967.983,
+        "total": 18002.412
+      },
+      "CA": {
+        "inAir": 0,
+        "total": 50.028
+      }
+    },
+    "weapons": {
+      "AGM-122": {
+        "hit": 0,
+        "kills": 2,
+        "numHits": 2,
+        "shot": 2
+      },
+      "ARAKM70BHE": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 12
+      },
+      "FFAR Mk1 HE": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 8
+      },
+      "GBU-16": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 2
+      },
+      "Mk-82": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 1,
+        "shot": 6
+      },
+      "Mk-82 SnakeEye": {
+        "hit": 0,
+        "kills": 0,
+        "numHits": 0,
+        "shot": 9
+      }
+    }
+  },
+  "host": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 1,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "host" ],
+    "times": [],
+    "weapons": []
+  }
+}

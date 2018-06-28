@@ -1,0 +1,351 @@
+{
+  "0ef908465d30dfcac51eefeecb339a17": {
+    "PvP": {
+      "kills": 0,
+      "losses": 1
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 3,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 1,
+      "eject": 0,
+      "pilotDeath": 1
+    },
+    "names": [ "RAVEN 1-3 | Roach", "RAVEN | Roach", "21st | Roach", "Roach" ],
+    "times": {
+      "FA-18C_hornet": {
+        "inAir": 1231.016,
+        "total": 1791.502
+      }
+    },
+    "weapons": []
+  },
+  "b22185f13bb7670277ef3a6e4444b4bb": {
+    "PvP": {
+      "kills": 1,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 16,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 1,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 1
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "Snap" ],
+    "times": {
+      "FA-18C_hornet": {
+        "inAir": 3532.834,
+        "total": 3733.04
+      }
+    },
+    "weapons": {
+      "AIM-9M": {
+        "hit": 0,
+        "kills": 1,
+        "numHits": 1,
+        "shot": 2
+      }
+    }
+  },
+  "d3e5193a19b7b4a5b3468492c7184a63": {
+    "PvP": {
+      "kills": 0,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 15,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "Admin", "admin" ],
+    "times": [],
+    "weapons": []
+  },
+  "d80d3a6fb2b5eb51b2cf2dcca0b0ceda": {
+    "PvP": {
+      "kills": 1,
+      "losses": 0
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 11,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 1,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 1
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 0,
+      "eject": 0,
+      "pilotDeath": 0
+    },
+    "names": [ "RAVEN | Buzzbomb", "Buzzbomb" ],
+    "times": {
+      "FA-18C_hornet": {
+        "inAir": 3472.8,
+        "total": 3943.22
+      }
+    },
+    "weapons": {
+      "AIM-7M": {
+        "hit": 0,
+        "kills": 1,
+        "numHits": 1,
+        "shot": 1
+      }
+    }
+  },
+  "ef12f7644455b392d425cc6f95ea5aa2": {
+    "PvP": {
+      "kills": 0,
+      "losses": 1
+    },
+    "friendlyCollisionHits": [],
+    "friendlyCollisionKills": [],
+    "friendlyHits": [],
+    "friendlyKills": [],
+    "id": 17,
+    "kills": {
+      "Buildings": {
+        "Other": 0,
+        "Static": 0,
+        "total": 0
+      },
+      "Ground Units": {
+        "AAA": 0,
+        "APCs": 0,
+        "Arty/MLRS": 0,
+        "EWR": 0,
+        "Forts": 0,
+        "IFVs": 0,
+        "Infantry": 0,
+        "Other": 0,
+        "SAM": 0,
+        "Tanks": 0,
+        "Unarmored": 0,
+        "total": 0
+      },
+      "Helicopters": {
+        "Attack": 0,
+        "Other": 0,
+        "Utility": 0,
+        "total": 0
+      },
+      "Planes": {
+        "Attack": 0,
+        "Bombers": 0,
+        "Fighters": 0,
+        "Other": 0,
+        "Support": 0,
+        "Transports": 0,
+        "UAVs": 0,
+        "total": 0
+      },
+      "Ships": {
+        "Other": 0,
+        "Subs": 0,
+        "Unarmed": 0,
+        "Warships": 0,
+        "total": 0
+      }
+    },
+    "losses": {
+      "crash": 1,
+      "eject": 0,
+      "pilotDeath": 1
+    },
+    "names": [ "59th | Maffers" ],
+    "times": {
+      "FA-18C_hornet": {
+        "inAir": 1471.235,
+        "total": 2001.711
+      }
+    },
+    "weapons": []
+  }
+}

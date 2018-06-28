@@ -1,6 +1,7 @@
 *.log
 *.pot
 *.pyc
+.metadata/
 willshousesync.txt
 willshousesync.bat
 __pycache__/
