@@ -3,7 +3,7 @@
 Django models for stats app
 '''
 from django.db import models
-
+import datetime
 
 class Pilot(models.Model):
     '''
@@ -49,12 +49,24 @@ class AircraftManager(models.Manager):
     '''
     Django Manager class for editing Aircraft SQL table.
     '''
-    def create_aircraft(self, aircraft, in_air_sec, total_sec, pilot):
+    def create_entry(self, aircraft, in_air_sec, total_sec, pilot, date=datetime.datetime.now()):
         '''
         Create a record in Aircraft SQL database and return it.
         '''
         aircraft = self.create(aircraft=aircraft, in_air_sec=in_air_sec,
-                               total_sec=total_sec, pilot=pilot)
+                               total_sec=total_sec, pilot=pilot, date=date)
+        return aircraft
+
+class MissionManager(models.Manager):
+    '''
+    Django Manager class for editing Aircraft SQL table.
+    '''
+    def create_entry(self, aircraft, in_air_sec, total_sec, pilot, date=datetime.datetime.now()):
+        '''
+        Create a record in Mission SQL database and return it.
+        '''
+        aircraft = self.create(aircraft=aircraft, in_air_sec=in_air_sec,
+                               total_sec=total_sec, pilot=pilot, date=date)
         return aircraft
 
 class Aircraft(models.Model):
@@ -66,11 +78,31 @@ class Aircraft(models.Model):
     total_sec = models.FloatField()
     pilot = models.ForeignKey('Pilot',
                               on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.datetime.now())
     objects = models.Manager()
     manager = AircraftManager()
 
     def __str__(self):
         return f"{self.aircraft} + {self.pilot}"
+
+class Mission(models.Model):
+    '''
+    Django Model class Mission SQL table
+    '''
+    aircraft = models.CharField(max_length=30)
+    in_air_sec = models.FloatField()
+    total_sec = models.FloatField()
+    pilot = models.ForeignKey('Pilot',
+                              on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=False, 
+                                auto_now_add=False, 
+                                default=datetime.datetime.now())
+
+    manager = MissionManager()
+    objects = models.Manager()
+
+    def __str__(self):
+        return f"{self.aircraft} + {self.pilot} + {self.date}"
 
 class PilotTotal:
     '''
@@ -85,7 +117,7 @@ class PilotTotal:
         pilot = Pilot.objects.get(clientid=clientid)
         self.name = str(pilot)
         self.rank = pilot.rank_id
-        aircraft = Aircraft.objects.filter(pilot=clientid)
+        aircraft = Mission.objects.filter(pilot=clientid)
         for a in aircraft:
             self.in_air_hr += (a.in_air_sec / 3600)
             self.total_hr += (a.total_sec / 3600)

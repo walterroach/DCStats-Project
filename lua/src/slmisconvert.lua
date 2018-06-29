@@ -12,7 +12,6 @@ local currentLocalTime= os.date('%Y-%m-%d-%H%M%S')
 
 
 local filename= "".. paths["misstats"] .. "" .. arg[2] .. ".json"
-print(filename)
 file = io.open(filename,"w")
 io.output(file)
 io.write(stats_json)
