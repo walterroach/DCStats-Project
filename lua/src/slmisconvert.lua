@@ -2,7 +2,7 @@ json = require "json"
 dofile("lua/src/config.lua")
 
 stats_path = arg[1]
-save_path = paths["savedir"]
+--save_path = paths["savedir"]
 
 dofile(stats_path)
 JSON = assert(loadfile "lua/src/JSON.lua")() -- one-time load of the routines

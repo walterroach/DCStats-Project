@@ -1,24 +1,19 @@
+#dqueries
+from .models import *
 
-from stats import models
-from stats.models import Pilot, Total, Aircraft
+def pilot_totals(pilots):
+	totals = []
+	for pilot in pilots:
+		x = PilotTotal(pilot.clientid)
+		totals.append(x)
+	
+	for x in totals:
+		print(x.name)
+	return totals
 
-class PilotTotal:
-	def __init__(self, clientid):
-		self.name = ''
-		self.rank = ''
-		self.in_air_hr = 0
-		self.total_hr = 0
-
-		pilot = Pilot.objects.get(clientid=clientid)
-		self.name = str(pilot)
-		self.rank = pilot.rank_id
-		aircraft = Aircraft.objects.filter(pilot=clientid)
-		for a in aircraft:
-			self.in_air_hr += (a.in_air_sec / 3600)
-			self.total_hr += (a.total_sec / 3600)
-
-
-
-
-	def __str__(self):
-		return self.name
+def aircraft_totals(aircraft, clientid):
+	a_missions = Mission.objects.filter(pilot=clientid, aircraft=aircraft)
+	x = AircraftTotal(aircraft)
+	for m in a_missions:
+		x.add_mission(m)
+	return x
