@@ -87,9 +87,9 @@ def mis_update():
         if m in exclude:
             continue
         else:
-            date_str = m[-28:-16]
-            date = datetime.datetime.strptime(date_str, '%b %d, %Y')
-            date = date.date()
+            date_str = m[-28:-4]
+            date = datetime.datetime.strptime(date_str, "%b %d, %Y at %H %M %S")
+            date = date.strftime('%b %d, %Y at %H %M %S')
             s_d = (m,date)
             stats_dates.append(s_d)
     print(f'Found {len(stats_dates)} SlMod Mission Files')
@@ -97,6 +97,8 @@ def mis_update():
 
     processed_slmis = open('stats\\processed_slmis.txt', "a")
     for m in stats_dates:
+        # print(f"{spath}\\{m[0]}")
+        # print(f"{m[0][:-30]} {m[1]}")
         subprocess.call(f'lua "lua\\src\\slmisconvert.lua" "{spath}\\{m[0]}" "{m[0][:-30]} {m[1]}"')
         processed_slmis.write(m[0] + "\n")
     processed_slmis.close()
@@ -130,20 +132,19 @@ def mis_update():
         if file in exclude:
             pass
         else:
-            date_str = file[-15:-5]
+            date_str = file[-29:-5]
             filename = mpath + file
             stats_json = load_json(filename)
             if stats_json != []:
                 for p in pilot_list:
                     try:
-                        print(f"This is the {stats_json[p]['times']}")
                         for k in stats_json[p]['times'].keys():
                             aircraft = k
                             in_air_sec = stats_json[p]['times'][k]['inAir']
                             total_sec = stats_json[p]['times'][k]['total']
                             pilot = Pilot.objects.get(clientid=p)
-                            date = datetime.datetime.strptime(date_str, '%Y-%m-%d')
-                            new_mission = Mission.manager.create_entry(aircraft, in_air_sec, total_sec, pilot, date)
+                            date = datetime.datetime.strptime(date_str, "%b %d, %Y at %H %M %S")
+                            new_mission = Mission.manager.create_entry(aircraft, in_air_sec, total_sec, pilot, file[:-30], date)
                     except KeyError:
                         print(f'No entry for {p} in {file}')
                     except AttributeError:

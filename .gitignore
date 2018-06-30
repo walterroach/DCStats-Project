@@ -1,6 +1,8 @@
 *.log
 *.pot
 *.pyc
+*.ipynb
+.ipynb_checkpoints/
 .metadata/
 willshousesync.txt
 willshousesync.bat

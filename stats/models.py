@@ -3,6 +3,7 @@
 Django models for stats app
 '''
 from django.db import models
+from django.utils import timezone
 import datetime
 
 class Pilot(models.Model):
@@ -49,7 +50,7 @@ class AircraftManager(models.Manager):
     '''
     Django Manager class for editing Aircraft SQL table.
     '''
-    def create_entry(self, aircraft, in_air_sec, total_sec, pilot, date=datetime.datetime.now()):
+    def create_entry(self, aircraft, in_air_sec, total_sec, pilot, date=timezone.now()):
         '''
         Create a record in Aircraft SQL database and return it.
         '''
@@ -61,12 +62,12 @@ class MissionManager(models.Manager):
     '''
     Django Manager class for editing Aircraft SQL table.
     '''
-    def create_entry(self, aircraft, in_air_sec, total_sec, pilot, date=datetime.datetime.now()):
+    def create_entry(self, aircraft, in_air_sec, total_sec, pilot, mission, date=timezone.now()):
         '''
         Create a record in Mission SQL database and return it.
         '''
         aircraft = self.create(aircraft=aircraft, in_air_sec=in_air_sec,
-                               total_sec=total_sec, pilot=pilot, date=date)
+                               total_sec=total_sec, pilot=pilot, mission=mission, date=date)
         return aircraft
 
 class Aircraft(models.Model):
@@ -78,7 +79,7 @@ class Aircraft(models.Model):
     total_sec = models.FloatField()
     pilot = models.ForeignKey('Pilot',
                               on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.datetime.now())
+    date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now())
     objects = models.Manager()
     manager = AircraftManager()
 
@@ -96,7 +97,8 @@ class Mission(models.Model):
                               on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=False, 
                                 auto_now_add=False, 
-                                default=datetime.datetime.now())
+                                default=timezone.now())
+    mission = models.CharField(max_length=100)
 
     manager = MissionManager()
     objects = models.Manager()
