@@ -42,8 +42,4 @@ def pilot_stats(request):
 			print(aircraft)
 		return render(request, 'stats/pilot_stats.html',{'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
 
-def search_client(request):
-	stats = Slmod_Total.objects
-	stats.file
-	fulltext = request.GET('fulltext')
 	

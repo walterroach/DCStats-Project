@@ -1,14 +1,14 @@
 json = require "json"
-dofile("lua\\src\\config.lua")
+dofile("lua/src/config.lua")
 
 stats_path = arg[1]
 save_path = paths["savedir"]
 
 dofile(stats_path)
-JSON = assert(loadfile "lua\\src\\JSON.lua")() -- one-time load of the routines
+JSON = assert(loadfile "lua/src/JSON.lua")() -- one-time load of the routines
 
 local stats_json = JSON:encode_pretty(misStats) -- "pretty printed" version for human readability
-local currentLocalTime= os.date('%Y-%m-%d-%H%M%S')
+--local currentLocalTime= os.date('%Y-%m-%d-%H%M%S')
 
 
 local filename= "".. paths["misstats"] .. "" .. arg[2] .. ".json"
