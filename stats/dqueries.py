@@ -2,6 +2,8 @@
 from .models import *
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.db.models import Sum
+import datetime
 
 def pilot_totals(pilots):
 	totals = []
@@ -29,43 +31,125 @@ def aircraft_totals(aircrafts):
 # 		x.add_mission(m)
 # 	return x
 
+class StatsRow:
+	def __init__(self, name, rank, aircraft, in_air_hours, hours_on_server):
+		self.name = name
+		self.rank = rank
+		self.aircraft = aircraft
+		self.in_air_hours = in_air_hours
+		self.hours_on_server = hours_on_server
+
+	def __str__(self):
+		return self.name
+
+def filter_date(datefilter):
+	if datefilter == 'all':
+		date_filter = all_dates()
+
+	elif datefilter == 'week':
+		date_filter = last_week()
+
+	elif datefilter == 'month':
+		date_filter = last_month()
+
+	elif datefilter == 'quarter':
+		date_filter = last_quarter()
+
+	return date_filter
+
+def last_week():
+	start_date = datetime.datetime.now() + datetime.timedelta(-7)
+	return start_date
+
+def all_dates():
+	date_filter = datetime.datetime.now()
+	date_filter = date_filter.replace(year=date_filter.year-50)
+	return date_filter
+
+def last_month():
+	date_filter = datetime.datetime.now() + datetime.timedelta(-30)
+	return date_filter
+
+def last_quarter():
+	date_filter = datetime.datetime.now() + datetime.timedelta(-90)
+	return date_filter
+
+def group_by_pilot(request, all_pilots, clientid, datefilter):
+	if clientid == 'all':
+		pilots = all_pilots
+	else:
+		pilots = Pilot.objects.filter(clientid=clientid)
+
+	date_filter = filter_date(datefilter)
+	
+	pilots = pilots.filter(mission__date__gte=date_filter).distinct()
+	stats = [] 
+	for pilot in pilots:
+		m_filter = Mission.objects.filter(pilot=pilot, date__gte=date_filter)
+		stats_query = m_filter.aggregate(in_air_hours=Sum('in_air_sec') / 3600, hours_on_server=Sum('total_sec') / 3600)
+		new_row = StatsRow(str(pilot), pilot.rank_id, 'All', stats_query['in_air_hours'], stats_query['hours_on_server'])
+		stats.append(new_row)
+	stats.sort(key=lambda x: x.in_air_hours, reverse=True)
+	return render(request, 'stats/pilot_stats.html', {'stats':stats, 'pilots':all_pilots})
+
 class Dquery:
 	def __init__(self):
 		self.clientid = ''
 		self.group_by = ''
 		self.request = ''
 
-	def execute(self, request, clientid, group_by):
-		self.clientid = clientid
-		self.group_by = group_by
-		self.request = request
 
-		if self.clientid == 'all' and group_by == 'pilot':
-			return self.group_by_pilot(request)
-		elif group_by == 'pilot':
-			return self.group_by_pilot(request, self.clientid)
-		elif clientid == 'all' and group_by == 'aircraft':
-			return self.group_by_aircraft(request, )
-		else:
-			return self.group_by_aircraft(request, self.clientid)
 
-	def group_by_pilot(self, request, clientid=""):
-		if clientid == "":
-			pilots = Pilot.objects.all()	
-		else:
-			pilots = Pilot.objects.filter(clientid=clientid)
-		aircraft = pilot_totals(pilots)	
-		return render(request, 'stats/pilot_stats.html', {'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
+	def execute(self, request, clientid, datefilter, group_by, group_by2):
+		all_pilots = Pilot.objects.all()
+		if group_by == 'pilot':
+			if group_by2 == 'None':
+				return group_by_pilot(request, all_pilots, clientid, datefilter,)
+			elif group_by2 == 'aircraft':
+				return group_by_pilot_aircraft(request, all_pilots, clientid, datefilter)
+			else:
+				return bad_request(group_by, group_by2)
 
-	def group_by_aircraft(self, request, clientid=""):
-		pilots = []
-		if clientid == "":
-			aircrafts = Aircraft.objects.all()
-		else:
-			aircrafts = Aircraft.objects.filter(mission__pilot_id=clientid)
-		aircraft = aircraft_totals(aircrafts)
+		elif group_by == 'aircraft':
+			if group_by2 == 'None':
+				return group_by_aircraft(request, all_pilots, clientid, datefilter)
+			elif group_by2 == 'pilot':
+				return group_by_aircraft_pilot(request, all_pilots, clientid, datefilter)
 
-		return render(request, 'stats/pilot_stats.html',{'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
+	
+			
+
+	# def execute(self, request, clientid, group_by):
+	# 	self.clientid = clientid
+	# 	self.group_by = group_by
+	# 	self.request = request
+
+	# 	if self.clientid == 'all' and group_by == 'pilot':
+	# 		return self.group_by_pilot(request)
+	# 	elif group_by == 'pilot':
+	# 		return self.group_by_pilot(request, self.clientid)
+	# 	elif clientid == 'all' and group_by == 'aircraft':
+	# 		return self.group_by_aircraft(request, )
+	# 	else:
+	# 		return self.group_by_aircraft(request, self.clientid)
+
+	# def group_by_pilot(self, request, clientid=""):
+	# 	if clientid == "":
+	# 		pilots = Pilot.objects.all()	
+	# 	else:
+	# 		pilots = Pilot.objects.filter(clientid=clientid)
+	# 	aircraft = pilot_totals(pilots)	
+	# 	return render(request, 'stats/pilot_stats.html', {'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
+
+	# def group_by_aircraft(self, request, clientid=""):
+	# 	pilots = []
+	# 	if clientid == "":
+	# 		aircrafts = Aircraft.objects.all()
+	# 	else:
+	# 		aircrafts = Aircraft.objects.filter(mission__pilot_id=clientid)
+	# 	aircraft = aircraft_totals(aircrafts)
+
+	# 	return render(request, 'stats/pilot_stats.html',{'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
 
 # class GetStats(Dquery): 
 

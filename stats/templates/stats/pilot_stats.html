@@ -54,6 +54,11 @@
               <option selected value='pilot'>Pilot</option>
               <option value='aircraft'>Aircraft</option>
             </select>
+            <select name='group_by2' class="custom-select custom-select-lg mb-3">
+              <option selected value='None'>None</option>
+              <option value='pilot'>Pilot</option>
+              <option value='aircraft'>Aircraft</option>
+            </select>
           </div>
           <div class="col">
             <h3>Filter by</h3>
@@ -62,10 +67,19 @@
               {% for pilot in pilots.all %}
               <option name='clientid' value="{{ pilot.clientid }}">{{ pilot }}</option>
               {% endfor %}
-            </select>  
+            </select>
+            <select name='date' class="custom-select custom-select-lg mb-3">
+              <option selected value = 'all'>Date (All)</option>
+              <option name='date' value='week'>Last Week</option>
+              <option name='date' value='month'>Last Month</option>
+              <option name='date' value='quarter'>Last 90 days</option>
+            </select>    
           </div>
         </div>
-        <input type="submit" value="Submit" />
+        <div class ="row">
+          <div class = "col">
+            <input type="submit" value="Submit" />
+        </div>
       </form>
       <table class="table mt-5 bg-light">
         <tr>
@@ -75,13 +89,13 @@
             <th>Hours in Air</th>
             <th>Hours on Server</th>
         </tr>
-        {% for x in aircraft %}
+        {% for row in stats %}
         <tr>
-          <td>{{ x.name }}</td>
-          <td>{{ x.rank }}</td>
-          <td>{{ x.aircraft }}</td>
-          <td>{{ x.in_air_hr|floatformat:2 }}</td>   
-          <td>{{ x.total_hr|floatformat:2}} </td>
+          <td>{{ row.name }}</td>
+          <td>{{ row.rank }}</td>
+          <td>{{ row.aircraft }}</td>
+          <td>{{ row.in_air_hours|floatformat:2 }}</td>   
+          <td>{{ row.hours_on_server|floatformat:2}} </td>
         </tr>
         {% endfor %}
 

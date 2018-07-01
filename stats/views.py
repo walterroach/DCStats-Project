@@ -11,9 +11,11 @@ def stats(request):
 
 def pilot_stats(request):
 	clientid = request.GET['clientid']
+	datefilter = request.GET['date']
 	group_by = request.GET['group_by']
+	group_by2 = request.GET['group_by2']
 	myquery = Dquery()
-	return myquery.execute(request, clientid, group_by)
+	return myquery.execute(request, clientid, datefilter, group_by, group_by2)
 
 	# if clientid == 'all' and group_by == 'pilot':
 	# 	pilots = Pilot.objects.all()
