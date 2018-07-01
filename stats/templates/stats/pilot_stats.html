@@ -45,14 +45,26 @@
     <br>
     <main>
     <div class="container">
+      <h2>Stats</h2>
       <form action="{% url 'pilot_stats' %}">
-        <h2>Stats</h2>
-        <select name='clientid' class="custom-select custom-select-lg mb-3">
-          <option selected value = 'all'>Pilot Totals</option>
-          {% for pilot in pilots.all %}
-          <option name='clientid' value="{{ pilot.clientid }}">{{ pilot }} by aircraft</option>
-          {% endfor %}
-        </select>
+        <div class="row">
+          <div class="col">
+            <h3>Group by</h3>
+            <select name='group_by' class="custom-select custom-select-lg mb-3">
+              <option selected value='pilot'>Pilot</option>
+              <option value='aircraft'>Aircraft</option>
+            </select>
+          </div>
+          <div class="col">
+            <h3>Filter by</h3>
+            <select name='clientid' class="custom-select custom-select-lg mb-3">
+              <option selected value = 'all'>Pilot (All)</option>
+              {% for pilot in pilots.all %}
+              <option name='clientid' value="{{ pilot.clientid }}">{{ pilot }}</option>
+              {% endfor %}
+            </select>  
+          </div>
+        </div>
         <input type="submit" value="Submit" />
       </form>
       <table class="table mt-5 bg-light">

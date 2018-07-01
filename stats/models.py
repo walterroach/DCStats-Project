@@ -50,12 +50,14 @@ class AircraftManager(models.Manager):
     '''
     Django Manager class for editing Aircraft SQL table.
     '''
-    def create_entry(self, aircraft, in_air_sec, total_sec, pilot, date):
+    def create_entry(self, aircraft):
         '''
         Create a record in Aircraft SQL database and return it.
         '''
-        aircraft = self.create(aircraft=aircraft, pilot=pilot)
-        return aircraft
+        #checks for existing entry
+        
+        new_aircraft = self.create(aircraft=aircraft)
+        return new_aircraft
 
 class MissionManager(models.Manager):
     '''
@@ -65,33 +67,38 @@ class MissionManager(models.Manager):
         '''
         Create a record in Mission SQL database and return it.
         '''
-        aircraft = Aircraft.objects.get(aircraft=aircraft, pilot=pilot)
+        # aircraft = Aircraft.objects.get(aircraft=aircraft, pilot=pilot)
+        # try:
+        print('MissionManager.create_entry')
         mission = self.create(aircraft=aircraft, in_air_sec=in_air_sec,
-                               total_sec=total_sec, pilot=pilot, mission=mission, date=date)
+                              total_sec=total_sec, pilot=pilot, mission=mission, date=date)
+        # except ValueError:
+        #     print(aircraft)
+        #     Aircraft.manager.create_entry(aircraft)
         return mission
 
 class Aircraft(models.Model):
     '''
     Django Model class Aircraft SQL table
     '''
-    aircraft = models.CharField(max_length=30)
-    pilot = models.ForeignKey('Pilot',
-                              on_delete=models.CASCADE)
+    aircraft = models.CharField(max_length=30, primary_key=(True))
+    # pilot = models.ForeignKey('Pilot',
+    #                           on_delete=models.CASCADE)
     objects = models.Manager()
     manager = AircraftManager()
 
     def __str__(self):
-        return f"Aircraft Object {self.aircraft} + {self.pilot}"
+        return f"Aircraft Object {self.aircraft}"
 
 class Mission(models.Model):
     '''
     Django Model class Mission SQL table
     '''
-    aircraft = models.ForeignKey('Aircraft',
+    aircraft = models.ForeignKey(Aircraft,
                                 on_delete=models.CASCADE)
     in_air_sec = models.FloatField()
     total_sec = models.FloatField()
-    pilot = models.ForeignKey('Pilot',
+    pilot = models.ForeignKey(Pilot,
                               on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=False, 
                                 auto_now_add=False)
@@ -102,16 +109,20 @@ class Mission(models.Model):
     def __str__(self):
         return f"Mission Object {self.aircraft} + {self.pilot} + {self.date}"
 
-class PilotTotal:
+class Total:
+    def __init__(self, clientid="", aircraft=""):
+        self.name = ""
+        self.rank = ""
+        self.aircraft = ""
+        self.in_air_hr = 0
+        self.total_hr = 0
+
+class PilotTotal(Total):
     '''
     Contains data for stats page Pilot Total view. 
     '''
     def __init__(self, clientid):
-        self.name = ''
-        self.rank = ''
-        self.in_air_hr = 0
-        self.total_hr = 0
-
+        super().__init__(self)
         pilot = Pilot.objects.get(clientid=clientid)
         self.name = str(pilot)
         self.rank = pilot.rank_id
@@ -123,15 +134,14 @@ class PilotTotal:
     def __str__(self):
         return self.name
 
-class AircraftTotal:
+class AircraftTotal(Total):
     def __init__(self, aircraft):
-        self.name = str(aircraft.pilot)
-        self.rank = aircraft.pilot.rank_id
-        self.aircraft = aircraft.aircraft
-        self.in_air_hr = 0
-        self.total_hr = 0
-        
+        super().__init__(self)
+        # self.name = str(aircraft.mission.pilot)
+        # self.rank = aircraft.pilot.rank_id
+        self.aircraft = aircraft.aircraft        
+        pilots = Mission.objects.filter(aircraft=aircraft)
+        for p in pilots:
+            self.in_air_hr += (p.in_air_sec / 3600)
+            self.total_hr += (p.total_sec / 3600)
 
-    def add_mission(self, m_model):
-        self.in_air_hr += (m_model.in_air_sec / 3600)
-        self.total_hr += (m_model.total_sec / 3600)

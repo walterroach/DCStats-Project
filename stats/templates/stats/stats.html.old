@@ -46,7 +46,7 @@
     <main>
     <div class="container">
       <form action="{% url 'pilot_stats' %}">
-        <h3>Stats</h3>
+        <h2>Stats</h2>
         <select name='clientid' class="custom-select custom-select-lg mb-3">
           <option selected>Pilot Totals</option>
           {% for pilot in pilots.all %}

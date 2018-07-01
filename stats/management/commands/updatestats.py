@@ -43,8 +43,8 @@ def update_stats():
             in_air_sec = stats_json[p]['times'][k]['inAir']
             total_sec = stats_json[p]['times'][k]['total']
             pilot = Pilot.objects.get(clientid=p)
-            new_aircraft = Aircraft.manager.create_entry(aircraft,
-                                                        in_air_sec, total_sec, pilot)
+            # new_aircraft = Aircraft.manager.create_entry(aircraft,
+            #                                             in_air_sec, total_sec, pilot)
     print(f'Updated totals for clients {pilot_list}')
     return 'done'
 
@@ -56,12 +56,17 @@ def list_files(spath):
                 mis_stats.append(file)
     return mis_stats
 
-def update_mismodel(k, p, file, stats_json, date):
-    aircraft = k
-    in_air_sec = stats_json[p]['times'][k]['inAir']
-    total_sec = stats_json[p]['times'][k]['total']
-    pilot = Pilot.objects.get(clientid=p)
-    new_mission = Mission.manager.create_entry(aircraft, in_air_sec, total_sec, pilot, file[:-30], date)
+def update_mismodel(aircrafts, pilots, file, stats_json, date):
+    print('updating mismodel')
+    in_air_sec = stats_json[pilots]['times'][aircrafts.aircraft]['inAir']
+    total_sec = stats_json[pilots]['times'][aircrafts.aircraft]['total']
+    pilot = Pilot.objects.get(clientid=pilots)
+    new_mission = Mission.manager.create_entry(aircrafts, 
+                                                in_air_sec,
+                                                total_sec, 
+                                                pilot, 
+                                                file[:-30],
+                                                date)
 
 def mis_update():
     '''
@@ -130,11 +135,14 @@ def mis_update():
                 for p in pilot_list:
                     try:
                         for k in stats_json[p]['times'].keys():
-                            update_mismodel(k, p, file, stats_json, date)
-                    except KeyError:
-                        pass
-                    except AttributeError:
-                        pass
+                            new_aircraft = Aircraft.objects.get_or_create(aircraft=k)
+                            new_aircraft = Aircraft.objects.get(aircraft=k)
+                            print(f'printing new_aircraft {new_aircraft}')                     
+                            update_mismodel(new_aircraft, p, file, stats_json, date)
+                    except KeyError as e:
+                        print(f'KeyError{e}')
+                    except AttributeError as e:
+                        print(f'AttributeError{e}')
             with open(finishedpath, 'a') as finishedfiles:
                 finishedfiles.write(file + '\n')
             finishedfiles.close()
@@ -143,6 +151,13 @@ def mis_update():
 
 def delete_mission():
     aircraft = Mission.objects.all().delete()
+
+def delete_aircraft():
+    aircraft = Aircraft.objects.all().delete()
+
+def list_aircraft():
+    aircrafts = Aircraft.objects.all()
+    print(aircrafts)
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
@@ -156,10 +171,24 @@ class Command(BaseCommand):
             action='store_true', 
             dest='deletemission', 
             help='Deletes all records in Mission table')
+        parser.add_argument(
+            '--deleteaircraft',
+            action='store_true', 
+            dest='deleteaircraft', 
+            help='Deletes all records in aircraft table')
+        parser.add_argument(
+            '--list_aircraft',
+            action='store_true', 
+            dest='list_aircraft', 
+            help='lists all records in aircraft table')
     def handle(self, **options):
         if options['mission']:
             return mis_update()
         elif options['deletemission']:
             return delete_mission()
+        elif options['deleteaircraft']:
+            return delete_aircraft()
+        elif options['list_aircraft']:
+            return list_aircraft()
         else:
             return update_stats()
