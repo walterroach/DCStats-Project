@@ -107,7 +107,10 @@ def group_by_aircraft(request, all_pilots, clientid, datefilter):
 	for aircraft in aircrafts:
 		m_filter = pilot_filter.filter(aircraft=aircraft, date__gte=date_filter)
 		stats_query = m_filter.aggregate(in_air_hours=Sum('in_air_sec') / 3600, hours_on_server=Sum('total_sec') / 3600)
-		new_row = StatsRow(str(pilot), pilot.rank_id, aircraft.aircraft, stats_query['in_air_hours'], stats_query['hours_on_server'])
+		try:
+			new_row = StatsRow(str(pilot), pilot.rank_id, aircraft.aircraft, stats_query['in_air_hours'], stats_query['hours_on_server'])
+		except UnboundLocalError:
+			new_row = StatsRow('All', 'N/A', aircraft.aircraft, stats_query['in_air_hours'], stats_query['hours_on_server'])
 		stats.append(new_row)
 	stats.sort(key=lambda x: x.in_air_hours, reverse=True)
 	return render(request, 'stats/pilot_stats.html', {'stats':stats, 'pilots':all_pilots})
