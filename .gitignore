@@ -1,7 +1,14 @@
 *.log
 *.pot
 *.pyc
+*.ipynb
+*.lua
+slmis/*.json
+.ipynb_checkpoints/
+.metadata/
 willshousesync.txt
+processed_slmis.txt
+finishedfiles.txt
 willshousesync.bat
 __pycache__/
 local_settings.py
