@@ -1,5 +1,6 @@
-#dqueries
-from .models import *
+#dqueries Contains logic for database queries on stats page.
+
+from stats.models import *
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Sum
@@ -143,7 +144,6 @@ def group_by_aircraft_pilot(request, all_pilots, clientid, datefilter):
 		print("clientid is all")
 	else:
 		pilots = Pilot.objects.filter(clientid=clientid)
-
 	aircrafts = Aircraft.objects.all()
 	print("aircraft query set to all")
 	date_filter = filter_date(datefilter)
