@@ -3,7 +3,7 @@
 *.pyc
 *.ipynb
 *.lua
-slmis/
+slmis/*.json
 .ipynb_checkpoints/
 .metadata/
 willshousesync.txt
