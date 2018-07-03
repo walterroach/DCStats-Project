@@ -130,7 +130,7 @@ def group_by_pilot_aircraft(request, all_pilots, clientid, datefilter):
 	pilots = pilots.filter(mission__date__gte=date_filter).distinct()
 	stats = [] 
 	for pilot in pilots:
-		aircrafts = aircrafts.filter(mission__pilot=pilot.clientid)
+		# aircrafts = aircrafts.filter(mission__pilot=pilot.clientid)
 		# print("aircraft filtered by pilot")
 		for aircraft in aircrafts:
 			m_filter = Mission.objects.filter(pilot=pilot, aircraft=aircraft, date__gte=date_filter)
