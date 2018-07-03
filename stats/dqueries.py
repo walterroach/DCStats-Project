@@ -176,8 +176,6 @@ class Dquery:
 		self.group_by = ''
 		self.request = ''
 
-
-
 	def execute(self, request, clientid, datefilter, group_by, group_by2):
 		all_pilots = Pilot.objects.all()
 		if group_by == 'pilot':
