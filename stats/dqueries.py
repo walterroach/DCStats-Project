@@ -96,15 +96,18 @@ def group_by_pilot(request, all_pilots, clientid, datefilter):
 def group_by_aircraft(request, all_pilots, clientid, datefilter):
 	if clientid == 'all':
 		aircrafts = Aircraft.objects.all()
+		pilot_filter = Mission.objects.all()
 	else:
 		aircrafts = Aircraft.objects.filter(mission__pilot=clientid)
+		pilot_filter = Mission.objects.filter(pilot=clientid)
+		pilot = Pilot.objects.get(clientid=clientid)
 	date_filter = filter_date(datefilter)
 	aircrafts = aircrafts.filter(mission__date__gte=date_filter).distinct()
 	stats = []
 	for aircraft in aircrafts:
-		m_filter = Mission.objects.filter(aircraft=aircraft, date__gte=date_filter)
+		m_filter = pilot_filter.filter(aircraft=aircraft, date__gte=date_filter)
 		stats_query = m_filter.aggregate(in_air_hours=Sum('in_air_sec') / 3600, hours_on_server=Sum('total_sec') / 3600)
-		new_row = StatsRow('all', 'None', aircraft.aircraft, stats_query['in_air_hours'], stats_query['hours_on_server'])
+		new_row = StatsRow(str(pilot), pilot.rank_id, aircraft.aircraft, stats_query['in_air_hours'], stats_query['hours_on_server'])
 		stats.append(new_row)
 	stats.sort(key=lambda x: x.in_air_hours, reverse=True)
 	return render(request, 'stats/pilot_stats.html', {'stats':stats, 'pilots':all_pilots})
@@ -125,7 +128,7 @@ def group_by_pilot_aircraft(request, all_pilots, clientid, datefilter):
 	pilots = pilots.filter(mission__date__gte=date_filter).distinct()
 	stats = [] 
 	for pilot in pilots:
-		# aircrafts = aircrafts.filter(mission__pilot=pilot.clientid)
+		aircrafts = aircrafts.filter(mission__pilot=pilot.clientid)
 		# print("aircraft filtered by pilot")
 		for aircraft in aircrafts:
 			m_filter = Mission.objects.filter(pilot=pilot, aircraft=aircraft, date__gte=date_filter)
