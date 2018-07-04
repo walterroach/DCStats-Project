@@ -92,17 +92,18 @@ def group_by_pilot(request, all_pilots, clientid, datefilter):
 	stats.sort(key=lambda x: x.in_air_hours, reverse=True)
 	return render(request, 'stats/pilot_stats.html', {'stats':stats, 'pilots':all_pilots})
 
-def group_by_aircraft(request, all_pilots, clientid, datefilter):
-	if clientid == 'all':
-		aircrafts = Aircraft.objects.all()
-		pilot_filter = Mission.objects.all()
-		class PilotPlaceholder:
+class PilotPlaceholder:
 			def __init__(self):
 				rank_id = 'N/A'
 				name = 'All'
 
 			def __str__(self):
 				return self.name
+
+def group_by_aircraft(request, all_pilots, clientid, datefilter):
+	if clientid == 'all':
+		aircrafts = Aircraft.objects.all()
+		pilot_filter = Mission.objects.all()
 		pilot = PilotPlaceholder()
 	else:
 		aircrafts = Aircraft.objects.filter(mission__pilot=clientid)
