@@ -7,8 +7,8 @@ slmis/*.json
 .ipynb_checkpoints/
 .metadata/
 willshousesync.txt
-processed_slmis.txt
-finishedfiles.txt
+stats/processed_slmis.txt
+stats/finishedfiles.txt
 willshousesync.bat
 finishedfiles.txt
 processed_slmis.txt

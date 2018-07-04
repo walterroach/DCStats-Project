@@ -69,7 +69,6 @@ class MissionManager(models.Manager):
         '''
         # aircraft = Aircraft.objects.get(aircraft=aircraft, pilot=pilot)
         # try:
-        print('MissionManager.create_entry')
         mission = self.create(aircraft=aircraft, in_air_sec=in_air_sec,
                               total_sec=total_sec, pilot=pilot, mission=mission, date=date)
         # except ValueError:

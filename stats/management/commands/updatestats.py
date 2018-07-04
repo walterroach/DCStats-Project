@@ -25,29 +25,6 @@ def get_pilots():
         pilot_list.append(pilot.clientid)
     return pilot_list
 
-def update_stats():
-    '''Update Aircraft SQL table with data from most current slmod json'''
-    #Clear exsiting aircraft database.
-    aircraft = Aircraft.objects.all().delete()
-    #Finds and loads most recent stats_YYYY_MM_DD_TTTT.json file
-    dir_path = Path("/slmod/")
-    list_of_files = glob.glob(dir_path)
-    fpath = max(list_of_files, key=os.path.getctime)
-    stats_json = load_json(fpath)
-    #Fetches current active users from Pilot SQL table
-    pilot_list = get_pilots()
-    #Updates aircraft database with new data
-    for p in pilot_list:
-        for k in stats_json[p]['times'].keys():
-            aircraft = k
-            in_air_sec = stats_json[p]['times'][k]['inAir']
-            total_sec = stats_json[p]['times'][k]['total']
-            pilot = Pilot.objects.get(clientid=p)
-            # new_aircraft = Aircraft.manager.create_entry(aircraft,
-            #                                             in_air_sec, total_sec, pilot)
-    print(f'Updated totals for clients {pilot_list}')
-    return 'done'
-
 def list_files(spath):
     mis_stats = []
     for root, dirs, files in os.walk(spath):
@@ -57,7 +34,6 @@ def list_files(spath):
     return mis_stats
 
 def update_mismodel(aircrafts, pilots, file, stats_json, date):
-    print('updating mismodel')
     in_air_sec = stats_json[pilots]['times'][aircrafts.aircraft]['inAir']
     total_sec = stats_json[pilots]['times'][aircrafts.aircraft]['total']
     pilot = Pilot.objects.get(clientid=pilots)
@@ -122,10 +98,13 @@ def mis_update():
         pass
     print(f'Found {new_count} new files to import')
     #Import new JSONs to Django Mission Model
+    progress = 0
     for file in new_files:
         if file in exclude:
             pass
         else:
+            progress += 1
+            print(f'Importing {progress} of {new_count}')
             lua_suff = file[:-5] + ".lua"
             lua_name = mpath / lua_suff
             date = datetime.datetime.fromtimestamp(os.path.getmtime(lua_name), pytz.UTC)
@@ -136,13 +115,12 @@ def mis_update():
                     try:
                         for k in stats_json[p]['times'].keys():
                             new_aircraft = Aircraft.objects.get_or_create(aircraft=k)
-                            new_aircraft = Aircraft.objects.get(aircraft=k)
-                            print(f'printing new_aircraft {new_aircraft}')                     
+                            new_aircraft = Aircraft.objects.get(aircraft=k)                    
                             update_mismodel(new_aircraft, p, file, stats_json, date)
                     except KeyError as e:
-                        print(f'KeyError{e}')
+                        pass
                     except AttributeError as e:
-                        print(f'AttributeError{e}')
+                        pass
             with open(finishedpath, 'a') as finishedfiles:
                 finishedfiles.write(file + '\n')
             finishedfiles.close()
@@ -157,15 +135,9 @@ def delete_aircraft():
 
 def list_aircraft():
     aircrafts = Aircraft.objects.all()
-    print(aircrafts)
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
-        parser.add_argument(
-            '--mission',
-            action='store_true',
-            dest='mission',
-            help='Update slmod mission stats files only')
         parser.add_argument(
             '--deletemission',
             action='store_true', 
@@ -182,13 +154,11 @@ class Command(BaseCommand):
             dest='list_aircraft', 
             help='lists all records in aircraft table')
     def handle(self, **options):
-        if options['mission']:
-            return mis_update()
-        elif options['deletemission']:
+        if options['deletemission']:
             return delete_mission()
         elif options['deleteaircraft']:
             return delete_aircraft()
         elif options['list_aircraft']:
             return list_aircraft()
         else:
-            return update_stats()
+            return mis_update()
