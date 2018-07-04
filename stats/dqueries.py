@@ -94,8 +94,8 @@ def group_by_pilot(request, all_pilots, clientid, datefilter):
 
 class PilotPlaceholder:
 			def __init__(self):
-				rank_id = 'N/A'
-				name = 'All'
+				self.rank_id = 'N/A'
+				self.name = 'All'
 
 			def __str__(self):
 				return self.name
@@ -105,6 +105,8 @@ def group_by_aircraft(request, all_pilots, clientid, datefilter):
 		aircrafts = Aircraft.objects.all()
 		pilot_filter = Mission.objects.all()
 		pilot = PilotPlaceholder()
+		print('Trying to print PilotPlaceholder object')
+		print(pilot)
 	else:
 		aircrafts = Aircraft.objects.filter(mission__pilot=clientid)
 		pilot_filter = Mission.objects.filter(pilot=clientid)
