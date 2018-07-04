@@ -50,8 +50,9 @@ def mis_update():
     '''
     print("Scanning stats folder")
     #Check for already converted slmod mission luas
-    mpath = Path('D:/DCS/Willshouse/stats')
+    mpath = Path('slmod/')
     mis_stats = list_files(mpath)
+    print(f'mis_stats after list_files() = {mis_stats}')
     exclude = []
     p_slmis = Path('stats/processed_slmis.txt')
     try:        
@@ -73,7 +74,10 @@ def mis_update():
         if m in exclude:
             pass
         else:
-            subprocess.call(f'lua {slmis_lua} "{mpath}\\{m}" "{m[:-4]}"')
+            mpath_m = str(mpath) +"/"+ m
+            process = f'lua {slmis_lua} "{mpath}/{m}" "/{m[:-4]}"'
+            print(process)
+            subprocess.call(process, shell=True)
             processed_slmis.write(m + "\n")
     processed_slmis.close()
     print("Finished Lua conversions")
