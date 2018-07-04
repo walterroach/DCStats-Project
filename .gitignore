@@ -27,6 +27,8 @@ willshousesync.txt
 processed_slmis.txt
 finishedfiles.txt
 willshousesync.bat
+finishedfiles.txt
+processed_slmis.txt
 __pycache__/
 local_settings.py
 db.sqlite3
