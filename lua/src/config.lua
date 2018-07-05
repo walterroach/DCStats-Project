@@ -1,3 +1,3 @@
 paths = {
-  ["misstats"] = "/home/walter/DCStats/DCStats-Project/slmis"
+  ["misstats"] = "C:\\Users\\Walter\\Desktop\\DCStats Django\\DCStats-Project\\slmis"
 }
