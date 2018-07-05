@@ -52,7 +52,6 @@ def mis_update():
     #Check for already converted slmod mission luas
     mpath = Path('slmod/')
     mis_stats = list_files(mpath)
-    print(f'mis_stats after list_files() = {mis_stats}')
     exclude = []
     p_slmis = Path('stats/processed_slmis.txt')
     try:        
@@ -70,15 +69,26 @@ def mis_update():
     print(f"Converting {new_count} SlMod mission files to JSON")
     slmis_lua = Path('lua/src/slmisconvert.lua')
     processed_slmis = open(p_slmis, "a")
+    progress = 0
     for m in mis_stats:
         if m in exclude:
             pass
         else:
-            mpath_m = str(mpath) +"/"+ m
+            progress += 1
+            print(f'Converting {progress} of {new_count} to JSON')
+            curmispath = Path(mpath / m)
+            with open(curmispath) as curmisfile:
+                first_line = curmisfile.readline()
+                curmisfile.close()
+            if 'misStats = { }' in first_line:
+                final = False
+                print(f'{curmispath} is not final, will convert to json again next run')
+            else:
+                final = True
             process = f'lua {slmis_lua} "{mpath}/{m}" "/{m[:-4]}"'
-            print(process)
             subprocess.call(process, shell=True)
-            processed_slmis.write(m + "\n")
+            if final:
+                processed_slmis.write(m + "\n")
     processed_slmis.close()
     print("Finished Lua conversions")
     #Check for already imported slmod mission JSONs
@@ -103,6 +113,7 @@ def mis_update():
     print(f'Found {new_count} new files to import')
     #Import new JSONs to Django Mission Model
     progress = 0
+    error_list = []
     for file in new_files:
         if file in exclude:
             pass
@@ -112,7 +123,7 @@ def mis_update():
             lua_suff = file[:-5] + ".lua"
             lua_name = mpath / lua_suff
             date = datetime.datetime.fromtimestamp(os.path.getmtime(lua_name), pytz.UTC)
-            filename = spath / file
+            filename = Path(spath / file)
             stats_json = load_json(filename)
             if stats_json != []:
                 for p in pilot_list:
@@ -125,10 +136,14 @@ def mis_update():
                         pass
                     except AttributeError as e:
                         pass
-            with open(finishedpath, 'a') as finishedfiles:
-                finishedfiles.write(file + '\n')
-            finishedfiles.close()
-    print("Finished Import with no errors")
+                with open(finishedpath, 'a') as finishedfiles:
+                    finishedfiles.write(file + '\n')
+                finishedfiles.close()
+            else:
+                error_list.append(filename)
+                print(f'No data to import from {filename}')
+            
+    print(f"Finished Import with {len(error_list)} errors")
 
 
 def delete_mission():
