@@ -96,3 +96,8 @@ Training Map - 1-20180313-205914- Mar 16, 2018 at 19 51 57.json
 IFR-XC- Apr 07, 2018 at 20 22 34.json
 21st PG Naval Training v.57- Jun 14, 2018 at 20 47 55.json
 21st PG Training v.64- Jul 03, 2018 at 21 45 49.json
+test- Jul 04, 2018 at 17 02 03.json
+21st PG Training v.65- Jul 04, 2018 at 13 09 40.json
+test- Jul 04, 2018 at 14 45 05.json
+test- Jul 04, 2018 at 22 31 41.json
+test- Jul 04, 2018 at 22 43 23.json
