@@ -87,8 +87,7 @@ def mis_update():
                 final = True
             if final:
                 process = f'lua {slmis_lua} "{mpath}/{m}" "/{m[:-4]}"'
-            subprocess.call(process, shell=True)
-            if final:
+                subprocess.call(process, shell=True)
                 processed_slmis.write(m + "\n")
     processed_slmis.close()
     print("Finished Lua conversions")
