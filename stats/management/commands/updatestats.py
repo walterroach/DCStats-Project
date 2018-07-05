@@ -43,12 +43,19 @@ def update_mismodel(aircrafts, pilots, file, stats_json, date):
                                                 pilot, 
                                                 file[:-30],
                                                 date)
+def log(logfile, string):
+    logfile.write(string + '\n')
+    print(string)
 
 def mis_update():
     '''
     Updates Mission Django model from json
     '''
-    print("Scanning stats folder")
+    curdate = datetime.datetime.now()
+    curdate = curdate.strftime('%b %d %Y %H%M%S')
+    log_path = Path('stats/logs/' + curdate + '.txt')
+    logfile = open(log_path, 'w')
+    log(logfile, "Scanning stats folder")
     #Check for already converted slmod mission luas
     mpath = Path('slmod/')
     mis_stats = list_files(mpath)
@@ -66,7 +73,7 @@ def mis_update():
         new_count = 0
     else:
         pass
-    print(f"Converting {new_count} SlMod mission files to JSON")
+    log(logfile, f"Converting {new_count} SlMod mission files to JSON")
     slmis_lua = Path('lua/src/slmisconvert.lua')
     processed_slmis = open(p_slmis, "a")
     progress = 0
@@ -75,14 +82,14 @@ def mis_update():
             pass
         else:
             progress += 1
-            print(f'Converting {progress} of {new_count} to JSON')
+            log(logfile, f'Converting {progress} of {new_count} to JSON')
             curmispath = Path(mpath / m)
             with open(curmispath) as curmisfile:
                 first_line = curmisfile.readline()
                 curmisfile.close()
             if 'misStats = { }' in first_line:
                 final = False
-                print(f'{curmispath} is not final, skipping')
+                log(logfile, f'{curmispath} is not final, skipping')
             else:
                 final = True
             if final:
@@ -90,9 +97,9 @@ def mis_update():
                 subprocess.call(process, shell=True)
                 processed_slmis.write(m + "\n")
     processed_slmis.close()
-    print("Finished Lua conversions")
+    log(logfile, "Finished Lua conversions")
     #Check for already imported slmod mission JSONs
-    print("Scanning JSONs")
+    log(logfile, "Scanning JSONs")
     spath = Path("slmis")
     new_files = list_files(spath)
     pilot_list = get_pilots()
@@ -110,7 +117,7 @@ def mis_update():
         new_count = 0
     else:
         pass
-    print(f'Found {new_count} new files to import')
+    log(logfile, f'Found {new_count} new files to import')
     #Import new JSONs to Django Mission Model
     progress = 0
     error_list = []
@@ -119,7 +126,7 @@ def mis_update():
             pass
         else:
             progress += 1
-            print(f'Importing {progress} of {new_count}')
+            log(logfile, f'Importing {progress} of {new_count}')
             lua_suff = file[:-5] + ".lua"
             lua_name = mpath / lua_suff
             date = datetime.datetime.fromtimestamp(os.path.getmtime(lua_name), pytz.UTC)
@@ -141,9 +148,9 @@ def mis_update():
                 finishedfiles.close()
             else:
                 error_list.append(filename)
-                print(f'No data to import from {filename}')
+                log(logfile, f'No data to import from {filename}')
             
-    print(f"Finished Import with {len(error_list)} errors")
+    log(logfile, f"Finished Import with {len(error_list)} errors")
 
 
 def delete_mission():
