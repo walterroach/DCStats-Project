@@ -82,10 +82,11 @@ def mis_update():
                 curmisfile.close()
             if 'misStats = { }' in first_line:
                 final = False
-                print(f'{curmispath} is not final, will convert to json again next run')
+                print(f'{curmispath} is not final, skipping')
             else:
                 final = True
-            process = f'lua {slmis_lua} "{mpath}/{m}" "/{m[:-4]}"'
+            if final:
+                process = f'lua {slmis_lua} "{mpath}/{m}" "/{m[:-4]}"'
             subprocess.call(process, shell=True)
             if final:
                 processed_slmis.write(m + "\n")
