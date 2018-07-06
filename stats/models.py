@@ -67,13 +67,8 @@ class MissionManager(models.Manager):
         '''
         Create a record in Mission SQL database and return it.
         '''
-        # aircraft = Aircraft.objects.get(aircraft=aircraft, pilot=pilot)
-        # try:
         mission = self.create(aircraft=aircraft, in_air_sec=in_air_sec,
                               total_sec=total_sec, pilot=pilot, mission=mission, date=date)
-        # except ValueError:
-        #     print(aircraft)
-        #     Aircraft.manager.create_entry(aircraft)
         return mission
 
 class Aircraft(models.Model):
@@ -81,17 +76,16 @@ class Aircraft(models.Model):
     Django Model class Aircraft SQL table
     '''
     aircraft = models.CharField(max_length=30, primary_key=(True))
-    # pilot = models.ForeignKey('Pilot',
-    #                           on_delete=models.CASCADE)
     objects = models.Manager()
     manager = AircraftManager()
 
     def __str__(self):
-        return f"Aircraft Object {self.aircraft}"
+        return f"{self.aircraft}"
 
 class Mission(models.Model):
     '''
-    Django Model class Mission SQL table
+    Django Model class Mission SQL table.  
+    Contains data from slmod mission files.  
     '''
     aircraft = models.ForeignKey(Aircraft,
                                 on_delete=models.CASCADE)
@@ -106,41 +100,4 @@ class Mission(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"Mission Object {self.aircraft} + {self.pilot} + {self.date}"
-
-class Total:
-    def __init__(self, clientid="", aircraft=""):
-        self.name = ""
-        self.rank = ""
-        self.aircraft = ""
-        self.in_air_hr = 0
-        self.total_hr = 0
-
-class PilotTotal(Total):
-    '''
-    Contains data for stats page Pilot Total view. 
-    '''
-    def __init__(self, clientid):
-        super().__init__(self)
-        pilot = Pilot.objects.get(clientid=clientid)
-        self.name = str(pilot)
-        self.rank = pilot.rank_id
-        aircraft = Mission.objects.filter(pilot=clientid)
-        for a in aircraft:
-            self.in_air_hr += (a.in_air_sec / 3600)
-            self.total_hr += (a.total_sec / 3600)
-
-    def __str__(self):
-        return self.name
-
-class AircraftTotal(Total):
-    def __init__(self, aircraft):
-        super().__init__(self)
-        # self.name = str(aircraft.mission.pilot)
-        # self.rank = aircraft.pilot.rank_id
-        self.aircraft = aircraft.aircraft        
-        pilots = Mission.objects.filter(aircraft=aircraft)
-        for p in pilots:
-            self.in_air_hr += (p.in_air_sec / 3600)
-            self.total_hr += (p.total_sec / 3600)
-
+        return f"{self.mission} {self.date} {self.aircraft} {self.pilot}"

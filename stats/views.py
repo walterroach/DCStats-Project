@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Pilot, Aircraft, PilotTotal, AircraftTotal, Mission
+from .models import Pilot, Aircraft, Mission
 from stats.dqueries import *
 
 def stats(request):

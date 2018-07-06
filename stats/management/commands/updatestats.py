@@ -1,11 +1,11 @@
 '''Updates Aircraft SQL table with data from most current slmod json.  Takes no arguments'''
 import os
 import json
-import glob
+# import glob
 import datetime
-import pytz
-import subprocess
 from pathlib import Path
+import subprocess
+import pytz
 from django.core.management.base import BaseCommand, CommandError
 from stats.models import Pilot, Aircraft, Mission
 
@@ -26,6 +26,7 @@ def get_pilots():
     return pilot_list
 
 def list_files(spath):
+    '''list all files in slmis folder except SlmodMetastats and SlmodStats'''
     mis_stats = []
     for root, dirs, files in os.walk(spath):
         for file in files:
@@ -34,22 +35,24 @@ def list_files(spath):
     return mis_stats
 
 def update_mismodel(aircrafts, pilots, file, stats_json, date):
+    '''Update Mission Django model from dict'''
     in_air_sec = stats_json[pilots]['times'][aircrafts.aircraft]['inAir']
     total_sec = stats_json[pilots]['times'][aircrafts.aircraft]['total']
     pilot = Pilot.objects.get(clientid=pilots)
-    new_mission = Mission.manager.create_entry(aircrafts, 
-                                                in_air_sec,
-                                                total_sec, 
-                                                pilot, 
-                                                file[:-30],
-                                                date)
+    new_mission = Mission.manager.create_entry(aircrafts,
+                                               in_air_sec,
+                                               total_sec,
+                                               pilot,
+                                               file[:-30],
+                                               date)
 def log(logfile, string):
+    '''write string to logfile and print string'''
     logfile.write(string + '\n')
     print(string)
 
 def mis_update():
     '''
-    Updates Mission Django model from json
+    Update Mission Django model from json
     '''
     curdate = datetime.datetime.now()
     curdate = curdate.strftime('%b %d %Y %H%M%S')
@@ -61,7 +64,7 @@ def mis_update():
     mis_stats = list_files(mpath)
     exclude = []
     p_slmis = Path('stats/processed_slmis.txt')
-    try:        
+    try:
         with open(p_slmis, "r") as processed_slmis:
             for line in processed_slmis:
                 exclude.append(line[:-1])
@@ -105,7 +108,7 @@ def mis_update():
     pilot_list = get_pilots()
     exclude = []
     finishedpath = Path('stats/finishedfiles.txt')
-    try:        
+    try:
         with open(finishedpath, "r") as finishedfiles:
             for line in finishedfiles:
                 exclude.append(line[:-1])
@@ -137,7 +140,7 @@ def mis_update():
                     try:
                         for k in stats_json[p]['times'].keys():
                             new_aircraft = Aircraft.objects.get_or_create(aircraft=k)
-                            new_aircraft = Aircraft.objects.get(aircraft=k)                    
+                            new_aircraft = Aircraft.objects.get(aircraft=k)
                             update_mismodel(new_aircraft, p, file, stats_json, date)
                     except KeyError as e:
                         pass
@@ -149,39 +152,59 @@ def mis_update():
             else:
                 error_list.append(filename)
                 log(logfile, f'No data to import from {filename}')
-            
     log(logfile, f"Finished Import with {len(error_list)} errors")
 
 
 def delete_mission():
-    aircraft = Mission.objects.all().delete()
+    '''Delete all stats in mission table and clear finishedfiles.txt and processed_slmis.txt'''
+    Mission.objects.all().delete()
+    with open('stats/finishedfiles.txt', "w") as finishedfiles:
+        finishedfiles.close()
+    with open('stats/processed_slmis.txt', "w") as processed_slmis:
+        processed_slmis.close()
+
 
 def delete_aircraft():
-    aircraft = Aircraft.objects.all().delete()
+    '''delete all records in Aircraft table'''
+    Aircraft.objects.all().delete()
 
 def list_aircraft():
+    '''queryset for all aircraft'''
     aircrafts = Aircraft.objects.all()
 
 class Command(BaseCommand):
+    '''
+    Handle updatestats options, if no option update all mission stats
+    '''
     def add_arguments(self, parser):
         parser.add_argument(
             '--deletemission',
-            action='store_true', 
-            dest='deletemission', 
+            action='store_true',
+            dest='deletemission',
             help='Deletes all records in Mission table')
         parser.add_argument(
             '--deleteaircraft',
-            action='store_true', 
-            dest='deleteaircraft', 
+            action='store_true',
+            dest='deleteaircraft',
             help='Deletes all records in aircraft table')
         parser.add_argument(
             '--list_aircraft',
-            action='store_true', 
-            dest='list_aircraft', 
+            action='store_true',
+            dest='list_aircraft',
             help='lists all records in aircraft table')
     def handle(self, **options):
         if options['deletemission']:
-            return delete_mission()
+            valid = False
+            while not valid:
+                cont = input('This will remove all stats data from the database'
+                             ' and cannot be undone.  '
+                             'Are you sure you want to delete all missions?  y/n')
+                if cont.lower() == 'y' or cont.lower() == 'n':
+                    valid = True
+            if cont.lower() == 'y':
+                return delete_mission()
+            else:
+                print('aborted')
         elif options['deleteaircraft']:
             return delete_aircraft()
         elif options['list_aircraft']:
