@@ -1,12 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Pilot, Aircraft, Mission
-from stats.dqueries import *
+from stats.query import *
 
 def stats(request):
 	clientid = 'all'
-	pilots = Pilot.objects.all()
-	aircraft = pilot_totals(pilots)
+	pilots = ''
+	aircraft = ''
 	return render(request, 'stats/pilot_stats.html', {'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
 
 def pilot_stats(request):
@@ -14,8 +14,13 @@ def pilot_stats(request):
 	datefilter = request.GET['date']
 	group_by = request.GET['group_by']
 	group_by2 = request.GET['group_by2']
-	myquery = Dquery()
-	return myquery.execute(request, clientid, datefilter, group_by, group_by2)
+	if group_by2 != '':
+		groups = dict(
+			group_by=group_by,
+			group_by2=group_by2)
+	else:
+		groups = dict(group_by=group_by)
+	return execute(request, clientid, datefilter, **groups)
 
 	# if clientid == 'all' and group_by == 'pilot':
 	# 	pilots = Pilot.objects.all()
