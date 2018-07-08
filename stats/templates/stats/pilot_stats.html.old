@@ -27,7 +27,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{% url 'home' %}"Home <span class="sr-only">Home</span></a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'stats' %}">Logbook</a>
@@ -45,15 +45,41 @@
     <br>
     <main>
     <div class="container">
+      <h2>Stats</h2>
       <form action="{% url 'pilot_stats' %}">
-        <h2>Stats</h2>
-        <select name='clientid' class="custom-select custom-select-lg mb-3">
-          <option selected value = 'all'>Pilot Totals</option>
-          {% for pilot in pilots.all %}
-          <option name='clientid' value="{{ pilot.clientid }}">{{ pilot }} by aircraft</option>
-          {% endfor %}
-        </select>
-        <input type="submit" value="Submit" />
+        <div class="row">
+          <div class="col">
+            <h3>Group by</h3>
+            <select name='group_by' class="custom-select custom-select-lg mb-3">
+              <option selected value='pilot'>Pilot</option>
+              <option value='aircraft'>Aircraft</option>
+            </select>
+            <select name='group_by2' class="custom-select custom-select-lg mb-3">
+              <option selected value=>None</option>
+              <option value='pilot'>Pilot</option>
+              <option value='aircraft'>Aircraft</option>
+            </select>
+          </div>
+          <div class="col">
+            <h3>Filter by</h3>
+            <select name='clientid' class="custom-select custom-select-lg mb-3">
+              <option selected value = 'all'>Pilot (All)</option>
+              {% for pilot in pilots.all %}
+              <option name='clientid' value="{{ pilot.clientid }}">{{ pilot }}</option>
+              {% endfor %}
+            </select>
+            <select name='date' class="custom-select custom-select-lg mb-3">
+              <option selected value = 'all'>Date (All)</option>
+              <option name='date' value='week'>Last Week</option>
+              <option name='date' value='month'>Last Month</option>
+              <option name='date' value='quarter'>Last 90 days</option>
+            </select>    
+          </div>
+        </div>
+        <div class ="row">
+          <div class = "col">
+            <input type="submit" value="Submit" />
+      </div>
       </form>
       <table class="table mt-5 bg-light">
         <tr>
@@ -63,18 +89,21 @@
             <th>Hours in Air</th>
             <th>Hours on Server</th>
         </tr>
-        {% for x in aircraft %}
+        {% for row in stats %}
         <tr>
-          <td>{{ x.name }}</td>
-          <td>{{ x.rank }}</td>
-          <td>{{ x.aircraft }}</td>
-          <td>{{ x.in_air_hr|floatformat:2 }}</td>   
-          <td>{{ x.total_hr|floatformat:2}} </td>
+          <td>{{ row.pilot }}</td>
+          <td>{{ row.rank }}</td>
+          <td>{{ row.aircraft }}</td>
+          <td>{{ row.in_air_hours|floatformat:2 }}</td>   
+          <td>{{ row.hours_on_server|floatformat:2}} </td>
         </tr>
         {% endfor %}
-
-    </div> <!-- /container -->
-  </main>
+      </table>
+      </div> <!-- /container -->
+        <footer class="container bg-secondary text-white text-center">
+          <p>&copy; 2018 21st Virtual Air Group</p>
+        </footer>
+      </main>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

@@ -67,12 +67,20 @@ class MissionManager(models.Manager):
     '''
     Django Manager class for editing Aircraft SQL table.
     '''
-    def create_entry(self, aircraft, in_air_sec, total_sec, pilot, mission, date):
+    def create_entry(self, aircraft, in_air_sec, total_sec, pilot, mission, date,
+                     crash, eject, death, friendly_col_hits, friendly_col_kills,
+                     friendly_hits, friendly_kills, building_kills, ground_kills,
+                     heli_kills, fighter_kills, all_aircraft_kills, ship_kills):
         '''
         Create a record in Mission SQL database and return it.
         '''
         mission = self.create(aircraft=aircraft, in_air_sec=in_air_sec,
-                              total_sec=total_sec, pilot=pilot, mission=mission, date=date)
+                              total_sec=total_sec, pilot=pilot, mission=mission, date=date,
+                              crash=crash, eject=eject, death=death, friendly_col_hits=friendly_col_hits,
+                              friendly_col_kills=friendly_col_kills, friendly_hits=friendly_hits,
+                              friendly_kills=friendly_kills, building_kills=building_kills,
+                              ground_kills=ground_kills, heli_kills=heli_kills, fighter_kills=fighter_kills,
+                              all_aircraft_kills=all_aircraft_kills, ship_kills=ship_kills)
         return mission
 
 class Aircraft(models.Model):
@@ -102,6 +110,19 @@ class Mission(models.Model):
     mission = models.CharField(max_length=100)
     manager = MissionManager()
     objects = models.Manager()
+    crash = models.IntegerField()
+    eject = models.IntegerField()
+    death = models.IntegerField()
+    friendly_col_hits = models.IntegerField()
+    friendly_col_kills = models.IntegerField()
+    friendly_hits = models.IntegerField()
+    friendly_kills = models.IntegerField()
+    building_kills = models.IntegerField()
+    ground_kills = models.IntegerField()
+    heli_kills = models.IntegerField()
+    fighter_kills = models.IntegerField()
+    all_aircraft_kills = models.IntegerField()
+    ship_kills = models.IntegerField()
 
     def __str__(self):
         return f"{self.mission} {self.date} {self.aircraft} {self.pilot}"

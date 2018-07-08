@@ -37,6 +37,7 @@ def list_files(spath):
 
 def update_mismodel(aircrafts, pilots, file, stats_json, date):
     '''Update Mission Django model from dict'''
+    print(file + "\n\n" + str(stats_json))
     in_air_sec = stats_json[pilots]['times'][aircrafts.aircraft]['inAir']
     total_sec = stats_json[pilots]['times'][aircrafts.aircraft]['total']
     crash = stats_json[pilots]['losses']['crash']
@@ -49,14 +50,39 @@ def update_mismodel(aircrafts, pilots, file, stats_json, date):
     building_kills = stats_json[pilots]['kills']["Buildings"]["total"]
     ground_kills = stats_json[pilots]['kills']['Ground Units']['total']
     heli_kills = stats_json[pilots]['kills']["Helicopters"]['total']
-    fighter_kills = stats_json[pilots]['kills']
+    fighter_kills = stats_json[pilots]['kills']['Planes']['Fighters']
+    all_aircraft_kills = stats_json[pilots]['kills']['Planes']['total']
+    ship_kills = stats_json[pilots]['kills']['Ships']['total']
     pilot = Pilot.objects.get(clientid=pilots)
+    if type(friendly_kills) == list:
+        friendly_kills = 0
+    if type(friendly_hits) == list:
+        friendly_hits = 0
+    if type(friendly_col_kills) == list:
+        friendly_col_kills = 0
+    if type(friendly_col_hits) == list:
+        friendly_col_hits = 0
+    print(f"DEBUG {type(friendly_kills)}")
     new_mission = Mission.manager.create_entry(aircrafts,
                                                in_air_sec,
                                                total_sec,
                                                pilot,
                                                file[:-30],
-                                               date)
+                                               date,
+                                               crash,
+                                               eject,
+                                               death,
+                                               friendly_col_hits,
+                                               friendly_col_kills,
+                                               friendly_hits,
+                                               friendly_kills,
+                                               building_kills,
+                                               ground_kills,
+                                               heli_kills,
+                                               fighter_kills,
+                                               all_aircraft_kills,
+                                               ship_kills,
+                                               )
 
 def log(string):
     '''write string to(and print string'''
@@ -64,7 +90,8 @@ def log(string):
     today = today.strftime('%b %d %Y')
     file = open(Path('stats/logs/'+today+'.txt'), "a")
     file.write(string + '\n')
-    
+    print(string)
+
 def mis_update():
     '''
     Update Mission Django model from json
