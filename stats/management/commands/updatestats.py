@@ -6,6 +6,7 @@ import datetime
 from pathlib import Path
 import subprocess
 import pytz
+import traceback
 from django.core.management.base import BaseCommand, CommandError
 from stats.models import Pilot, Aircraft, Mission
 
@@ -38,6 +39,17 @@ def update_mismodel(aircrafts, pilots, file, stats_json, date):
     '''Update Mission Django model from dict'''
     in_air_sec = stats_json[pilots]['times'][aircrafts.aircraft]['inAir']
     total_sec = stats_json[pilots]['times'][aircrafts.aircraft]['total']
+    crash = stats_json[pilots]['losses']['crash']
+    eject = stats_json[pilots]['losses']['eject']
+    death = stats_json[pilots]['losses']['pilotDeath']
+    friendly_col_hits = stats_json[pilots]['friendlyCollisionHits']
+    friendly_col_kills = stats_json[pilots]['friendlyCollisionKills']
+    friendly_hits = stats_json[pilots]['friendlyHits']
+    friendly_kills = stats_json[pilots]['friendlyKills']
+    building_kills = stats_json[pilots]['kills']["Buildings"]["total"]
+    ground_kills = stats_json[pilots]['kills']['Ground Units']['total']
+    heli_kills = stats_json[pilots]['kills']["Helicopters"]['total']
+    fighter_kills = stats_json[pilots]['kills']
     pilot = Pilot.objects.get(clientid=pilots)
     new_mission = Mission.manager.create_entry(aircrafts,
                                                in_air_sec,
@@ -45,11 +57,14 @@ def update_mismodel(aircrafts, pilots, file, stats_json, date):
                                                pilot,
                                                file[:-30],
                                                date)
-def log(logfile, string):
-    '''write string to logfile and print string'''
-    logfile.write(string + '\n')
-    print(string)
 
+def log(string):
+    '''write string to(and print string'''
+    today = datetime.date.today()
+    today = today.strftime('%b %d %Y')
+    file = open(Path('stats/logs/'+today+'.txt'), "a")
+    file.write(string + '\n')
+    
 def mis_update():
     '''
     Update Mission Django model from json
@@ -57,8 +72,7 @@ def mis_update():
     curdate = datetime.datetime.now()
     curdate = curdate.strftime('%b %d %Y %H%M%S')
     log_path = Path('stats/logs/' + curdate + '.txt')
-    logfile = open(log_path, 'w')
-    log(logfile, "Scanning stats folder")
+    print("Scanning stats folder")
     #Check for already converted slmod mission luas
     mpath = Path('slmod/')
     mis_stats = list_files(mpath)
@@ -76,7 +90,7 @@ def mis_update():
         new_count = 0
     else:
         pass
-    log(logfile, f"Converting {new_count} SlMod mission files to JSON")
+    print(f"Converting {new_count} SlMod mission files to JSON")
     slmis_lua = Path('lua/src/slmisconvert.lua')
     processed_slmis = open(p_slmis, "a")
     progress = 0
@@ -85,27 +99,28 @@ def mis_update():
             pass
         else:
             progress += 1
-            log(logfile, f'Converting {progress} of {new_count} to JSON')
+            print(f'Converting {progress} of {new_count} to JSON')
             curmispath = Path(mpath / m)
             with open(curmispath) as curmisfile:
                 first_line = curmisfile.readline()
                 curmisfile.close()
             if 'misStats = { }' in first_line:
                 final = False
-                log(logfile, f'{curmispath} is not final, skipping')
+                log(f'FAILED JSON CONVERT: {curmispath} is not final')
             else:
                 final = True
             if final:
                 process = f'lua {slmis_lua} "{mpath}/{m}" "/{m[:-4]}"'
                 subprocess.call(process, shell=True)
                 processed_slmis.write(m + "\n")
+                log(f'NEW JSON: {m}')
     processed_slmis.close()
-    log(logfile, "Finished Lua conversions")
+    print("Finished Lua conversions")
     #Check for already imported slmod mission JSONs
-    log(logfile, "Scanning JSONs")
+    print("Scanning JSONs")
     spath = Path("slmis")
     new_files = list_files(spath)
-    pilot_list = get_pilots()
+    # pilot_list = get_pilots()
     exclude = []
     finishedpath = Path('stats/finishedfiles.txt')
     try:
@@ -120,7 +135,7 @@ def mis_update():
         new_count = 0
     else:
         pass
-    log(logfile, f'Found {new_count} new files to import')
+    print(f'Found {new_count} new files to import')
     #Import new JSONs to Django Mission Model
     progress = 0
     error_list = []
@@ -129,19 +144,36 @@ def mis_update():
             pass
         else:
             progress += 1
-            log(logfile, f'Importing {progress} of {new_count}')
+            print(f'Importing {progress} of {new_count}')
             lua_suff = file[:-5] + ".lua"
             lua_name = mpath / lua_suff
             date = datetime.datetime.fromtimestamp(os.path.getmtime(lua_name), pytz.UTC)
             filename = Path(spath / file)
             stats_json = load_json(filename)
+            pilot_list = []
             if stats_json != []:
+                for client in stats_json:
+                    try:
+                        callsign = stats_json[client]['names'][0]
+                    except IndexError:
+                        callsign = 'None' 
+                    try:                   
+                        pilot_list.append(Pilot.objects.get(clientid=client).clientid)
+                    except:
+                        traceback.print_exc()
+                        new_pilot = Pilot.objects.create(clientid=client, callsign=callsign)
+                        new_pilot = Pilot.objects.get(clientid=client)
+                        pilot_list.append(new_pilot)
+                        log(f'NEW PILOT: {new_pilot.clientid} Callsign={new_pilot.callsign}')
                 for p in pilot_list:
                     try:
                         for k in stats_json[p]['times'].keys():
                             new_aircraft = Aircraft.objects.get_or_create(aircraft=k)
+                            if new_aircraft[1] == True:
+                                log(f'NEW AIRCRAFT: {new_aircraft[0].aircraft}')
                             new_aircraft = Aircraft.objects.get(aircraft=k)
                             update_mismodel(new_aircraft, p, file, stats_json, date)
+
                     except KeyError as e:
                         pass
                     except AttributeError as e:
@@ -149,10 +181,11 @@ def mis_update():
                 with open(finishedpath, 'a') as finishedfiles:
                     finishedfiles.write(file + '\n')
                 finishedfiles.close()
+                log(f'IMPORTED: {file}')
             else:
                 error_list.append(filename)
-                log(logfile, f'No data to import from {filename}')
-    log(logfile, f"Finished Import with {len(error_list)} errors")
+                log(f'FAILED IMPORT: {filename} contains no data')
+    log(f"Finished {curdate} import with {len(error_list)} errors")
 
 
 def delete_mission():

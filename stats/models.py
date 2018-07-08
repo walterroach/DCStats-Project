@@ -12,11 +12,14 @@ class Pilot(models.Model):
     '''
     clientid = models.CharField(max_length=32,
                                 primary_key=True)
-    f_name = models.CharField(max_length=30)
-    l_name = models.CharField(max_length=30)
+    f_name = models.CharField(max_length=30,
+                              default='')
+    l_name = models.CharField(max_length=30,
+                              default='')
     callsign = models.CharField(max_length=30)
     rank_id = models.ForeignKey('Rank', null=True,
-                                on_delete=models.SET_NULL)
+                                on_delete=models.SET_NULL,
+                                default=7)
 
     def __str__(self):
         '''Return string value of Pilot'''
@@ -35,9 +38,10 @@ class Rank(models.Model):
         ("O3", "O-3"),
         ("O4", "O-4"),
         ("O5", "O-5"),
-        ("O6", "O-6")
+        ("O6", "O-6"),
+        ("Guest", "Guest")
         )
-    rank = models.CharField(max_length=3,
+    rank = models.CharField(max_length=5,
                             choices=rank_choices)
     AF_name = models.CharField(max_length=30)
     Navy_name = models.CharField(max_length=30)
