@@ -19,7 +19,7 @@ def pilot_stats(request):
 			groups = options['group_by']
 			return render(request, 'stats/pilot_stats.html', {'form':form, 'stats':stats, 'groups':groups})
 	else:
-		form = StatsOptions(initial={'group_by':'pilot'})
+		form = StatsOptions(initial={'group_by':'pilot', 'sort_by':'-in_air_hours'})
 
 	return render(request, 'stats/pilot_stats.html', {'form':form})
 
