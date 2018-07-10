@@ -105,8 +105,8 @@ class Mission(models.Model):
     total_sec = models.FloatField()
     pilot = models.ForeignKey(Pilot,
                               on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=False, 
-                                auto_now_add=False)
+    date = models.DateField(auto_now=False, 
+                            auto_now_add=False)
     mission = models.CharField(max_length=100)
     manager = MissionManager()
     objects = models.Manager()

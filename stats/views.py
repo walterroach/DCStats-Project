@@ -15,10 +15,11 @@ def pilot_stats(request):
 		form = StatsOptions(request.POST)
 		if form.is_valid():
 			options = form.cleaned_data
-			print(options)
-			return HttpResponseRedirect('pilot_stats')
+			stats = execute(options)
+			groups = options['group_by']
+			return render(request, 'stats/pilot_stats.html', {'form':form, 'stats':stats, 'groups':groups})
 	else:
-		form = StatsOptions()
+		form = StatsOptions(initial={'group_by':'pilot'})
 
 	return render(request, 'stats/pilot_stats.html', {'form':form})
 

@@ -59,11 +59,13 @@
         </div>
         
       <div class='col'>
-      <table class="table table-responsive ml-1 bg-light">
+      <table class="table table-responsive ml-1 mt-2 bg-light">
         <tr>
             <th>Name</th>
             <th>Rank</th>
             <th>Aircraft</th>
+            <th>Mission</th>
+            <th>Date</th>
             <th>Hours in Air</th>
             <th>Hours on Server</th>
             <th>Losses </th>
@@ -75,6 +77,8 @@
           <td>{{ row.pilot }}</td>
           <td>{{ row.rank }}</td>
           <td>{{ row.aircraft }}</td>
+          <td>{{ row.mission }}</td>
+          <td>{{ row.date|date:"m/d/y"}}
           <td>{{ row.in_air_hours|floatformat:2 }}</td>   
           <td>{{ row.hours_on_server|floatformat:2}} </td>
           <td>{{ row.losses }}</td>
