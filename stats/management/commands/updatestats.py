@@ -85,11 +85,12 @@ def update_mismodel(aircrafts, pilots, file, stats_json, date):
                                                )
 
 def log(string):
-    '''write string to(and print string'''
+    '''write string to stats/logs/DATE and print string'''
     today = datetime.date.today()
     today = today.strftime('%b %d %Y')
     file = open(Path('stats/logs/'+today+'.txt'), "a")
-    file.write(string + '\n')
+    time = datetime.datetime.utcnow().isoformat(' ')
+    file.write(f'{time} : ' + string + '\n')
     print(string)
 
 def mis_update():
@@ -99,6 +100,7 @@ def mis_update():
     curdate = datetime.datetime.now()
     curdate = curdate.strftime('%b %d %Y %H%M%S')
     log_path = Path('stats/logs/' + curdate + '.txt')
+    log('START UPDATE:')
     print("Scanning stats folder")
     #Check for already converted slmod mission luas
     mpath = Path('slmod/')
@@ -212,7 +214,7 @@ def mis_update():
             else:
                 error_list.append(filename)
                 log(f'FAILED IMPORT: {filename} contains no data')
-    log(f"Finished {curdate} import with {len(error_list)} errors")
+    log(f"FINISH UPDATE: {len(error_list)} errors")
 
 
 def delete_mission():
