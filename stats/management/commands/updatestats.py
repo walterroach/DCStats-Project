@@ -35,9 +35,8 @@ def list_files(spath):
                 mis_stats.append(file)
     return mis_stats
 
-def update_mismodel(aircrafts, pilots, file, stats_json, date):
+def update_mismodel(aircrafts, pilots, file, stats_json, date, ip_flag):
     '''Update Mission Django model from dict'''
-    print(file + "\n\n" + str(stats_json))
     in_air_sec = stats_json[pilots]['times'][aircrafts.aircraft]['inAir']
     total_sec = stats_json[pilots]['times'][aircrafts.aircraft]['total']
     crash = stats_json[pilots]['losses']['crash']
@@ -62,7 +61,7 @@ def update_mismodel(aircrafts, pilots, file, stats_json, date):
         friendly_col_kills = 0
     if type(friendly_col_hits) == list:
         friendly_col_hits = 0
-    print(f"DEBUG {type(friendly_kills)}")
+    print(f'Printing from update_mismodel {file[:-30]}')
     new_mission = Mission.manager.create_entry(aircrafts,
                                                in_air_sec,
                                                total_sec,
@@ -81,7 +80,8 @@ def update_mismodel(aircrafts, pilots, file, stats_json, date):
                                                heli_kills,
                                                fighter_kills,
                                                all_aircraft_kills,
-                                               ship_kills,
+                                               ship_kills, ip_flag,
+                                               file
                                                )
 
 def log(string):
@@ -122,6 +122,15 @@ def mis_update():
     print(f"Converting {new_count} SlMod mission files to JSON")
     slmis_lua = Path('lua/src/slmisconvert.lua')
     processed_slmis = open(p_slmis, "a")
+    ip_path = Path('stats/in_process.txt')
+    ip_list = []
+    try:
+        with open(ip_path, "r") as ip_file:
+            for line in ip_file:
+                ip_list.append(line[:-1])
+        ip_file.close()
+    except FileNotFoundError:
+        pass
     progress = 0
     for m in mis_stats:
         if m in exclude:
@@ -134,15 +143,25 @@ def mis_update():
                 first_line = curmisfile.readline()
                 curmisfile.close()
             if 'misStats = { }' in first_line:
+                ip_list.append(m[:-4])
                 final = False
-                log(f'FAILED JSON CONVERT: {curmispath} is not final')
             else:
                 final = True
+                if m in ip_list:
+                    ip_list.remove(m)
+                ip_string = ''    
+                for l in ip_list:
+                    ip_string += l + '\n'
+            print(f'Printing final at line 156 {final}')
             if final:
                 process = f'lua {slmis_lua} "{mpath}/{m}" "/{m[:-4]}"'
                 subprocess.call(process, shell=True)
                 processed_slmis.write(m + "\n")
                 log(f'NEW JSON: {m}')
+            else:
+                process = f'lua {slmis_lua} "{mpath}/{m}" "/{m[:-4]}"'
+                subprocess.call(process, shell=True)
+                log(f'NEW IN_PROCESS JSON: {m}')
     processed_slmis.close()
     print("Finished Lua conversions")
     #Check for already imported slmod mission JSONs
@@ -181,6 +200,10 @@ def mis_update():
             stats_json = load_json(filename)
             pilot_list = []
             if stats_json != []:
+                if file[:-5] not in ip_list:
+                    ip_flag = 1
+                else:
+                    ip_flag = 0
                 for client in stats_json:
                     try:
                         callsign = stats_json[client]['names'][0]
@@ -194,6 +217,7 @@ def mis_update():
                         new_pilot = Pilot.objects.get(clientid=client)
                         pilot_list.append(new_pilot)
                         log(f'NEW PILOT: {new_pilot.clientid} Callsign={new_pilot.callsign}')
+                print(f'Printing final at line 221 {final} \nPrinting file {file}')
                 for p in pilot_list:
                     try:
                         for k in stats_json[p]['times'].keys():
@@ -201,15 +225,17 @@ def mis_update():
                             if new_aircraft[1] == True:
                                 log(f'NEW AIRCRAFT: {new_aircraft[0].aircraft}')
                             new_aircraft = Aircraft.objects.get(aircraft=k)
-                            update_mismodel(new_aircraft, p, file, stats_json, date)
+                            print(f'Printing from line 228 {file}')
+                            update_mismodel(new_aircraft, p, file, stats_json, date, ip_flag)
 
                     except KeyError as e:
                         pass
                     except AttributeError as e:
                         pass
-                with open(finishedpath, 'a') as finishedfiles:
-                    finishedfiles.write(file + '\n')
-                finishedfiles.close()
+                if ip_flag:
+                    with open(finishedpath, 'a') as finishedfiles:
+                        finishedfiles.write(file + '\n')
+                    finishedfiles.close()
                 log(f'IMPORTED: {file}')
             else:
                 error_list.append(filename)
@@ -224,6 +250,8 @@ def delete_mission():
         finishedfiles.close()
     with open('stats/processed_slmis.txt', "w") as processed_slmis:
         processed_slmis.close()
+    with open('stats/in_process.txt', "w") as in_progress:
+        in_progress.close()
 
 
 def delete_aircraft():
