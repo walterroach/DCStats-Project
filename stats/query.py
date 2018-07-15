@@ -41,7 +41,7 @@ def execute(options):
 	print(f'in execute function {options}')
 	groups = options['group_by']
 	all_pilots = Pilot.objects.all()
-	missions = Mission.objects.filter(date__range=(options['start_date'], options['end_date']))
+	missions = Stats.objects.filter(date__range=(options['start_date'], options['end_date']))
 	if options['pilot_filter'] != 'All':
 		missions = missions.filter(pilot=options['pilot_filter'])
 	if options['aircraft_filter'] != 'All':
@@ -69,7 +69,7 @@ def execute(options):
 # def execute(request, clientid, datefilter, **groups):
 # 	groups = groups
 # 	all_pilots = Pilot.objects.all()
-# 	missions = Mission.objects.filter(date__gte=filter_date(datefilter))
+# 	missions = Stats.objects.filter(date__gte=filter_date(datefilter))
 # 	if clientid != 'all':
 # 		missions = missions.filter(pilot=clientid)
 # 		# pilot = Pilot.objects.get(clientid=clientid)

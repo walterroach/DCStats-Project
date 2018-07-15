@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Pilot, Aircraft, Mission
+from .models import Pilot, Aircraft, Stats
 from .forms import StatsOptions
 from stats.query import *
 
