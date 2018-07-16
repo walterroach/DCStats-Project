@@ -23,6 +23,6 @@ import stats.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home.views.home, name='home'),
-    path('stats/', stats.views.stats, name='stats'),
+    path('stats/', stats.views.pilot_stats, name='stats'),
     path('stats/pilot_stats', stats.views.pilot_stats, name='pilot_stats')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

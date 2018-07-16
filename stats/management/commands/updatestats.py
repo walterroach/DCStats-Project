@@ -1,13 +1,12 @@
 '''Updates Aircraft SQL table with data from most current slmod json.  Takes no arguments'''
 import os
 import json
-# import glob
 import datetime
 from pathlib import Path
 import subprocess
 import pytz
 from django.core.management.base import BaseCommand, CommandError
-from stats.models import Pilot, Aircraft, Mission
+from stats.models import Pilot, Aircraft, Stats, Mission
 
 def load_json(fpath):
     '''load json at fpath and return dict'''
@@ -25,143 +24,145 @@ def get_pilots():
         pilot_list.append(pilot.clientid)
     return pilot_list
 
-def list_files(spath):
-    '''list all files in slmis folder except SlmodMetastats and SlmodStats'''
-    mis_stats = []
-    for root, dirs, files in os.walk(spath):
+def list_files(dir_path, exclusions):
+    '''list all files in dir, return as list of dicts {file:modified_date}'''
+    file_list = []
+    for root, dirs, files in os.walk(dir_path):
         for file in files:
-            if file != 'SlmodMetaStats.lua' and file != 'SlmodStats.lua':
-                mis_stats.append(file)
-    return mis_stats
+            if file not in exclusions:
+                filepath = Path(dir_path / file)
+                mod_date = datetime.datetime.fromtimestamp(os.path.getmtime(filepath),
+                                                           pytz.UTC)
+                file_list.append({'file':file, 'date':mod_date})
+            else:
+                pass
+    return file_list
 
-def update_mismodel(aircrafts, pilots, file, stats_json, date):
-    '''Update Mission Django model from dict'''
-    in_air_sec = stats_json[pilots]['times'][aircrafts.aircraft]['inAir']
-    total_sec = stats_json[pilots]['times'][aircrafts.aircraft]['total']
-    pilot = Pilot.objects.get(clientid=pilots)
-    new_mission = Mission.manager.create_entry(aircrafts,
-                                               in_air_sec,
-                                               total_sec,
-                                               pilot,
-                                               file[:-30],
-                                               date)
-def log(logfile, string):
-    '''write string to logfile and print string'''
-    logfile.write(string + '\n')
+def log(string):
+    '''write string to stats/logs/DATE and print string'''
+    today = datetime.date.today()
+    today = today.strftime('%b %d %Y')
+    file = open(Path('stats/logs/'+today+'.txt'), "a")
+    time = datetime.datetime.utcnow().isoformat(' ')
+    file.write(f'{time} : ' + string + '\n')
     print(string)
 
-def mis_update():
-    '''
-    Update Mission Django model from json
-    '''
-    curdate = datetime.datetime.now()
-    curdate = curdate.strftime('%b %d %Y %H%M%S')
-    log_path = Path('stats/logs/' + curdate + '.txt')
-    logfile = open(log_path, 'w')
-    log(logfile, "Scanning stats folder")
-    #Check for already converted slmod mission luas
-    mpath = Path('slmod/')
-    mis_stats = list_files(mpath)
-    exclude = []
-    p_slmis = Path('stats/processed_slmis.txt')
-    try:
-        with open(p_slmis, "r") as processed_slmis:
-            for line in processed_slmis:
-                exclude.append(line[:-1])
-        processed_slmis.close()
-    except FileNotFoundError:
-        pass
-    new_count = len(mis_stats)-len(exclude)
-    if new_count < 0:
-        new_count = 0
-    else:
-        pass
-    log(logfile, f"Converting {new_count} SlMod mission files to JSON")
-    slmis_lua = Path('lua/src/slmisconvert.lua')
-    processed_slmis = open(p_slmis, "a")
-    progress = 0
-    for m in mis_stats:
-        if m in exclude:
-            pass
-        else:
-            progress += 1
-            log(logfile, f'Converting {progress} of {new_count} to JSON')
-            curmispath = Path(mpath / m)
-            with open(curmispath) as curmisfile:
-                first_line = curmisfile.readline()
-                curmisfile.close()
-            if 'misStats = { }' in first_line:
-                final = False
-                log(logfile, f'{curmispath} is not final, skipping')
-            else:
-                final = True
-            if final:
-                process = f'lua {slmis_lua} "{mpath}/{m}" "/{m[:-4]}"'
-                subprocess.call(process, shell=True)
-                processed_slmis.write(m + "\n")
-    processed_slmis.close()
-    log(logfile, "Finished Lua conversions")
-    #Check for already imported slmod mission JSONs
-    log(logfile, "Scanning JSONs")
-    spath = Path("slmis")
-    new_files = list_files(spath)
-    pilot_list = get_pilots()
-    exclude = []
-    finishedpath = Path('stats/finishedfiles.txt')
-    try:
-        with open(finishedpath, "r") as finishedfiles:
-            for line in finishedfiles:
-                exclude.append(line[:-1])
-        finishedfiles.close()
-    except FileNotFoundError:
-        pass
-    new_count = len(new_files)-len(exclude)
-    if new_count < 0:
-        new_count = 0
-    else:
-        pass
-    log(logfile, f'Found {new_count} new files to import')
-    #Import new JSONs to Django Mission Model
-    progress = 0
-    error_list = []
-    for file in new_files:
-        if file in exclude:
-            pass
-        else:
-            progress += 1
-            log(logfile, f'Importing {progress} of {new_count}')
-            lua_suff = file[:-5] + ".lua"
-            lua_name = mpath / lua_suff
-            date = datetime.datetime.fromtimestamp(os.path.getmtime(lua_name), pytz.UTC)
-            filename = Path(spath / file)
-            stats_json = load_json(filename)
-            if stats_json != []:
-                for p in pilot_list:
-                    try:
-                        for k in stats_json[p]['times'].keys():
-                            new_aircraft = Aircraft.objects.get_or_create(aircraft=k)
-                            new_aircraft = Aircraft.objects.get(aircraft=k)
-                            update_mismodel(new_aircraft, p, file, stats_json, date)
-                    except KeyError as e:
-                        pass
-                    except AttributeError as e:
-                        pass
-                with open(finishedpath, 'a') as finishedfiles:
-                    finishedfiles.write(file + '\n')
-                finishedfiles.close()
-            else:
-                error_list.append(filename)
-                log(logfile, f'No data to import from {filename}')
-    log(logfile, f"Finished Import with {len(error_list)} errors")
+def update_models(key,
+                  pilot,
+                  filename,
+                  mission,
+                  stats_json,
+                  date,
+                  in_process):
+    '''get_or_create aircraft, mission, and stats objects'''
+    new_aircraft = Aircraft.objects.get_or_create(aircraft=key)
+    if new_aircraft[1]:
+        log(f'NEW AIRCRAFT:  {new_aircraft[0].aircraft}')
+    new_aircraft = new_aircraft[0]
+    model_pilot = Pilot.objects.get(clientid=pilot)
+    new_mission = Mission.objects.get_or_create(file=filename)
+    if new_mission[1]:
+        new_mission[0].name = mission
+        new_mission[0].date = date
+        log(f'NEW MISSION : {new_mission[0]}')
+    new_mission[0].in_process = in_process
+    new_mission = new_mission[0]
+    new_mission.save()
+    stats = Stats.objects.get_or_create(mission=new_mission,
+                                        pilot=model_pilot,
+                                        aircraft=new_aircraft,
+                                       )
+    stats = stats[0]
+    stats.in_air_sec = stats_json[pilot]['times'][new_aircraft.aircraft]['inAir']
+    stats.total_sec = stats_json[pilot]['times'][new_aircraft.aircraft]['total']
+    stats.save()
 
+def stats_update():
+    log('START UPDATE :')
+    ## Create list of already processed SLMod Mission .lua files
+    all_missions = Mission.objects.all()
+    finished_missions = Mission.objects.filter(in_process=0)
+    exclusions = ['SlmodMetaStats.lua', 'SlmodStats.lua']
+    for mission in finished_missions:
+        exclusions.append(mission.file)
+    sl_lua_path = Path('slmod/')
+    ## Convert all unprocessed SLMod Mission .luas to JSON
+    file_list = list(list_files(sl_lua_path, exclusions))
+    print(f'FILE LIST: {len(file_list)}')
+    slmis_lua = Path('lua/src/slmisconvert.lua')
+    total_failed = []
+    for file in file_list:
+        filepath = Path(sl_lua_path / file['file'])
+        filename = file['file']
+        date = file['date']
+        mission = filename[:-4]
+        with open(filepath) as curmisfile:
+            first_line = curmisfile.readline()
+            curmisfile.close()
+        process = f'lua {slmis_lua} "{sl_lua_path}/{filename}" "/{mission}"'
+        subprocess.call(process, shell=True)
+        log(f'LUA CONVERSION : {filename}')
+        if 'misStats = { }' in first_line:
+            in_process = 1
+        else:
+            in_process = 0
+        ## Load json to memory
+        filepath = Path('slmis/' + mission + '.json')
+        with open(filepath) as curjson:
+            stats_json = curjson.read()
+            stats_json = json.loads(stats_json)
+            curjson.close()
+        if stats_json == []:
+            log(f'FAILED IMPORT: {curjson} contains no data')
+            total_failed.append(curjson)
+        ## Check if pilots in json exist in db, create if not.
+        else:
+            pilot_list = []
+            for client in stats_json:
+                try:
+                    callsign = stats_json[client]['names'][0]
+                except IndexError:
+                    callsign = 'None'
+                try:
+                    pilot_list.append(Pilot.objects.get(clientid=client).clientid)
+                except:
+                    new_pilot = Pilot.objects.create(clientid=client, callsign=callsign)
+                    new_pilot = Pilot.objects.get(clientid=client)
+                    pilot_list.append(new_pilot)
+            ## Check if aircraft in json exist in db, create if not.
+            for pilot in pilot_list:
+                try:
+                    for key in stats_json[pilot]['times'].keys():
+                        update_models(key,
+                                      pilot,
+                                      filename,
+                                      mission[:-26],
+                                      stats_json,
+                                      date,
+                                      in_process)
+
+                except AttributeError as e:
+                    stats_json[pilot]['times'] = {'None' : {"inAir":0, "total":0}}
+                    for key in stats_json[pilot]['times'].keys():
+                        update_models(key,
+                                      pilot,
+                                      filename,
+                                      mission[:-26],
+                                      stats_json,
+                                      date,
+                                      in_process)
+            log(f'IMPORTED : {filename}')
+    print(len(total_failed))
 
 def delete_mission():
     '''Delete all stats in mission table and clear finishedfiles.txt and processed_slmis.txt'''
-    Mission.objects.all().delete()
+    Stats.objects.all().delete()
     with open('stats/finishedfiles.txt', "w") as finishedfiles:
         finishedfiles.close()
     with open('stats/processed_slmis.txt', "w") as processed_slmis:
         processed_slmis.close()
+    with open('stats/in_process.txt', "w") as in_progress:
+        in_progress.close()
 
 
 def delete_aircraft():
@@ -181,7 +182,7 @@ class Command(BaseCommand):
             '--deletemission',
             action='store_true',
             dest='deletemission',
-            help='Deletes all records in Mission table')
+            help='Deletes all records in Stats table')
         parser.add_argument(
             '--deleteaircraft',
             action='store_true',
@@ -210,4 +211,4 @@ class Command(BaseCommand):
         elif options['list_aircraft']:
             return list_aircraft()
         else:
-            return mis_update()
+            return stats_update()
