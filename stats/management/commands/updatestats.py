@@ -136,7 +136,7 @@ def stats_update():
                         update_models(key,
                                       pilot,
                                       filename,
-                                      mission,
+                                      mission[:-26],
                                       stats_json,
                                       date,
                                       in_process)
@@ -147,7 +147,7 @@ def stats_update():
                         update_models(key,
                                       pilot,
                                       filename,
-                                      mission,
+                                      mission[:-26],
                                       stats_json,
                                       date,
                                       in_process)

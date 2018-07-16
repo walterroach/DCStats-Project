@@ -4,6 +4,7 @@ from .models import *
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Sum
+from django.db.models.functions import TruncDay
 
 def filter_date(datefilter):
 	if datefilter == 'all':
@@ -41,7 +42,7 @@ def execute(options):
 	print(f'in execute function {options}')
 	groups = options['group_by']
 	all_pilots = Pilot.objects.all()
-	missions = Stats.objects.filter(date__range=(options['start_date'], options['end_date']))
+	missions = Stats.objects.filter(mission__date__range=(options['start_date'], options['end_date']))
 	if options['pilot_filter'] != 'All':
 		missions = missions.filter(pilot=options['pilot_filter'])
 	if options['aircraft_filter'] != 'All':
@@ -49,13 +50,27 @@ def execute(options):
 		# pilot = Pilot.objects.get(clientid=clientid)
 		# name = str(pilot)
 		# rank = pilot.rank_id
-	stats = missions.values(*groups) \
-	        .annotate(in_air_hours=Sum('in_air_sec') / 3600,
+	if  'mission__date' in groups or 'mission__date' in options['sort_by']:
+		options['group_by'].remove('mission__date')
+		stats = missions \
+			.annotate(day = TruncDay('mission__date')) \
+			.values('day',*groups) \
+			.annotate(in_air_hours=Sum('in_air_sec') / 3600,
 		    hours_on_server=Sum('total_sec') / 3600,
 		    losses=Sum('crash'),
 		    all_aircraft_kills=Sum('all_aircraft_kills'),
 		    surface_kills=Sum('building_kills') + Sum('ground_kills') + Sum('ship_kills')) \
 		    .order_by(options['sort_by'])
+
+	else:
+		stats = missions.values(*groups) \
+		.annotate(in_air_hours=Sum('in_air_sec') / 3600,
+		    hours_on_server=Sum('total_sec') / 3600,
+		    losses=Sum('crash'),
+		    all_aircraft_kills=Sum('all_aircraft_kills'),
+		    surface_kills=Sum('building_kills') + Sum('ground_kills') + Sum('ship_kills')) \
+		    .order_by(options['sort_by'])
+
 	if 'pilot' in groups:
 		for s in stats:
 			pobject = Pilot.objects.get(clientid=s['pilot'])
@@ -63,6 +78,7 @@ def execute(options):
 			rank = pobject.rank_id
 			s['pilot'] = name
 			s['rank'] = rank
+	print(stats)
 	return stats
 
 

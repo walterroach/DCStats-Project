@@ -77,8 +77,8 @@
           <td>{{ row.pilot }}</td>
           <td>{{ row.rank }}</td>
           <td>{{ row.aircraft }}</td>
-          <td>{{ row.mission }}</td>
-          <td>{{ row.date|date:"m/d/y"}}
+          <td>{{ row.mission__name }}</td>
+          <td>{{ row.day|date }}</td>
           <td>{{ row.in_air_hours|floatformat:2 }}</td>   
           <td>{{ row.hours_on_server|floatformat:2}} </td>
           <td>{{ row.losses }}</td>
