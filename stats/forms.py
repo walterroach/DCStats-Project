@@ -9,7 +9,7 @@ def not_future(date):
 		return date
 
 class StatsOptions(forms.Form):
-	group_by_choices = [("pilot","Pilot"), ("aircraft","Aircraft"), ("mission__name","Mission"), ("mission__date","Date")]
+	group_by_choices = [("pilot","Pilot"), ("aircraft","Aircraft"), ("mission__name","Mission"), ("day","Date")]
 	# group_by2_choices = ['Pilot', 'Aircraft', 'Mission', 'Date']
 	group_by = forms.MultipleChoiceField(label='Group By', choices=group_by_choices, initial='Pilot')
 	aircraft_choices = [('All','All')]

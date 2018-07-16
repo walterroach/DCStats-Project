@@ -50,11 +50,10 @@ def execute(options):
 		# pilot = Pilot.objects.get(clientid=clientid)
 		# name = str(pilot)
 		# rank = pilot.rank_id
-	if  'mission__date' in groups or 'mission__date' in options['sort_by']:
-		options['group_by'].remove('mission__date')
+	if  'day' in groups or 'day' in options['sort_by']:
 		stats = missions \
 			.annotate(day = TruncDay('mission__date')) \
-			.values('day',*groups) \
+			.values(*groups) \
 			.annotate(in_air_hours=Sum('in_air_sec') / 3600,
 		    hours_on_server=Sum('total_sec') / 3600,
 		    losses=Sum('crash'),
