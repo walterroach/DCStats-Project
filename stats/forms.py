@@ -25,7 +25,7 @@ class StatsOptions(forms.Form):
 	end_date = forms.DateField(initial=datetime.date.today, widget=forms.SelectDateWidget(years=[2018,2017]), validators=[not_future])
 	aircraft_filter = forms.ChoiceField(label='Aircraft Filter', initial='All', choices=aircraft_choices, widget=forms.Select())
 	pilot_filter = forms.ChoiceField(label="Pilot Filter", initial='All', choices=pilot_choices, widget=forms.Select())
-	sort_by_choices = [('pilot__f_name','Pilot'),('pilot__rank_id','Rank'),('aircraft','Aircraft'),('mission__name','Mission'),('mission__date', 'Date'),('-in_air_hours','In Air Hours'),
+	sort_by_choices = [('pilot__f_name','Pilot'),('pilot__rank_id','Rank'),('aircraft','Aircraft'),('mission__name','Mission'),('day', 'Date'),('-in_air_hours','In Air Hours'),
 					   ('-hours_on_server', 'Hours On Server'),('-losses', 'Losses'),('-all_aircraft_kills', 'Air Kills'),
 					   ('-surface_kills', 'Surface Kills')]
 	sort_by = forms.ChoiceField(label='Sort By', choices=sort_by_choices, widget=forms.Select())
