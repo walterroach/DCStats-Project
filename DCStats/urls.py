@@ -13,10 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.urls import include, re_path
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 import home.views
 import stats.views
 
@@ -24,5 +26,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home.views.home, name='home'),
     path('stats/', stats.views.pilot_stats, name='stats'),
-    path('stats/pilot_stats', stats.views.pilot_stats, name='pilot_stats')
+    path('stats/pilot_stats', stats.views.pilot_stats, name='pilot_stats'),
+    # path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/login', auth_views.LoginView.as_view(template_name='home/login.html'), name='login'),
+    path('accounts/logout', auth_views.LogoutView.as_view(template_name='home/logout.html'), name='logout'),
+    # re_path(r'^login/$', home.views.login, name='login'),
+    # re_path(r'^logout/$', home.views.logout_view, name='logout'),
+    re_path(r'^auth/', include('social_django.urls', namespace='social')),  # <- Here
+    # re_path(r'^$', home.views.home, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

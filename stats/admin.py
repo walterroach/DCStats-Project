@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pilot, Rank, Aircraft, Stats, Mission
+from .models import Pilot, Rank, Aircraft, Mission, Stats
 
 admin.site.register(Pilot)
 admin.site.register(Rank)

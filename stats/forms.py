@@ -1,7 +1,9 @@
 #forms.py
 import datetime
 from django import forms
+from django.forms import ModelForm
 from stats.models import *
+from django.forms import modelformset_factory
 
 def not_future(date):
 	if date > datetime.date.today():
@@ -24,8 +26,11 @@ class StatsOptions(forms.Form):
 	start_date = forms.DateField(widget=forms.SelectDateWidget(years=[2017,2018]), initial=(datetime.datetime.today() - datetime.timedelta(days=7)))
 	end_date = forms.DateField(initial=datetime.date.today, widget=forms.SelectDateWidget(years=[2018,2017]), validators=[not_future])
 	aircraft_filter = forms.ChoiceField(label='Aircraft Filter', initial='All', choices=aircraft_choices, widget=forms.Select())
-	pilot_filter = forms.ChoiceField(label="Pilot Filter", initial='All', choices=pilot_choices, widget=forms.Select())
-	sort_by_choices = [('pilot__f_name','Pilot'),('pilot__rank_id','Rank'),('aircraft','Aircraft'),('mission__name','Mission'),('day', 'Date'),('-in_air_hours','In Air Hours'),
+	pilot_filter = forms.ChoiceField(label="Pilot Filter", choices=pilot_choices, widget=forms.Select())
+	sort_by_choices = [('pilot__f_name','Pilot'),('pilot__rank_id','Rank'),('aircraft','Aircraft'),('mission__name','Mission'),('-day', 'Date'),('-in_air_hours','In Air Hours'),
 					   ('-hours_on_server', 'Hours On Server'),('-losses', 'Losses'),('-all_aircraft_kills', 'Air Kills'),
 					   ('-surface_kills', 'Surface Kills')]
 	sort_by = forms.ChoiceField(label='Sort By', choices=sort_by_choices, widget=forms.Select())
+
+		
+

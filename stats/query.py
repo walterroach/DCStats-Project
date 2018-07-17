@@ -50,7 +50,7 @@ def execute(options):
 		# pilot = Pilot.objects.get(clientid=clientid)
 		# name = str(pilot)
 		# rank = pilot.rank_id
-	if  'day' in groups or 'day' in options['sort_by']:
+	if  'day' in groups or '-day' in options['sort_by']:
 		stats = missions \
 			.annotate(day = TruncDay('mission__date')) \
 			.values(*groups) \
@@ -80,6 +80,10 @@ def execute(options):
 	print(stats)
 	return stats
 
+def NewStats(user):
+	stats = Stats.objects.filter(pilot=user, new=1)
+	print(f'NEW STATS: {stats}')
+	return stats
 
 # def execute(request, clientid, datefilter, **groups):
 # 	groups = groups

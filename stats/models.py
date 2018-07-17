@@ -3,6 +3,7 @@
 Django models for stats app
 '''
 from django.db import models
+from django.contrib.auth.models import User
 import django.utils
 import datetime
 
@@ -10,6 +11,7 @@ class Pilot(models.Model):
     '''
     Django model class Pilot SQL table.
     '''
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     clientid = models.CharField(max_length=32,
                                 primary_key=True)
     f_name = models.CharField(max_length=30,
@@ -17,9 +19,10 @@ class Pilot(models.Model):
     l_name = models.CharField(max_length=30,
                               default='')
     callsign = models.CharField(max_length=30)
-    rank_id = models.ForeignKey('Rank', null=True,
+    rank_id = models.ForeignKey('Rank', null=True, blank=True,
                                 on_delete=models.SET_NULL,
                                 default=7)
+    
 
     def __str__(self):
         '''Return string value of Pilot'''
@@ -145,11 +148,11 @@ class Aircraft(models.Model):
         return f"{self.aircraft}"
 
 class Mission(models.Model):
-    name = models.CharField(max_length=250, null=True)
+    name = models.CharField(max_length=250, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=False,
-                     auto_now=False, null=True)
+                     auto_now=False, null=True, blank=True)
     file = models.CharField(max_length=250)
-    in_process = models.IntegerField(null=True)
+    in_process = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return(f'{self.name} {self.date}')
@@ -161,28 +164,36 @@ class Stats(models.Model):
     '''
     aircraft = models.ForeignKey(Aircraft,
                                 on_delete=models.CASCADE)
-    in_air_sec = models.FloatField(null=True)
-    total_sec = models.FloatField(null=True)
+    in_air_sec = models.FloatField(null=True, blank=True)
+    total_sec = models.FloatField(null=True, blank=True)
     pilot = models.ForeignKey(Pilot,
                               on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission,
                                 on_delete=models.CASCADE)
     # manager = StatsManager()
     objects = models.Manager()
-    crash = models.IntegerField(null=True)
-    eject = models.IntegerField(null=True)
-    death = models.IntegerField(null=True)
-    friendly_col_hits = models.IntegerField(null=True)
-    friendly_col_kills = models.IntegerField(null=True)
-    friendly_hits = models.IntegerField(null=True)
-    friendly_kills = models.IntegerField(null=True)
-    building_kills = models.IntegerField(null=True)
-    ground_kills = models.IntegerField(null=True)
-    heli_kills = models.IntegerField(null=True)
-    fighter_kills = models.IntegerField(null=True)
-    all_aircraft_kills = models.IntegerField(null=True)
-    ship_kills = models.IntegerField(null=True)
+    crash = models.IntegerField(null=True, blank=True)
+    eject = models.IntegerField(null=True, blank=True)
+    death = models.IntegerField(null=True, blank=True)
+    friendly_col_hits = models.IntegerField(null=True, blank=True)
+    friendly_col_kills = models.IntegerField(null=True, blank=True)
+    friendly_hits = models.IntegerField(null=True, blank=True)
+    friendly_kills = models.IntegerField(null=True, blank=True)
+    building_kills = models.IntegerField(null=True, blank=True)
+    ground_kills = models.IntegerField(null=True, blank=True)
+    heli_kills = models.IntegerField(null=True, blank=True)
+    fighter_kills = models.IntegerField(null=True, blank=True)
+    all_aircraft_kills = models.IntegerField(null=True, blank=True)
+    ship_kills = models.IntegerField(null=True, blank=True)
+    new = models.IntegerField(default=0)
     
 
     def __str__(self):
-        return f"{self.mission} {self.aircraft} {self.pilot}"
+        return f"{self.mission.date.strftime('%m/%d/%y %H:%M')} \
+                 {self.mission.name} {self.aircraft} {self.pilot}"
+
+class UserStats(models.Model):
+    stats = models.ForeignKey(Stats,
+                              on_delete=models.CASCADE)
+    losses = models.IntegerField(default=0)
+    aircraft_kills = models.IntegerField(default=0)
