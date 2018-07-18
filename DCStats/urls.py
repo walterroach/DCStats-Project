@@ -28,7 +28,7 @@ urlpatterns = [
     path('stats/', stats.views.pilot_stats, name='stats'),
     path('stats/log_entry', stats.views.log_entry, name='logstats'),
     path('stats/pilot_stats', stats.views.pilot_stats, name='pilot_stats'),
-    # path('accounts/', include('django.contrib.auth.urls')),
+    re_path(r'^accounts/inactive', home.views.inactive, name='inactive'),
     path('accounts/signup', home.views.signup, name='signup'),
     path('accounts/login', auth_views.LoginView.as_view(template_name='home/login.html'), name='login'),
     path('accounts/logout', auth_views.LogoutView.as_view(template_name='home/logout.html'), name='logout'),

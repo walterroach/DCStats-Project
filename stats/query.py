@@ -56,18 +56,18 @@ def execute(options):
 			.values(*groups) \
 			.annotate(in_air_hours=Sum('in_air_sec') / 3600,
 		    hours_on_server=Sum('total_sec') / 3600,
-		    losses=Sum('crash'),
-		    all_aircraft_kills=Sum('all_aircraft_kills'),
-		    surface_kills=Sum('building_kills') + Sum('ground_kills') + Sum('ship_kills')) \
+		    losses=Sum('losses'), ground_kills=Sum('ground_kills'),
+		    aircraft_kills=Sum('aircraft_kills'), ship_kills=Sum('ship_kills'),
+		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar')) \
 		    .order_by(options['sort_by'])
 
 	else:
 		stats = missions.values(*groups) \
 		.annotate(in_air_hours=Sum('in_air_sec') / 3600,
 		    hours_on_server=Sum('total_sec') / 3600,
-		    losses=Sum('crash'),
-		    all_aircraft_kills=Sum('all_aircraft_kills'),
-		    surface_kills=Sum('building_kills') + Sum('ground_kills') + Sum('ship_kills')) \
+		    losses=Sum('losses'), ground_kills=Sum('ground_kills'),
+		    aircraft_kills=Sum('aircraft_kills'), ship_kills=Sum('ship_kills'),
+		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar')) \
 		    .order_by(options['sort_by'])
 
 	if 'pilot' in groups:
@@ -80,9 +80,8 @@ def execute(options):
 	print(stats)
 	return stats
 
-def NewStats(user):
-	stats = Stats.objects.filter(pilot=user, new=1)
-	print(f'NEW STATS: {stats}')
+def NewStats(user, get):
+	stats = Stats.objects.filter(pilot=user, new=get['new_only'], mission__date__range=(get['start_date'], get['end_date']))
 	return stats
 
 # def execute(request, clientid, datefilter, **groups):

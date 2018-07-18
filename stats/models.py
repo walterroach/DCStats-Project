@@ -172,28 +172,22 @@ class Stats(models.Model):
                                 on_delete=models.CASCADE)
     # manager = StatsManager()
     objects = models.Manager()
-    crash = models.IntegerField(null=True, blank=True)
-    eject = models.IntegerField(null=True, blank=True)
-    death = models.IntegerField(null=True, blank=True)
-    friendly_col_hits = models.IntegerField(null=True, blank=True)
-    friendly_col_kills = models.IntegerField(null=True, blank=True)
-    friendly_hits = models.IntegerField(null=True, blank=True)
-    friendly_kills = models.IntegerField(null=True, blank=True)
-    building_kills = models.IntegerField(null=True, blank=True)
+    losses = models.IntegerField(null=True, blank=True)
     ground_kills = models.IntegerField(null=True, blank=True)
-    heli_kills = models.IntegerField(null=True, blank=True)
-    fighter_kills = models.IntegerField(null=True, blank=True)
-    all_aircraft_kills = models.IntegerField(null=True, blank=True)
+    aircraft_kills = models.IntegerField(null=True, blank=True)
     ship_kills = models.IntegerField(null=True, blank=True)
-    new = models.IntegerField(default=0)
+    landings = models.IntegerField(null=True, blank=True)
+    traps = models.IntegerField(null=True, blank=True)
+    aar = models.IntegerField(null=True, blank=True)
+    new = models.IntegerField(default=1)
     
 
     def __str__(self):
-        return f"{self.mission.date.strftime('%m/%d/%y %H:%M')} \
+        return f"{self.mission.date.strftime('%m/%d/%y %H:%MZ')} \
                  {self.mission.name} {self.aircraft} {self.pilot}"
 
-class UserStats(models.Model):
-    stats = models.ForeignKey(Stats,
-                              on_delete=models.CASCADE)
-    losses = models.IntegerField(default=0)
-    aircraft_kills = models.IntegerField(default=0)
+# class UserStats(models.Model):
+#     stats = models.ForeignKey(Stats,
+#                               on_delete=models.CASCADE)
+#     losses = models.IntegerField(default=0)
+#     aircraft_kills = models.IntegerField(default=0)

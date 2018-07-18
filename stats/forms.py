@@ -33,8 +33,15 @@ class StatsOptions(forms.Form):
 					   ('-surface_kills', 'Surface Kills')]
 	sort_by = forms.ChoiceField(label='Sort By', choices=sort_by_choices, widget=forms.Select())
 
+class LogFilter(forms.Form):
+	start_date = forms.DateField(widget=forms.SelectDateWidget(years=[2017,2018]), initial=(datetime.datetime.today() - datetime.timedelta(days=7)))
+	end_date = forms.DateField(initial=datetime.date.today, widget=forms.SelectDateWidget(years=[2018,2017]), validators=[not_future])
+	new_only = forms.ChoiceField(choices=[(1,'Yes'),(0,'No')])
+
 class LogForm(ModelForm):
 	class Meta:
 		model = Stats
-		fields = ['crash', 'fighter_kills']
+		fields = ['landings', 'traps', 'aar', 'aircraft_kills',
+				  'ground_kills', 'losses']
+		labels = {'aar':'AAR'}
 		

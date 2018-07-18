@@ -16,6 +16,9 @@ def logout_view(request):
 def login(request):
     return render(request, 'home/login.html')
 
+def inactive(request):
+    return render(request, 'home/inactive.html')
+    
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -33,7 +36,7 @@ def signup(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        userform=UserProfileForm(request.POST, instance=request.user)
+        userform=UserProfileForm(request.POST)
         if userform.is_valid():
             userform.save()
     else:

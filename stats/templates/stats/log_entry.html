@@ -3,10 +3,12 @@
 <container class="container mx-auto">
 	<h2 class="text-white">{{stat}}</h2>
 	<div class="card bg-light mx-auto" style="max-width: 600px;">
-		<form action="pilot_stats" method="post" style="max-width: 100%">
+		<form action="log_entry" method="post" style="max-width: 100%">
+			{% csrf_token %}
 	    	<table class="table table-responsive bg-light text-center mx-auto" style="width: 400px;">
 				{{ logform.as_table }}
 			</table>
+			<input type="hidden" value="{{ stat.pk }}" name="statid">
 			<button class="btn btn-dark" type="submit">Submit Changes</button>
 		</form>
 	</div>
