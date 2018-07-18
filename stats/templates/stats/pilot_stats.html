@@ -17,7 +17,7 @@
                 <h2>New Logbook Entry</h2>
                 {{ log_entry.as_table }}
                 {% for stat in new_stats %}
-                 <a href='/pilot_stats/?stat={{stat.pk}}'>{{stat}}</a>
+                 <a href='log_entry?stat={{stat.pk}}'>{{stat}}</a>
                 {% endfor %}
               </table>
               <input type="submit" name="Submit">

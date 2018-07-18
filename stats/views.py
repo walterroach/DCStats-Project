@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
 from .models import Pilot, Aircraft, Stats
-from .forms import StatsOptions
+from .forms import StatsOptions, LogForm
 from stats.query import *
 
 def stats(request):
@@ -44,6 +44,15 @@ def pilot_stats(request):
 		new_stats = NewStats(user)
 	return render(request, 'stats/pilot_stats.html', {'form':form, 'stats':stats, 'new_stats':new_stats})
 
+@login_required
+def log_entry(request):
+	stat_id=request.GET['stat']
+	stat = Stats.objects.get(pk=stat_id)
+	minutes = (stat.in_air_sec / 60)
+	user = request.user
+	user = Pilot.objects.get(user=user)
+	logform = LogForm(instance=stat)
+	return render(request, 'stats/log_entry.html', {'stat':stat, 'logform':logform})
 
 # def pilot_stats(request):
 # 	clientid = request.GET['clientid']

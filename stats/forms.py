@@ -4,6 +4,7 @@ from django import forms
 from django.forms import ModelForm
 from stats.models import *
 from django.forms import modelformset_factory
+from django.utils.translation import gettext_lazy as _
 
 def not_future(date):
 	if date > datetime.date.today():
@@ -32,5 +33,8 @@ class StatsOptions(forms.Form):
 					   ('-surface_kills', 'Surface Kills')]
 	sort_by = forms.ChoiceField(label='Sort By', choices=sort_by_choices, widget=forms.Select())
 
+class LogForm(ModelForm):
+	class Meta:
+		model = Stats
+		fields = ['crash', 'fighter_kills']
 		
-

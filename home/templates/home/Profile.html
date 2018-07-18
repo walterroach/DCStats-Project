@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block navprofile %}
+<li class="nav-item active">
+{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<div class="card bg-light mx-auto mb-3" style="max-width: 400px;">
+				<form method="post">
+					<h2>User Info</h2>
+					<table class="table table-responsive text-left" style="width: 600px;">
+						{% csrf_token %}
+						{{userform.as_table}}
+					</table>
+					<button class="btn btn-dark float-left ml-3" type="submit">Submit User Changes</button>
+					<a class="float-right" href="{% url "social:begin" "google-oauth2" %}"><u>Login with Google</u></a><br>
+				</form>
+			</div>
+		</div>
+		<div class="col">
+			<div class="card bg-light mx-auto mb-3" style="max-width: 400px;">
+				<form method="post">
+					<h2>Logbook Info</h2>
+					<table class="table table-responsive text-left" style="width: 600px;">
+						{% csrf_token %}
+						<tr><td><b>Rank:</b></td><td>{{ pilot.rank_id }}</td></tr>
+						<tr><td><b>Squadron:</b></td><td>Placeholder</td></tr>
+						{{pilotform.as_table}}
+					</table>
+					<button class="btn btn-dark float-left ml-3" type="submit">Change Callsign</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

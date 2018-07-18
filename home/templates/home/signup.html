@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="card bg-light mx-auto mb-3" style="max-width: 600px;">
+		  <h2>Sign up</h2>
+		  <form method="post">
+		  	<table class="table table-responsive text-left" style="width: 600px;">
+		    {% csrf_token %}
+		    {{ form.as_table }}
+		   </table>
+		    <button class="btn btn-dark" type="submit">Sign up</button>
+		  </form>
+		</div>
+	</div>
+</div>
+{% endblock %}
