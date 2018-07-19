@@ -164,21 +164,21 @@ class Stats(models.Model):
     '''
     aircraft = models.ForeignKey(Aircraft,
                                 on_delete=models.CASCADE)
-    in_air_sec = models.FloatField(null=True, blank=True)
-    total_sec = models.FloatField(null=True, blank=True)
+    in_air_sec = models.FloatField(default=0)
+    total_sec = models.FloatField(default=0)
     pilot = models.ForeignKey(Pilot,
                               on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission,
                                 on_delete=models.CASCADE)
     # manager = StatsManager()
     objects = models.Manager()
-    losses = models.IntegerField(null=True, blank=True)
-    ground_kills = models.IntegerField(null=True, blank=True)
-    aircraft_kills = models.IntegerField(null=True, blank=True)
-    ship_kills = models.IntegerField(null=True, blank=True)
-    landings = models.IntegerField(null=True, blank=True)
-    traps = models.IntegerField(null=True, blank=True)
-    aar = models.IntegerField(null=True, blank=True)
+    losses = models.IntegerField(default=0)
+    ground_kills = models.IntegerField(default=0)
+    aircraft_kills = models.IntegerField(default=0)
+    ship_kills = models.IntegerField(default=0)
+    landings = models.IntegerField(default=0)
+    traps = models.IntegerField(default=0)
+    aar = models.IntegerField(default=0)
     new = models.IntegerField(default=1)
     
 
