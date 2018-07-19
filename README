@@ -1,2 +1,1 @@
-KNOWN ISSUES:
-All data imported from SLMod except time is incorrectly associated to first Aircraft object. Only relationship between mission-pilot-STATOTHERTHANTIME is always true. 
+
