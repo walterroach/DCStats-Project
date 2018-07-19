@@ -7,7 +7,7 @@
     </header>
 {% block content %}
 {% load tz %}
-
+{% localtime on %}
     <main>
       <div class="container mx-auto">
       <div class="row">
@@ -85,5 +85,6 @@
       </div>
     </div>
   </main>
+  {% endlocaltime %}
       {% endblock %}
     
