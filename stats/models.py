@@ -14,10 +14,6 @@ class Pilot(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     clientid = models.CharField(max_length=32,
                                 primary_key=True)
-    f_name = models.CharField(max_length=30,
-                              default='')
-    l_name = models.CharField(max_length=30,
-                              default='')
     callsign = models.CharField(max_length=30)
     rank_id = models.ForeignKey('Rank', null=True, blank=True,
                                 on_delete=models.SET_NULL,
@@ -26,7 +22,12 @@ class Pilot(models.Model):
 
     def __str__(self):
         '''Return string value of Pilot'''
-        return f'{self.f_name} "{self.callsign}" {self.l_name}'
+        try:
+            name = f'{self.user.first_name} "{self.callsign}" {self.user.last_name}'
+        except AttributeError:
+            name = f'"{self.callsign}"'
+
+        return name
 
     # def stats(self, clientid):
     #     self.air_hours = int

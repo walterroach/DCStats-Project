@@ -39,7 +39,6 @@ def last_quarter():
 	return date_filter
 
 def execute(options):
-	print(f'in execute function {options}')
 	groups = options['group_by']
 	all_pilots = Pilot.objects.all()
 	missions = Stats.objects.filter(mission__date__range=(options['start_date'], options['end_date']))
@@ -73,11 +72,15 @@ def execute(options):
 	if 'pilot' in groups:
 		for s in stats:
 			pobject = Pilot.objects.get(clientid=s['pilot'])
-			name = str(pobject)
+			s['name'] = str(pobject)
+			# first_name = pobject.user.first_name
+			# last_name = pobject.user.last_name
+			# callsign = pobject.callsign
+			# s['name'] = first_name + ' "' + callsign + '" ' + last_name
 			rank = pobject.rank_id
-			s['pilot'] = name
 			s['rank'] = rank
-	print(stats)
+
+			
 	return stats
 
 def NewStats(user, get):

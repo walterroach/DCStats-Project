@@ -20,7 +20,7 @@ class StatsOptions(forms.Form):
 	for aircraft in aircrafts:
 		aircraft_choices.append((aircraft.aircraft, aircraft.aircraft))
 	pilot_choices = [('All','All')]
-	pilots = Pilot.objects.all().order_by('f_name')
+	pilots = Pilot.objects.all().order_by('user__first_name')
 	for pilot in pilots:
 		pilot_choices.append((pilot.clientid, str(pilot)))
 	# group_by2 = forms.ChoiceField(label='and Group By', choices=group_by2_choices, widget=forms.Select)
@@ -28,7 +28,7 @@ class StatsOptions(forms.Form):
 	end_date = forms.DateField(initial=datetime.date.today, widget=forms.SelectDateWidget(years=[2018,2017]), validators=[not_future])
 	aircraft_filter = forms.ChoiceField(label='Aircraft Filter', initial='All', choices=aircraft_choices, widget=forms.Select())
 	pilot_filter = forms.ChoiceField(label="Pilot Filter", choices=pilot_choices, widget=forms.Select())
-	sort_by_choices = [('pilot__f_name','Pilot'),('pilot__rank_id','Rank'),('aircraft','Aircraft'),('mission__name','Mission'),('-day', 'Date'),('-in_air_hours','In Air Hours'),
+	sort_by_choices = [('pilot__user__first_name','Pilot'),('pilot__rank_id','Rank'),('aircraft','Aircraft'),('mission__name','Mission'),('-day', 'Date'),('-in_air_hours','In Air Hours'),
 					   ('-hours_on_server', 'Hours On Server'),('-losses', 'Losses'),('-all_aircraft_kills', 'Air Kills'),
 					   ('-surface_kills', 'Surface Kills')]
 	sort_by = forms.ChoiceField(label='Sort By', choices=sort_by_choices, widget=forms.Select())

@@ -36,7 +36,7 @@ def signup(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        userform=UserProfileForm(request.POST)
+        userform=UserProfileForm(request.POST, instance=request.user)
         if userform.is_valid():
             userform.save()
     else:
