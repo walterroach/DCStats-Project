@@ -39,8 +39,12 @@ def profile(request):
         userform=UserProfileForm(request.POST, instance=request.user)
         if userform.is_valid():
             userform.save()
+            change = 'Change Submitted'
+        if not userform.is_valid():
+            change = 'Problem sumbitting request, please contact administrator'
     else:
         userform = UserProfileForm(instance=request.user)
+        change = ''
     try:
         pilot = Pilot.objects.get(user=request.user)
         pilotform=PilotProfileForm(instance=pilot)
@@ -48,4 +52,4 @@ def profile(request):
         pilotform = None
         pilot = {'rank_id':"Welcome Guest!"}
     
-    return render(request, 'home/profile.html', {'userform':userform, 'pilot':pilot, 'pilotform':pilotform})
+    return render(request, 'home/profile.html', {'userform':userform, 'pilot':pilot, 'change':change, 'pilotform':pilotform})
