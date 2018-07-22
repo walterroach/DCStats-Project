@@ -7,7 +7,6 @@
     </header>
 {% block content %}
 {% load tz %}
-{% localtime on %}
     <main>
       <div class="container mx-auto">
       <div class="row">
@@ -68,7 +67,7 @@
           <td>{{ row.rank }}</td>
           <td>{{ row.aircraft }}</td>
           <td>{{ row.mission__name }}</td>
-          <td>{{ row.day|date }}</td>
+          <td>{{ row.day }}</td>
           <td>{{ row.in_air_hours|floatformat:2 }}</td>   
           <td>{{ row.hours_on_server|floatformat:2}} </td>
           <td>{{ row.ground_kills}}</td>
@@ -85,6 +84,5 @@
       </div>
     </div>
   </main>
-  {% endlocaltime %}
       {% endblock %}
     

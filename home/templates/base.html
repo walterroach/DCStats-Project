@@ -4,6 +4,8 @@
 <div class="bg-secondary">
   <head>
     {% load static %}
+    {% load tz %}
+    {% get_current_timezone as TIME_ZONE %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="21st Virtual Air Group Home Page - a DCS community">
@@ -49,7 +51,6 @@
             <li class="nav-item">
             {% endblock %}
               <a class="nav-link" href="{% url 'profile' %}">| {{user.username}} Profile</a>
-            }
             </li>
             {% else %}
             <li class="nav-item">
@@ -67,7 +68,7 @@
     </body>
     </div>
       <footer class="container bg-dark text-white mt-2">
-        <p>&copy; 2018 21st Virtual Air Group</p>
+        <p>&copy; 2018 21st Virtual Air Group <br> Current Timezone: {{TIME_ZONE}} </p>
       </footer>
     </main>
     
@@ -80,4 +81,5 @@
     {% block js %}{% endblock %}
   </body>
   </div>
+
 </html>

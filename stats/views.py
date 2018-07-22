@@ -1,4 +1,6 @@
 import datetime
+from django.utils import timezone
+import pytz
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -9,6 +11,13 @@ from .forms import StatsOptions, LogForm, LogFilter
 from stats import query
 from home.views import inactive
 
+def get_timezone(request):
+    if request.method == 'POST':
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/')
+    else:
+        return render(request, 'stats/timezone.html', {'timezones': pytz.common_timezones})
+
 def stats(request):
 	clientid = 'all'
 	pilots = ''
@@ -18,19 +27,20 @@ def stats(request):
 @login_required
 def pilot_stats(request):
 	try:
-		start_date = datetime.date.today() - datetime.timedelta(days=7)
-		end_date = datetime.date.today()
+		start_date =timezone.now()
+		start_date = query.last_week(start_date)
+		end_date = timezone.now()
+		end_date = query.end_day(end_date)
 		log_filter=LogFilter()
-		get = {'new_only':1, 'start_date':start_date, 'end_date':end_date}
+		new_options = {'new_only':1, 'start_date':start_date, 'end_date':end_date}
 		user = request.user
 		user = Pilot.objects.get(user=user)
-		new_stats = query.NewStats(user, get)
+		new_stats = query.new_stats(user, new_options)
 
 		if request.method == 'POST':
 			if request.POST['query'] == 'True':
 				form = StatsOptions(request.POST)
 				log_filter = LogFilter()
-				print(request.POST)
 				if form.is_valid():
 					options = form.cleaned_data
 					stats = query.execute(options)
@@ -40,8 +50,7 @@ def pilot_stats(request):
 				log_filter = LogFilter(request.POST)
 				if log_filter.is_valid():
 					options = log_filter.cleaned_data
-					new_stats = query.NewStats(user, options)
-					print(request.POST)
+					new_stats = query.new_stats(user, options)
 
 
 		
@@ -56,19 +65,8 @@ def pilot_stats(request):
 			           'end_date': end_date,
 			           'aircraft_filter': 'All',
 			           'pilot_filter': user.clientid,
-			           'sort_by': '-day'})
-		
-		# if request.GET:
-		# 	get = request.GET
-		# 	get['start_date'] = get['start_date_month'] + get['start_date_day'] + get['start_date_year=2018']
-		# 	get['end_date'] = get['end_date_month'] + get['end_date_day'] + get['end_date_year=2018']
-		# else:
-		# 	start_date = datetime.date.today() - datetime.timedelta(days=7)
-		# 	end_date = datetime.date.today()
-				
-	
+			           'sort_by': '-day'})	
 	except ObjectDoesNotExist:
-		print('INACTIVE')
 		return redirect('inactive')
 	return render(request, 'stats/pilot_stats.html', {'form':form, 'log_filter':log_filter, 'stats':stats, 'new_stats':new_stats})
 
@@ -78,7 +76,6 @@ def log_entry(request):
 		user = Pilot.objects.get(user=request.user)
 		stat = Stats.objects.get(pk=request.POST['statid'])
 		logform = LogForm(request.POST, instance=stat)
-		print(logform)
 		if logform.is_valid():
 			stat = logform.save(commit=False)
 			stat.new = 0
@@ -88,47 +85,29 @@ def log_entry(request):
 		stat = Stats.objects.get(pk=request.GET['stat'])
 		logform = LogForm(instance=stat)
 	user = Pilot.objects.get(user=request.user)
-	return render(request, f'stats/log_entry.html', {'stat':stat, 'logform':logform})
+	return render(request, f'stats/log_entry.html', {'stat':stat, 'logform':logform})	
 
-# def pilot_stats(request):
-# 	clientid = request.GET['clientid']
-# 	datefilter = request.GET['date']
-# 	group_by = request.GET['group_by']
-# 	group_by2 = request.GET['group_by2']
-# 	if group_by2 != '':
-# 		groups = dict(
-# 			group_by=group_by,
-# 			group_by2=group_by2)
-# 	else:
-# 		groups = dict(group_by=group_by)
-# 	return query.execute(request, clientid, datefilter, **groups)
+@login_required
+def pilot_log(request):
+	#checks if user active
+	try:
+		pilot = Pilot.objects.get(user=request.user)
+	except ObjectDoesNotExist:
+		return redirect('inactive')
+	if request.method == 'POST':
+		log_filter = LogFilter(request.POST)
+		if log_filter.is_valid():
+			clean = log_filter.cleaned_data
+			# clean['start_date'] = log_filter.
+			logs = query.new_stats(pilot, clean)
+			return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'logs':logs})
+	start_date = timezone.localtime() + datetime.timedelta(-7)
+	start_date = query.last_week(start_date)
+	end_date = timezone.localtime().replace(hour=0, minute=0, second=0)
+	end_date = query.end_day(end_date)
+	log_filter = LogFilter()
+	options = new_options = {'new_only':1, 'start_date':start_date, 'end_date':end_date}
+	logs = query.new_stats(pilot, options)
+		
+	return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'logs':logs})
 
-
-	# if clientid == 'all' and group_by == 'pilot':
-	# 	pilots = Pilot.objects.all()
-	# 	aircraft = pilot_totals(pilots)		
-	# 	return render(request, 'stats/pilot_stats.html', {'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
-	
-	# elif group_by == 'pilot':
-	# 	pilots = Pilot.objects.filter(clientid=clientid)
-	# 	aircraft = pilot_totals(pilots)
-	# 	return render(request, 'stats/pilot_stats.html', {'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
-
-	# elif clientid == 'all' and group_by == 'aircraft':
-	# 	pilots = Pilot.objects.all()
-	# 	aircraft = []
-	# 	for p in pilots:
-	# 		a_models = Aircraft.objects.filter(pilot=p.clientid)
-	# 		for a in a_models:
-	# 			aircraft.append(aircraft_totals(a, p.clientid))
-	# 	return render(request, 'stats/pilot_stats.html',{'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
-
-	# else:
-	# 	pilots = Pilot.objects.filter(clientid=clientid)
-	# 	a_models = Aircraft.objects.filter(pilot=clientid)
-	# 	aircraft = []
-	# 	for a in a_models:
-	# 		aircraft.append(aircraft_totals(a, clientid))
-	# 	return render(request, 'stats/pilot_stats.html',{'pilots':pilots, 'clientid':clientid, 'aircraft':aircraft})
-
-	

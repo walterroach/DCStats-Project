@@ -1,0 +1,76 @@
+<!-- pilot_stats.html-->
+{% extends "base.html" %}
+{% load static %}
+{{ log_filter.media }}
+{% block navlog %}
+      <li class="nav-item active">
+      {% endblock navlog %}
+<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
+    </header>
+{% block content %}
+<div class='row'>
+<div class='col' style="max-width: 400px">
+<div class="card bg-light ml-3" style="max-width: 400px;">
+  <form action="pilot_log" method="post" style="max-width: 100%">
+    <table class="table table-responsive bg-light text-left" style="width: 400px;">
+      {% csrf_token %}
+      <h2>Logbook Entries</h2>
+      {{ log_filter.as_table }}
+      Please update your logbook after each flight
+    </table>
+    <input type="submit" name="Submit">
+  </form>
+</div>
+</div>
+<div class='col'>
+  <div class="card bg-light ml-3" style="max-width: 80%;">
+      <table class="table table-striped bg-light table-responsive">
+        <tr>
+            <th>Name</th>
+            <th>Rank</th>
+            <th>Aircraft</th>
+            <th>Mission</th>
+            <th>Date</th>
+            <th>Hours in Air</th>
+            <th>Hours on Server</th>
+            <th>Ground Kills</th>
+            <th>Air Kills</th>
+            <th>Ship Kills</th>
+            <th>Landings</th>
+            <th>Traps</th>
+            <th>AARs</th>
+        </tr>
+        {% for row in logs %}
+        <tr>
+          <td>{{ row.pilot.user.first_name}} "{{ row.pilot.callsign }}" {{ row.pilot.user.last_name}}</td>
+          <td>{{ row.pilot.rank_id }}</td>
+          <td>{{ row.aircraft }}</td>
+          <td>{{ row.mission.name }}</td>
+          <td>{{ row.mission.date|date:'Y-m-d H:i e' }}</td>
+          <td>{{ row.in_air_hours|floatformat:2 }}</td>   
+          <td>{{ row.hours_on_server|floatformat:2}} </td>
+          <td>{{ row.ground_kills}}</td>
+          <td>{{ row.aircraft_kills }}</td>
+          <td>{{ row.ship_kills }}</td>
+          <td>{{ row.landings }}</td>
+          <td>{{ row.traps }}</td>
+          <td>{{ row.aar }}</td>
+        </tr>
+        {% endfor %}
+     </table>
+    </div>
+</div>
+<div class='col' style="max-width: 400px">
+</div>
+</div>
+<div class='row'>
+<br>
+</div>
+{% endblock %}

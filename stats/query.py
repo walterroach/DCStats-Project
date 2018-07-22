@@ -1,5 +1,5 @@
 #dqueries
-import datetime
+from django.utils import timezone
 from .models import *
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -21,22 +21,26 @@ def filter_date(datefilter):
 
 	return date_filter
 
-def last_week():
-	start_date = datetime.datetime.now() + datetime.timedelta(-7)
+def last_week(date):
+	start_date = date.replace(hour=0, minute=0, second=0)
 	return start_date
 
-def all_dates():
-	date_filter = datetime.datetime.now()
-	date_filter = date_filter.replace(year=date_filter.year-50)
-	return date_filter
+def end_day(date):
+	end_date = date.replace(hour=23, minute=59, second=59)
+	return end_date
 
-def last_month():
-	date_filter = datetime.datetime.now() + datetime.timedelta(-30)
-	return date_filter
+# def all_dates():
+# 	date_filter = datetime.datetime.now()
+# 	date_filter = date_filter.replace(year=date_filter.year-50)
+# 	return date_filter
 
-def last_quarter():
-	date_filter = datetime.datetime.now() + datetime.timedelta(-90)
-	return date_filter
+# def last_month():
+# 	date_filter = datetime.datetime.now() + datetime.timedelta(-30)
+# 	return date_filter
+
+# def last_quarter():
+# 	date_filter = datetime.datetime.now() + datetime.timedelta(-90)
+# 	return date_filter
 
 def execute(options):
 	groups = options['group_by']
@@ -83,8 +87,12 @@ def execute(options):
 			
 	return stats
 
-def NewStats(user, get):
-	stats = Stats.objects.filter(pilot=user, new=get['new_only'], mission__date__range=(get['start_date'], get['end_date']))
+def new_stats(user, options):
+	stats = Stats.objects.filter(pilot=user,
+								 mission__date__range=(options['start_date'],
+								 options['end_date'])).annotate(
+								 in_air_hours=Sum('in_air_sec') / 3600,
+								 hours_on_server=Sum('total_sec') /3600).order_by('-mission__date')
 	return stats
 
 # def execute(request, clientid, datefilter, **groups):

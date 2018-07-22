@@ -5,9 +5,12 @@ from django.contrib.auth.decorators import login_required
 from stats.models import Pilot
 from home.forms import SignUpForm, UserProfileForm, PilotProfileForm
 from django.core.exceptions import ObjectDoesNotExist
+import datetime
+import pytz
 
 def home(request):
-    return render(request, 'home/home.html')
+    time = datetime.datetime.now(pytz.utc)
+    return render(request, 'home/home.html', {'time':time})
 
 def logout_view(request):
     logout(request)
