@@ -1,5 +1,5 @@
 #home.forms
-
+import pytz
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
@@ -22,4 +22,4 @@ class UserProfileForm(ModelForm):
 class PilotProfileForm(ModelForm):
 	class Meta:
 		model = Pilot
-		fields = ['callsign']
+		fields = ['callsign', 'timezone']

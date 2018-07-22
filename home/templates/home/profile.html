@@ -3,6 +3,8 @@
 <li class="nav-item active">
 {% endblock %}
 {% block content %}
+{% load tz %}
+{% get_current_timezone as TIME_ZONE %}
 <div class="container">
 	<div class="row">
 		<div class="col">
@@ -12,26 +14,15 @@
 					<table class="table table-responsive text-left" style="width: 600px;">
 						{% csrf_token %}
 						{{userform.as_table}}
+						{{pilotform.as_table}}
+						{{change}}
 					</table>
-					{{ change }}
 					<br>
 					<button class="btn btn-dark float-left ml-3" type="submit">Submit User Changes</button>
+					{% if user.is_authenticated and not backends.associated %}
 					<a class="float-right" href="{% url "social:begin" "google-oauth2" %}"><u>Login with Google</u></a><br>
-				</form>
-			</div>
-		</div>
-		<div class="col">
-			<div class="card bg-light mx-auto mb-3" style="max-width: 400px;">
-				<form method="post">
-					<h2>Logbook Info</h2>
-					<table class="table table-responsive text-left" style="width: 600px;">
-						{% csrf_token %}
-						<tr><td><b>Rank:</b></td><td>{{ pilot.rank_id }}</td></tr>
-						<tr><td><b>Squadron:</b></td><td>Placeholder</td></tr>
-						{{pilotform.as_table}}
-					</table>
-					{% if pilot.rank_id != "Welcome Guest!" %}
-					<button class="btn btn-dark float-left ml-3" type="submit">Change Callsign</button>
+					{% elif user.is_authenticated and backends.associated %}
+					<p class="text-center">Account is linked with Google!</p>
 					{% endif %}
 				</form>
 			</div>
@@ -39,4 +30,15 @@
 	</div>
 </div>
 
+
 {% endblock %}
+<!-- 
+<form action="{% url 'set_timezone' %}" method="POST">
+    {% csrf_token %}
+    <label for="timezone">Time zone:</label>
+    <select name="timezone">
+        {% for tz in timezones %}
+        <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Set"> -->

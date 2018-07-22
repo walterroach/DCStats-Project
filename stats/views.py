@@ -10,13 +10,8 @@ from .models import Pilot, Aircraft, Stats
 from .forms import StatsOptions, LogForm, LogFilter
 from stats import query
 from home.views import inactive
+from home.decorators import user_tz
 
-def get_timezone(request):
-    if request.method == 'POST':
-        request.session['django_timezone'] = request.POST['timezone']
-        return redirect('/')
-    else:
-        return render(request, 'stats/timezone.html', {'timezones': pytz.common_timezones})
 
 def stats(request):
 	clientid = 'all'
@@ -71,6 +66,7 @@ def pilot_stats(request):
 	return render(request, 'stats/pilot_stats.html', {'form':form, 'log_filter':log_filter, 'stats':stats, 'new_stats':new_stats})
 
 @login_required
+@user_tz
 def log_entry(request):
 	if request.method == 'POST':
 		user = Pilot.objects.get(user=request.user)
@@ -88,6 +84,7 @@ def log_entry(request):
 	return render(request, f'stats/log_entry.html', {'stat':stat, 'logform':logform})	
 
 @login_required
+@user_tz
 def pilot_log(request):
 	#checks if user active
 	try:

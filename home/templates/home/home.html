@@ -4,18 +4,22 @@
 <li class="nav-item active">
 {% endblock %}
 {% block content %}
-
-    <main role="main" class="inner cover">
+<div class="row">
+<div class="col ml-3" style="max-width:500px;">
         <h3 class="cover-heading text-white">Home of The</h3>
-        <h1 class="cover-heading text-white">21st Virtual Air Group</h1>
+        <h1 class="cover-heading text-white text-right">21st Virtual Air Group</h1>
+        <div class="text-center">
         {% if user.is_authenticated %}
              <p class="text-white">Hello, {{ user.username }}</p>
         {% else %}
              <a class="text-white" href="{% url 'login' %}">Log in</a>
         {% endif %}
+        </div>
         <br>
           <img class="img-fluid" alt="Responsive image" src="{% static '21logo.png' %}" width=400>
-        <!-- FOOTER -->
-      </body>
+</div>
+<div class="col">
+</div>
+</div>
 
 {% endblock %}
