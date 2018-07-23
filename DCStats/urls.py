@@ -43,3 +43,10 @@ urlpatterns = [
     re_path(r'^auth/', include('social_django.urls', namespace='social')),  # <- Here
     # re_path(r'^$', home.views.home, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]

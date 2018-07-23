@@ -69,7 +69,6 @@ def log_entry(request):
 			stat = logform.save(commit=False)
 			stat.new = 0
 			stat.save()
-		return redirect('stats')
 	else:
 		stat = Stats.objects.get(pk=request.GET['stat'])
 		logform = LogForm(instance=stat)
