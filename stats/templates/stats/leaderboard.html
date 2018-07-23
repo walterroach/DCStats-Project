@@ -1,0 +1,113 @@
+<!-- leaderboard.html-->
+{% extends "base.html" %}
+{% load static %}
+{{ log_filter.media }}
+
+{% block navleader %}
+      <li class="nav-item active">
+{% endblock %}
+
+{% block css %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+{% endblock %}
+{% block bodycss %}
+<style>
+.page-bg {
+  height: 100%;
+    /* The image used */
+    background-image: url("/static/21stdecknew.png");
+    filter: saturate(70%);
+    filter: blur(2px);
+    /* Full height */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class='row'>
+<div class='col' style="max-width: 600px">
+<div class="card bg-light mx-auto mt-2" style="max-width: 95%;">
+  <div class="card-header">
+    <h3>Options</h3>
+  </div>
+  <form action="pilot_stats" method="post" style="max-width: 100%">
+    <table class="table table-responsive bg-light text-left" style="width: 400px;">
+      {% csrf_token %}
+      {{ form.as_table }}
+    </table>
+    <input type="submit" name="Submit">
+  </form>
+</div>
+</div>
+<div class='col'>
+  <div class="card bg-light mt-2 mx-auto" style="max-width: 95%;">
+    <div class="table-sm table-hover table-striped bg-light table-responsive mx-auto mt-5 mb-5" style="max-width: 90%">
+      <h2>Logbook Entries</h2>
+      <table id="logs" class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Rank</th>
+            <th>Aircraft</th>
+            <th>Mission</th>
+            <th>Date</th>
+            <th>Hours in Air</th>
+            <th>Hours on Server</th>
+            <th>Ground Kills</th>
+            <th>Air Kills</th>
+            <th>Ship Kills</th>
+            <th>Landings</th>
+            <th>Traps</th>
+            <th>AARs</th>
+          </tr>
+        </thead>
+          {% for row in stats %}
+          <tr>
+            <td>{{ row.name}}</td>
+            <td>{{ row.rank }}</td>
+            <td>{{ row.aircraft }}</td>
+            <td>{{ row.mission__name }}</td>
+            <td>{{ row.day|date }}</td>
+            <td>{{ row.in_air_hours|floatformat:2 }}</td>   
+            <td>{{ row.hours_on_server|floatformat:2}} </td>
+            <td>{{ row.ground_kills}}</td>
+            <td>{{ row.aircraft_kills }}</td>
+            <td>{{ row.ship_kills }}</td>
+            <td>{{ row.landings }}</td>
+            <td>{{ row.traps }}</td>
+            <td>{{ row.aar }}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+     </table>
+   </div>
+    </div>
+</div>
+</div>
+<div class='row'>
+<br>
+</div>
+<script>
+$(document).ready( function () {
+    $('#logs').DataTable( {
+      "searching": false,
+      "order":[[5, "desc"]]
+    } );
+} );
+</script>
+{% endblock %}

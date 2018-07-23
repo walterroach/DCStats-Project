@@ -41,6 +41,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'home/signup.html', {'form': form})
 
+@user_tz
 @login_required
 def profile(request):
     if request.method == 'POST':

@@ -23,6 +23,7 @@ def filter_date(datefilter):
 
 def last_week(date):
 	start_date = date.replace(hour=0, minute=0, second=0)
+	start_date = start_date + datetime.timedelta(days=-7)
 	return start_date
 
 def end_day(date):
@@ -46,14 +47,14 @@ def execute(options):
 	groups = options['group_by']
 	all_pilots = Pilot.objects.all()
 	missions = Stats.objects.filter(mission__date__range=(options['start_date'], options['end_date']))
-	if options['pilot_filter'] != 'All':
+	if options['pilot_filter']:
 		missions = missions.filter(pilot=options['pilot_filter'])
-	if options['aircraft_filter'] != 'All':
+	if options['aircraft_filter']:
 		missions = missions.filter(aircraft=options['aircraft_filter'])
 		# pilot = Pilot.objects.get(clientid=clientid)
 		# name = str(pilot)
 		# rank = pilot.rank_id
-	if  'day' in groups or '-day' in options['sort_by']:
+	if  'day' in groups:
 		stats = missions \
 			.annotate(day = TruncDay('mission__date')) \
 			.values(*groups) \
@@ -61,17 +62,14 @@ def execute(options):
 		    hours_on_server=Sum('total_sec') / 3600,
 		    losses=Sum('losses'), ground_kills=Sum('ground_kills'),
 		    aircraft_kills=Sum('aircraft_kills'), ship_kills=Sum('ship_kills'),
-		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar')) \
-		    .order_by(options['sort_by'])
-
+		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar'))
 	else:
 		stats = missions.values(*groups) \
 		.annotate(in_air_hours=Sum('in_air_sec') / 3600,
 		    hours_on_server=Sum('total_sec') / 3600,
 		    losses=Sum('losses'), ground_kills=Sum('ground_kills'),
 		    aircraft_kills=Sum('aircraft_kills'), ship_kills=Sum('ship_kills'),
-		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar')) \
-		    .order_by(options['sort_by'])
+		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar'))
 
 	if 'pilot' in groups:
 		for s in stats:
@@ -84,7 +82,7 @@ def execute(options):
 			rank = pobject.rank_id
 			s['rank'] = rank
 
-			
+	print(stats)
 	return stats
 
 def new_stats(user, options):
