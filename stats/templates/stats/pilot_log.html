@@ -41,10 +41,12 @@
 {% block content %}
 <div class='row'>
 <div class='col' style="max-width: 600px">
-<div class="card bg-light mx-auto mt-2" style="max-width: 95%;">
+ <div class="card bg-light mx-auto mt-2" style="max-width: 95%;">
   <div class="card-header">
-    <h3>Date Filter</h3>
+    <a data-toggle="collapse" href=#logfilter aria-expanded="false" aria-controls="collapseExample"><h3>Date Filter</h3></a>
   </div>
+  <div class="collapse" id="logfilter">
+    <div class="card-body" style="max-width: 95%;">
   <form action="pilot_log" method="post" style="max-width: 100%">
     <table class="table table-responsive bg-light text-left" style="width: 400px;">
       {% csrf_token %}
@@ -54,10 +56,14 @@
   </form>
 </div>
 </div>
+</div>
+</div>
 <div class='col'>
   <div class="card bg-light mt-2 mx-auto" style="max-width: 95%;">
-    <div class="table-sm table-hover table-striped bg-light table-responsive mx-auto mt-5 mb-5" style="max-width: 90%">
+    <div class="card-header">
       <h2>Logbook Entries</h2>
+    </div>
+    <div class="table-sm table-hover table-striped bg-light table-responsive mx-auto mt-5 mb-5" style="max-width: 90%">
       <table id="logs" class="table">
         <thead>
           <tr>

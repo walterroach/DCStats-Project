@@ -43,8 +43,10 @@
 <div class='col' style="max-width: 600px">
 <div class="card bg-light mx-auto mt-2" style="max-width: 95%;">
   <div class="card-header">
-    <h3>Options</h3>
+     <a data-toggle="collapse" href=#logfilter aria-expanded="false" aria-controls="collapseExample"><h3>Display Options</h3></a>
   </div>
+  <div class="collapse" id="logfilter">
+    <div class="card-body" style="max-width: 95%;">
   <form action="pilot_stats" method="post" style="max-width: 100%">
     <table class="table table-responsive bg-light text-left" style="width: 400px;">
       {% csrf_token %}
@@ -54,18 +56,30 @@
   </form>
 </div>
 </div>
+</div>
+</div>
 <div class='col'>
   <div class="card bg-light mt-2 mx-auto" style="max-width: 95%;">
+    <div class="card-header"><h2>Leaderboard</h2></div>
     <div class="table-sm table-hover table-striped bg-light table-responsive mx-auto mt-5 mb-5" style="max-width: 90%">
-      <h2>Logbook Entries</h2>
       <table id="logs" class="table">
         <thead>
           <tr>
+            {% if stats.0.name %}
             <th>Name</th>
+            {% endif %}
+            {% if stats.0.rank %}
             <th>Rank</th>
+            {% endif %}
+            {% if stats.0.aircraft %}
             <th>Aircraft</th>
+            {% endif %}
+            {% if stats.0.mission__name %}
             <th>Mission</th>
+            {% endif %}
+            {% if stats.0.day %}
             <th>Date</th>
+            {% endif %}
             <th>Hours in Air</th>
             <th>Hours on Server</th>
             <th>Ground Kills</th>
@@ -78,11 +92,21 @@
         </thead>
           {% for row in stats %}
           <tr>
+            {% if row.name %}
             <td>{{ row.name}}</td>
+            {% endif %}
+            {% if row.rank %}
             <td>{{ row.rank }}</td>
+            {% endif %}
+            {% if row.aircraft %}
             <td>{{ row.aircraft }}</td>
+            {% endif %}
+            {% if row.mission__name %}
             <td>{{ row.mission__name }}</td>
+            {% endif %}
+            {% if row.day %}
             <td>{{ row.day|date }}</td>
+            {% endif %}
             <td>{{ row.in_air_hours|floatformat:2 }}</td>   
             <td>{{ row.hours_on_server|floatformat:2}} </td>
             <td>{{ row.ground_kills}}</td>
