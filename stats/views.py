@@ -74,7 +74,10 @@ def log_entry(request):
 		stat = Stats.objects.get(pk=request.GET['stat'])
 		logform = LogForm(instance=stat)
 	user = Pilot.objects.get(user=request.user)
-	return render(request, f'stats/log_entry.html', {'stat':stat, 'logform':logform})	
+	hours = {}
+	hours['in_air'] = stat.in_air_sec / 3600
+	hours['on_server'] = stat.total_sec / 3600
+	return render(request, f'stats/log_entry.html', {'stat':stat, 'hours':hours, 'logform':logform})	
 
 @login_required
 @user_tz

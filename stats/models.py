@@ -190,7 +190,7 @@ class Stats(models.Model):
 
     def __str__(self):
         return f"{self.mission.date.strftime('%m/%d/%y %H:%MZ')} \
-                 {self.mission.name} {self.aircraft} {self.pilot}"
+                 {self.aircraft} {self.pilot}"
 
 # class UserStats(models.Model):
 #     stats = models.ForeignKey(Stats,

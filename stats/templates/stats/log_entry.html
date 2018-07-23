@@ -1,16 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
-<container class="container mx-auto">
-	<h2 class="text-white">{{stat}}</h2>
-	<div class="card bg-light mx-auto" style="max-width: 600px;">
-		<form action="log_entry" method="post" style="max-width: 100%">
-			{% csrf_token %}
-	    	<table class="table table-responsive bg-light text-center mx-auto" style="width: 400px;">
-				{{ logform.as_table }}
-			</table>
-			<input type="hidden" value="{{ stat.pk }}" name="statid">
-			<button class="btn btn-dark" type="submit">Submit Changes</button>
-		</form>
+<!-- <container class="container mx-auto"> -->
+<div class="row">
+			<div class="col" style="max-width: 800px;">
+			<div class="card mt-2 mx-auto bg-light" style="max-width: 400px;">
+				<div class="card-header">
+					<a data-toggle="collapse" href=#logvalues aria-expanded="false" aria-controls="collapseExample"><b>Entry Details</b></a>
+				</div>
+				<div class="collapse" id="logvalues">
+	    			<div class="card-body mx-auto" style="max-width: 95%;">
+				    	<table class="table table-responsive bg-light text-center mx-auto">
+				    		<tr><th>Date</th><td>{{ stat.mission.date|date }}</td></tr>
+				    		<tr><th>Time</th><td>{{ stat.mission.date|date:"H:m e" }}</td></tr>
+							<tr><th>In Air Hours</th><td>{{ hours.in_air|floatformat:2 }}</td></tr>
+				            <tr><th>Total Hours</th><td>{{ hours.on_server|floatformat:2}} </td></tr>
+				            <tr><th>Aircraft</th><td>{{ stat.aircraft }}</td></tr>
+				          	<tr><th>Landings</th><td>{{ stat.landings }}</td></tr>
+				            <tr><th>Traps</th><td>{{ stat.traps }}</td></tr>
+				            <tr><th>AAR</th><td>{{ stat.aar }}</td></tr>
+				            <tr><th>Aircraft Kills</th><td>{{ stat.aircraft_kills }}</td></tr>
+				            <tr><th>Ground Kills</th><td>{{ stat.ground_kills }}</td></tr>
+				            <tr><th>Losses</th><td>{{ stat.losses }}</td></tr>
+				            <tr><th>Status</th>
+				            {% if row.new %}
+				            <td>Unlogged</td>
+				            {% else %}
+				            <td>Logged</td>
+				            {% endif %}
+				        	</tr>
+						</table>
+					</div>
+			</div>
+		</div>
+	
+	<div class="row">
+			<div class="card mt-2 mx-auto bg-light" style="max-width: 400px;">
+				<div class="card-header">
+					<b>{{stat}}</b>
+				</div>
+				<form action="log_entry" method="post">
+					{% csrf_token %}
+			    	<table class="table table-responsive bg-light text-center mx-auto">
+						{{ logform.as_table }}
+					</table>
+					<input type="hidden" value="{{ stat.pk }}" name="statid">
+					<button class="btn btn-dark" type="submit">Submit Log Entry</button>
+				</form>
+			</div>
+		</div>
+		</div>
+	<div class="col hidden-xs"></div>
 	</div>
-</container>
+
+
+<!-- </container> -->
 {% endblock %}

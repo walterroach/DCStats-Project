@@ -62,14 +62,14 @@ def execute(options):
 		    hours_on_server=Sum('total_sec') / 3600,
 		    losses=Sum('losses'), ground_kills=Sum('ground_kills'),
 		    aircraft_kills=Sum('aircraft_kills'), ship_kills=Sum('ship_kills'),
-		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar'))
+		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar')).order_by('-hours_on_server')
 	else:
 		stats = missions.values(*groups) \
 		.annotate(in_air_hours=Sum('in_air_sec') / 3600,
 		    hours_on_server=Sum('total_sec') / 3600,
 		    losses=Sum('losses'), ground_kills=Sum('ground_kills'),
 		    aircraft_kills=Sum('aircraft_kills'), ship_kills=Sum('ship_kills'),
-		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar'))
+		    landings=Sum('landings'), traps=Sum('traps'), aar=Sum('aar')).order_by('-hours_on_server')
 
 	if 'pilot' in groups:
 		for s in stats:
