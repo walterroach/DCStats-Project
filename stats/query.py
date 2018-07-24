@@ -90,8 +90,9 @@ def new_stats(user, options):
 								 mission__date__range=(options['start_date'],
 								 options['end_date'])).annotate(
 								 in_air_hours=Sum('in_air_sec') / 3600,
-								 hours_on_server=Sum('total_sec') /3600).order_by('-mission__date')
-	return stats
+								 hours_on_server=Sum('total_sec') /3600).order_by('-mission__date') \
+								 .select_related()
+	return stats 
 
 # def execute(request, clientid, datefilter, **groups):
 # 	groups = groups
