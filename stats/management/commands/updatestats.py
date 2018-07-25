@@ -128,8 +128,9 @@ def stats_update():
                 except:
                     new_pilot = Pilot.objects.create(clientid=client, callsign=callsign)
                     new_pilot = Pilot.objects.get(clientid=client)
-                    pilot_list.append(new_pilot)
+                    pilot_list.append(new_pilot.clientid)
             ## Check if aircraft in json exist in db, create if not.
+            print(pilot_list)
             for pilot in pilot_list:
                 try:
                     for key in stats_json[pilot]['times'].keys():
@@ -151,6 +152,7 @@ def stats_update():
                                       stats_json,
                                       date,
                                       in_process)
+
             log(f'IMPORTED : {filename}')
     print(len(total_failed))
 
