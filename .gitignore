@@ -3,6 +3,7 @@
 *.pyc
 *.ipynb
 *.lua
+static/
 slmis/
 slmod/
 .ipynb_checkpoints/
