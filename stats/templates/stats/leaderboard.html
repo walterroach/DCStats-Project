@@ -65,21 +65,11 @@
       <table id="logs" class="table">
         <thead>
           <tr>
-            {% if stats.0.name %}
             <th>Name</th>
-            {% endif %}
-            {% if stats.0.rank %}
             <th>Rank</th>
-            {% endif %}
-            {% if stats.0.aircraft %}
             <th>Aircraft</th>
-            {% endif %}
-            {% if stats.0.mission__name %}
             <th>Mission</th>
-            {% endif %}
-            {% if stats.0.day %}
             <th>Date</th>
-            {% endif %}
             <th>Hours in Air</th>
             <th>Hours on Server</th>
             <th>Ground Kills</th>
@@ -92,21 +82,11 @@
         </thead>
           {% for row in stats %}
           <tr>
-            {% if row.name %}
             <td>{{ row.name}}</td>
-            {% endif %}
-            {% if row.rank %}
             <td>{{ row.rank }}</td>
-            {% endif %}
-            {% if row.aircraft %}
             <td>{{ row.aircraft }}</td>
-            {% endif %}
-            {% if row.mission__name %}
             <td>{{ row.mission__name }}</td>
-            {% endif %}
-            {% if row.day %}
             <td>{{ row.day|date }}</td>
-            {% endif %}
             <td>{{ row.in_air_hours|floatformat:2 }}</td>   
             <td>{{ row.hours_on_server|floatformat:2}} </td>
             <td>{{ row.ground_kills}}</td>
