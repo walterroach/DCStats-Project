@@ -7,17 +7,19 @@ from stats.models import Stats, Pilot, Aircraft
 from django.forms import modelformset_factory
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from datetime import date
+from django.forms import widgets
+
 
 def not_future(date):
 	if date > datetime.datetime.now(pytz.utc) + datetime.timedelta(hours=1):
 		raise forms.ValidationError('The end date date cannot be in the future')
 		return date
-
 class StatsOptions(forms.Form):
 	group_by_choices = [("pilot","Pilot"), ("aircraft","Aircraft"), ("mission__name","Mission"),  ("day","Date")]
 	group_by = forms.MultipleChoiceField(label='Group By', choices=group_by_choices, initial='Pilot')
-	start_date = forms.DateTimeField(widget=forms.SelectDateWidget(years=[2017,2018]), initial=(datetime.datetime.now(pytz.utc) - datetime.timedelta(days=7)))
-	end_date = forms.DateTimeField(initial=datetime.datetime.now(pytz.utc), widget=forms.SelectDateWidget(years=[2018,2017]), validators=[not_future])
+	start_date = forms.SplitDateTimeField()
+	end_date = forms.SplitDateTimeField()
 	aircraft_filter = forms.ModelChoiceField(queryset=Aircraft.objects.all(), required=False)
 	pilot_filter = forms.ModelChoiceField(queryset=Pilot.objects.all(), required=False)
 
@@ -51,4 +53,6 @@ class LogForm(ModelForm):
 		fields = ['landings', 'traps', 'aar', 'aircraft_kills',
 				  'ground_kills', 'losses']
 		labels = {'aar':'AAR'}
+
+
 		

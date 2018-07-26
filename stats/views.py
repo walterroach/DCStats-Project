@@ -22,23 +22,23 @@ def stats(request):
 @login_required
 def pilot_stats(request):
 	try:
-		start_date =timezone.now()
+		start_date =timezone.localtime()
 		start_date = query.last_week(start_date)
 		print(start_date)
-		end_date = timezone.now()
+		end_date = timezone.localtime().replace(hour=0, minute=0, second=0)
 		end_date = query.end_day(end_date)
 		user = request.user
 		user = Pilot.objects.get(user=user)
-
 		if request.method == 'POST':
 			form = StatsOptions(request.POST)
+			print(f'Request:  {request.POST}')
 			if form.is_valid():
 				options = form.cleaned_data
 				stats = query.execute(options)
 				print(options)
 				return render(request, 'stats/leaderboard.html', {'form':form,'stats':stats})
 		else:
-			form = StatsOptions(initial={'group_by':['pilot']})
+			form = StatsOptions(initial={'group_by':['pilot'], 'start_date':start_date, 'end_date':end_date})
 			options = {'group_by': ['pilot'],
 			           'start_date': start_date,
 			           'end_date': end_date,
@@ -97,7 +97,7 @@ def pilot_log(request):
 	start_date = query.last_week(start_date)
 	end_date = timezone.localtime().replace(hour=0, minute=0, second=0)
 	end_date = query.end_day(end_date)
-	log_filter = LogFilter()
+	log_filter = LogFilter(initial={'start_date':start_date, 'end_date':end_date})
 	options = new_options = {'new_only':1, 'start_date':start_date, 'end_date':end_date}
 	logs = query.new_stats(pilot, options)
 		

@@ -9,6 +9,7 @@
 		  	<table class="table table-responsive text-left" style="width: 600px;">
 		    {% csrf_token %}
 		    {{ form.as_table }}
+		    {{ profileform.as_table}}
 		   </table>
 		    <button class="btn btn-dark" type="submit">Sign up</button>
 		  </form>

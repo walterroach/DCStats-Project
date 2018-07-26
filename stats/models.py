@@ -4,6 +4,8 @@ Django models for stats app
 '''
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import django.utils
 import datetime
 import pytz
@@ -16,6 +18,23 @@ class Pilot(models.Model):
     clientid = models.CharField(max_length=32,
                                 primary_key=True)
     callsign = models.CharField(max_length=30)
+
+
+    def __str__(self):
+        '''Return string value of Pilot'''
+        try:
+            name = f'{self.user.first_name} "{self.callsign}" {self.user.last_name}'
+        except AttributeError:
+            name = f'"{self.callsign}"'
+
+        return name
+
+class UserProfile(models.Model):
+    '''
+    OnetoOne extension of Django User Model
+    '''
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    # pilot = models.OneToOneField(Pilot, on_delete=models.CASCADE, null=True, blank=True)
     rank_id = models.ForeignKey('Rank', null=True, blank=True,
                                 on_delete=models.SET_NULL,
                                 default=7)
@@ -27,15 +46,9 @@ class Pilot(models.Model):
 
     def __str__(self):
         '''Return string value of Pilot'''
-        try:
-            name = f'{self.user.first_name} "{self.callsign}" {self.user.last_name}'
-        except AttributeError:
-            name = f'"{self.callsign}"'
+        name = f'{self.user.username} Profile'
 
         return name
-
-    # def stats(self, clientid):
-    #     self.air_hours = int
 
 class Rank(models.Model):
     '''
@@ -71,76 +84,6 @@ class AircraftManager(models.Manager):
         
         new_aircraft = self.create(aircraft=aircraft)
         return new_aircraft
-
-# class StatsManager(models.Manager):
-#     '''
-#     Django Manager class for editing Aircraft SQL table.
-#     '''
-#     def create_entry(self, aircraft, in_air_sec, total_sec, pilot, missions, date,
-#                      crash, eject, death, friendly_col_hits, friendly_col_kills,
-#                      friendly_hits, friendly_kills, building_kills, ground_kills,
-#                      heli_kills, fighter_kills, all_aircraft_kills, ship_kills, ip_flag, file):
-#         '''
-#         Create a record in Stats SQL database and return it.
-#         '''
-#         print(f'From models {ip_flag}')
-#         # try:
-#         print('MODELS')
-#         mission = Stats.objects.get_or_create(aircraft=aircraft, pilot=pilot, file=file)
-#         mission = mission[0]
-#         mission.in_air_sec=in_air_sec
-#         mission.total_sec=total_sec
-#         mission.mission=missions
-#         mission.date=date
-#         # mission.crash=crash
-#         # mission.eject=eject
-#         # mission.death=death
-#         # mission.friendly_col_hits=friendly_col_hits
-#         # mission.friendly_col_kills=friendly_col_kills
-#         # mission.friendly_hits=friendly_hits
-#         # mission.friendly_kills=friendly_kills
-#         # mission.building_kills=building_kills
-#         # mission.ground_kills=ground_kills
-#         # mission.heli_kills=heli_kills
-#         # mission.fighter_kills=fighter_kills
-#         # mission.all_aircraft_kills=all_aircraft_kills
-#         # mission.ship_kills=ship_kills
-#         mission.ip_flag=ip_flag
-#         mission.file=file
-#         mission.save()
-#         # .save(update_fieldsaircraft=aircraft, 
-#                     # in_air_sec=in_air_sec,
-#                     # total_sec=total_sec,
-#                     # pilot=pilot,
-#                     # mission=mission,
-#                     # date=date,
-#                     # crash=crash,
-#                     # eject=eject,
-#                     # death=death,
-#                     # friendly_col_hits=friendly_col_hits,
-#                     # friendly_col_kills=friendly_col_kills,
-#                     # friendly_hits=friendly_hits,
-#                     # friendly_kills=friendly_kills,
-#                     # building_kills=building_kills,
-#                     # ground_kills=ground_kills,
-#                     # heli_kills=heli_kills,
-#                     # fighter_kills=fighter_kills,
-#                     # all_aircraft_kills=all_aircraft_kills,
-#                     # ship_kills=ship_kills,
-#                     # ip_flag=ip_flag,
-#                     # file=file)
-                    
-#         # mission.save()
-#         # except:
-#         #     print('EXCEPTING!')
-#         #     mission = self.create(aircraft=aircraft, in_air_sec=in_air_sec,
-#         #                       total_sec=total_sec, pilot=pilot, mission=mission, date=date,
-#         #                       crash=crash, eject=eject, death=death, friendly_col_hits=friendly_col_hits,
-#         #                       friendly_col_kills=friendly_col_kills, friendly_hits=friendly_hits,
-#         #                       friendly_kills=friendly_kills, building_kills=building_kills,
-#         #                       ground_kills=ground_kills, heli_kills=heli_kills, fighter_kills=fighter_kills,
-#         #                       all_aircraft_kills=all_aircraft_kills, ship_kills=ship_kills, ip_flag=ip_flag, file=file)
-        
 
 class Aircraft(models.Model):
     '''
@@ -192,8 +135,11 @@ class Stats(models.Model):
         return f"{self.mission.date.strftime('%m/%d/%y %H:%MZ')} \
                  {self.aircraft} {self.pilot}"
 
-# class UserStats(models.Model):
-#     stats = models.ForeignKey(Stats,
-#                               on_delete=models.CASCADE)
-#     losses = models.IntegerField(default=0)
-#     aircraft_kills = models.IntegerField(default=0)
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()

@@ -79,7 +79,10 @@ def execute(options):
 			# last_name = pobject.user.last_name
 			# callsign = pobject.callsign
 			# s['name'] = first_name + ' "' + callsign + '" ' + last_name
-			rank = pobject.rank_id
+			try:
+				rank = pobject.user.userprofile.rank_id
+			except AttributeError:
+				rank = 'Guest'
 			s['rank'] = rank
 
 	print(stats)

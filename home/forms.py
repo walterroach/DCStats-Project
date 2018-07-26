@@ -4,7 +4,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from stats.models import Pilot
+from stats.models import Pilot, UserProfile
 
 
 class SignUpForm(UserCreationForm):
@@ -14,7 +14,7 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'password1', 'password2', 'first_name', 'last_name')
 
-class UserProfileForm(ModelForm):
+class UserForm(ModelForm):
 	class Meta:
 		model = User
 		fields = ['first_name', 'last_name', 'email']
@@ -22,4 +22,9 @@ class UserProfileForm(ModelForm):
 class PilotProfileForm(ModelForm):
 	class Meta:
 		model = Pilot
-		fields = ['callsign', 'timezone']
+		fields = ['callsign']
+
+class UserProfileForm(ModelForm):
+	class Meta:
+		model = UserProfile
+		fields = ['timezone']

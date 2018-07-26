@@ -14,7 +14,11 @@
 					<table class="table table-responsive text-left" style="width: 600px;">
 						{% csrf_token %}
 						{{userform.as_table}}
+						{% if pilotform.callsign == None %}
+						<tr><colgroup>Your account is inactive, please contact an officer on Slack.</colgroup></tr>
+						{% endif %}
 						{{pilotform.as_table}}
+						{{userprofileform.as_table}}
 						{{change}}
 					</table>
 					<br>

@@ -91,7 +91,7 @@
           <tr>
             {% endif %}
             <td>{{ row.pilot.user.first_name}} "{{ row.pilot.callsign }}" {{ row.pilot.user.last_name}}</td>
-            <td>{{ row.pilot.rank_id }}</td>
+            <td>{{ row.pilot.user.userprofile.rank_id }}</td>
             <td>{{ row.aircraft }}</td>
             <td><a href='log_entry?stat={{row.pk}}'>{{ row.mission.name }}</a></td>
             <td>{{ row.mission.date|date:'Y-m-d H:i e' }}</td>
