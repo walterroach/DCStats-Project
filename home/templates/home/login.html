@@ -30,15 +30,14 @@
         <form method="post">
           {% csrf_token %}
           {{ form.as_p }}
-          <button type="submit">Login</button>
+           <button class="btn btn-dark btn-block" type="submit">Login</button>
         </form>
          <br>
-        <p><strong>-- OR --</strong></p>
+        <p class="mx-auto"><strong>-- OR --</strong></p>
         <p class="mb-5">
-        <a href="{% url "social:begin" "google-oauth2" %}"><u>Login/Signup with Google</u></a><br>
+        <a class="btn btn-outline-dark btn-block" href="{% url "social:begin" "google-oauth2" %}"><u>Login/Signup with Google</u></a>
         </p>
-        <br>
-        <p><strong>-- OR --</strong></p>
-        <a href="{% url 'signup' %}">Signup</a>
+        <p class="mx-auto"><strong>-- OR --</strong></p>
+        <a class="btn btn-outline-dark btn-block mb-2" href="{% url 'signup' %}">Signup</a>
 </div>
 {% endblock %}  

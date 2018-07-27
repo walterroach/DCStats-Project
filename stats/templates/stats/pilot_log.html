@@ -8,10 +8,16 @@
 {% endblock navlog %}
 
 {% block css %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script>
+ $( function() {
+    $( "#start_date" ).datepicker();
+    $( "#end_date" ).datepicker();
+  } );
+  </script>
 {% endblock %}
 {% block bodycss %}
 <style>
@@ -52,7 +58,7 @@
       {% csrf_token %}
       {{ log_filter.as_table }}
     </table>
-    <input type="submit" name="Submit">
+     <button class="btn btn-dark btn-block" type="submit" name="Submit">Submit</button>
   </form>
 </div>
 </div>

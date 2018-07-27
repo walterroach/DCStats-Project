@@ -12,12 +12,12 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script>
  $( function() {
-    $( "#datepicker" ).datepicker();
+    $( "#start_date" ).datepicker();
+    $( "#end_date" ).datepicker();
   } );
   </script>
 {% endblock %}
@@ -58,11 +58,14 @@
   <form action="pilot_stats" method="post" style="max-width: 100%">
     {% csrf_token %}
     <table class="table table-responsive bg-light text-left" style="width: 400px;">
-      
-      <!-- {{ form.as_table }} -->
+      {{form.as_table}}
+<!--       <tr>
+        <td>Start Date: <input name="start_date" value="{{form.start_date|date}}" type="text" id="start_date"></td>
+        <input type="hidden" name="start_time" type="text" value="0 0 0 {{TIME_ZONE}}">
+        <td>End Date: <input name="end_date" value="{{form.end_date|date}}" type="text" id="end_date"></td>
+        <input type="hidden" name="end_time" type="text" value="23 59 59 {{TIME_ZONE}}"> -->
     </table>
-    <p>Date: <input name="datepicker" type="text" id="datepicker"></p>
-    <input type="submit" name="Submit">
+    <button class="btn btn-dark btn-block" type="submit" name="Submit">Submit</button>
   </form>
 </div>
 </div>
@@ -70,7 +73,7 @@
 </div>
 <div class='col'>
   <div class="card bg-light mt-2 mx-auto" style="max-width: 95%;">
-    <div class="card-header"><h2>Leaderboard</h2></div>
+    <div class="card-header"><h2>Leaderboard</h2>  <h4> {{ start_date }} - {{ end_date }}</h4></div>
     <div class="table-sm table-hover table-striped bg-light table-responsive mx-auto mt-5 mb-5" style="max-width: 90%">
       <table id="logs" class="table">
         <thead>
@@ -79,7 +82,6 @@
             <th>Rank</th>
             <th>Aircraft</th>
             <th>Mission</th>
-            <th>Date</th>
             <th>Hours in Air</th>
             <th>Hours on Server</th>
             <th>Ground Kills</th>
@@ -92,11 +94,14 @@
         </thead>
           {% for row in stats %}
           <tr>
-            <td>{{ row.name}}</td>
-            <td>{{ row.rank }}</td>
+            {% if row.pilot__user__first_name %}
+            <td>{{row.pilot__user__first_name}} "{{ row.pilot__callsign}}" {{row.pilot__user__last_name}}</td>
+            {% else %}
+            <td>"{{ row.pilot__callsign}}"</td>
+            {% endif %}
+            <td>{{ row.pilot__user__userprofile__rank_id__rank }}</td>
             <td>{{ row.aircraft }}</td>
-            <td>{{ row.mission__name }}</td>
-            <td>{{ row.day|date:'Y-m-d' }}</td>
+            <td>{{ row.mission__name }} {{ row.mission__date }}</td>
             <td>{{ row.in_air_hours|floatformat:2 }}</td>   
             <td>{{ row.hours_on_server|floatformat:2}} </td>
             <td>{{ row.ground_kills}}</td>
