@@ -31,6 +31,7 @@ urlpatterns = [
     path('stats/log_entry', stats.views.log_entry, name='logstats'),
     path('stats/pilot_stats', stats.views.pilot_stats, name='pilot_stats'),
     path('stats/pilot_log', stats.views.pilot_log, name='pilot_log'),
+    path('stats/new_log', stats.views.new_log, name='new_log'),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     re_path(r'^accounts/inactive', home.views.inactive, name='inactive'),
     path('accounts/signup', home.views.signup, name='signup'),

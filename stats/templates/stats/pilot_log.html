@@ -16,6 +16,7 @@
  $( function() {
     $( "#start_date" ).datepicker();
     $( "#end_date" ).datepicker();
+    $( "#mis_date" ).datepicker();
   } );
   </script>
 {% endblock %}
@@ -59,6 +60,22 @@
       {{ log_filter.as_table }}
     </table>
      <button class="btn btn-dark btn-block" type="submit" name="Submit">Submit</button>
+  </form>
+</div>
+</div>
+</div>
+ <div class="card bg-light ml-2" style="max-width: 95%;">
+  <div class="card-header">
+    <a data-toggle="collapse" href=#mis_form aria-expanded="false" aria-controls="collapseExample"><h3>Manual Log Entry</h3></a>
+  </div>
+  <div class="collapse" id="mis_form">
+    <div class="card-body" style="max-width: 95%;">
+  <form action="new_log" method="post" style="max-width: 100%">
+    <table class="table table-responsive bg-light text-left" style="width: 400px;">
+      {% csrf_token %}
+      {{ mis_form.as_table }}
+    </table>
+     <button class="btn btn-dark btn-block" type="submit" name="Submit">Create Entry</button>
   </form>
 </div>
 </div>
