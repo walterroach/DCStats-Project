@@ -38,6 +38,7 @@ urlpatterns = [
     path('accounts/login', auth_views.LoginView.as_view(template_name='home/login.html'), name='login'),
     path('accounts/logout', auth_views.LogoutView.as_view(template_name='home/logout.html'), name='logout'),
     path('accounts/profile', home.views.profile, name='profile'),
+    path('accounts/unauthorized', home.views.unauthorized, name='unauthorized'),
     # re_path(r'^stats/timezone', stats.views.get_timezone, name='set_timezone'),
     # re_path(r'^login/$', home.views.login, name='login'),
     # re_path(r'^logout/$', home.views.logout_view, name='logout'),

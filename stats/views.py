@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from stats import query
-from home.decorators import user_tz
+from home.decorators import user_tz, user_must_own_stat
 from .models import Pilot, Stats, Mission
 from .forms import StatsOptions, LogForm, LogFilter, MisForm, NewLogForm
 
@@ -81,6 +81,7 @@ def pilot_stats(request):
     except ObjectDoesNotExist:
         return redirect('inactive')
 
+@user_must_own_stat
 @login_required
 @user_tz
 def log_entry(request):
@@ -105,11 +106,13 @@ def log_entry(request):
         stat = Stats.objects.get(pk=request.POST['statid'])
         if 'total_minutes' in request.POST:
             logform = NewLogForm(request.POST, instance=stat)
+            print(logform)
         else:
             logform = LogForm(request.POST, instance=stat)
         if logform.is_valid():
             stat = logform.save(commit=False)
             stat.new = 0
+
             try:
                 stat.total_sec = logform.cleaned_data['total_minutes'] * 60
                 stat.in_air_sec = (logform.cleaned_data['total_minutes'] * .8) * 60
@@ -180,6 +183,8 @@ def new_log(request):
         if mis_form.is_valid():
             mis = Mission.objects.get_or_create(name=mis_form.cleaned_data['name'], date=mis_form.cleaned_data['date'], file=mis_form.cleaned_data['file'])
             new_mis = mis[0]
+            new_mis.in_process = 0
+            new_mis.save()
         pilot = Pilot.objects.get(user=request.user)
         stat = Stats.objects.create(mission=new_mis, pilot=pilot, aircraft=mis_form.cleaned_data['aircraft'])
         return redirect(f'/stats/log_entry?stat={stat.pk}')
