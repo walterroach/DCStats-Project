@@ -108,20 +108,20 @@ def log_entry(request):
         stat = Stats.objects.get(pk=request.POST['statid'])
         if 'total_minutes' in request.POST:
             logform = NewLogForm(request.POST, instance=stat)
-            print(logform)
         else:
             logform = LogForm(request.POST, instance=stat)
         if logform.is_valid():
             stat = logform.save(commit=False)
             stat.new = 0
-
             try:
                 stat.total_sec = logform.cleaned_data['total_minutes'] * 60
                 stat.in_air_sec = (logform.cleaned_data['total_minutes'] * .8) * 60
             except KeyError:
                 pass
             stat.save()
+            change = 'Change Submitted'
     else:
+        change = ''
         stat = Stats.objects.get(pk=request.GET['stat'])
         if stat.mission.name in ['Blue Flag', 'Dynamic DCS', 'Other Server', '21st Server Error', 'Other']:
             logform = NewLogForm(instance=stat)
@@ -135,7 +135,8 @@ def log_entry(request):
                   {
                       'stat':stat,
                       'hours':hours,
-                      'logform':logform
+                      'logform':logform,
+                      'change':change,
                   }
                  )
 

@@ -72,11 +72,11 @@ def new_stats(options):
         {'start_date':datetime, 'end_date':datetime}
 
     '''
-    print(f"NEW STATS {options}")
-    if options['pilot'] != None:
-        qset = Stats.objects.filter(pilot=options['pilot'])
+    if options['pilot'] != ['']:
+        qset = Stats.objects.all()
     else:
-      qset = Stats.objects.all()
+        qset = Stats.objects.filter(pilot=options['pilot'])
+        print("ELSE!!!")
     stats = qset.filter(new__gte=options['unlogged_only'], mission__date__range=(options['start_date'],
                               options['end_date'])) \
                          .annotate(

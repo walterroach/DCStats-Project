@@ -66,8 +66,22 @@
             {% block navrecruit %}<li class="nav-item">{% endblock %}
               <a class="nav-link disabled" href="#">Recruiting</a>
             </li>
-            </ul>
             {% block navuser %}
+            {% if request.user.is_staff %}
+            {% block navchiefs %}
+            <div class="dropdown">
+              <li class="nav-item active">
+            {% endblock %}
+                <a class= "nav-link dropdown-toggle" id="chiefsDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Chiefs
+                </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'chiefs_log' %}">Chief's Logbook</a>
+              </div>
+              </li>
+            </div>
+            {% endif %}
+            </ul>
             <ul class="navbar-nav ml-auto text-right">
             {% if user.is_authenticated %}
             <li class="nav-item">

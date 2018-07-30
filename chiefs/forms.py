@@ -8,7 +8,7 @@ class ChiefLogFilter(LogFilter):
     '''
     Inherits from stats.forms.LogFilter.  Adds pilot filter.
     '''
-    pilot_filter = forms.ModelChoiceField(queryset=Pilot.objects.all(), required=False)
+    pilot = forms.ModelChoiceField(queryset=Pilot.objects.all().order_by('callsign'), required=False, label='Pilot Filter')
 
 class ChiefMisForm(MisForm):
 	'''
