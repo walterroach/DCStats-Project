@@ -60,7 +60,7 @@ def execute(options):
               aar=Sum('aar')).order_by('-hours_on_server')
     return stats
 
-def new_stats(user, options):
+def new_stats(options):
     '''
     Return queryset of :models:'stats.Stats', and related
     :models:'stats.Pilot' :models:'stats.aircraft' objects.
@@ -73,7 +73,8 @@ def new_stats(user, options):
 
     '''
     print(f"NEW STATS {options}")
-    qset = Stats.objects.filter(pilot=user)
+    if options['pilot'] != None:
+        qset = Stats.objects.filter(pilot=options['pilot'])
     stats = qset.filter(new__gte=options['unlogged_only'], mission__date__range=(options['start_date'],
                               options['end_date'])) \
                          .annotate(

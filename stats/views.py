@@ -173,8 +173,8 @@ def pilot_log(request):
     end_date = query.end_day(end_date)
     log_filter = LogFilter(initial={'start_date':start_date.date, 'end_date':end_date.date, 'unlogged_only':False})
     mis_form = MisForm(initial={'date':date.date})
-    options = {'unlogged_only':0, 'start_date':start_date, 'end_date':end_date}
-    logs = query.new_stats(pilot, options)
+    options = {'unlogged_only':0, 'start_date':start_date, 'end_date':end_date, 'pilot':pilot}
+    logs = query.new_stats(options)
     return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'mis_form':mis_form, 'logs':logs})
 
 @login_required
