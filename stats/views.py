@@ -85,7 +85,7 @@ def pilot_stats(request):
 
 @user_must_own_stat
 @login_required
-# @user_tz
+@user_tz
 def log_entry(request):
     '''
     Displays an individual :model:'stats.Stats' for editing
@@ -140,7 +140,7 @@ def log_entry(request):
                  )
 
 @login_required
-# @user_tz
+@user_tz
 def pilot_log(request):
     '''
     Displays instances of :model:'stats.Stats' related to currently logged in user
