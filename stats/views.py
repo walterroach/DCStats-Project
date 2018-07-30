@@ -1,36 +1,39 @@
 '''
+###########
 stats.views
+###########
 '''
 from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from stats import query
-from home.decorators import user_tz
+# from home.decorators import user_tz
 from .models import Pilot, Stats
 from .forms import StatsOptions, LogForm, LogFilter
 
-@user_tz
+# @user_tz
 @login_required
 def pilot_stats(request):
     '''
     Displays the Leaderboard page
 
     **Context**
-    ''form''
+    
+    form
         An instance of forms.StatsOptions
 
-    ''stats''
+    stats
         dict from query.execute on :model:'stats.Stats'
 
-    ''start_date''
+    start_date
         The currently selected start_date in form
 
-    ''end_date''
+    end_date
         The currently selected end_date in form
 
-    **Template**
-        :template:'stats/leaderboard.html'
+    Template
+        stats/leaderboard.html
     '''
     try:
         user = request.user
@@ -81,7 +84,7 @@ def pilot_stats(request):
         return redirect('inactive')
 
 @login_required
-@user_tz
+# @user_tz
 def log_entry(request):
     '''
     Displays an individual :model:'stats.Stats' for editing
@@ -123,7 +126,7 @@ def log_entry(request):
                  )
 
 @login_required
-@user_tz
+# @user_tz
 def pilot_log(request):
     '''
     Displays instances of :model:'stats.Stats' related to currently logged in user

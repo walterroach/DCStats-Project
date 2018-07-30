@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'social_django',
+    'social_django',    
 ]
 
 MIDDLEWARE = [
@@ -75,6 +75,10 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATES_LOADERS = (
+    "admin_tools.template_loaders.Loader",
+)
 
 WSGI_APPLICATION = 'DCStats.wsgi.application'
 

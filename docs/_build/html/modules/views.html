@@ -1,0 +1,162 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Views &#8212; DCStats 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="About the 21st" href="about-21st.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-stats.views">
+<span id="views"></span><h1>Views<a class="headerlink" href="#module-stats.views" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="stats-views">
+<h2>stats.views<a class="headerlink" href="#stats-views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="stats.views.log_entry">
+<code class="descclassname">stats.views.</code><code class="descname">log_entry</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#stats.views.log_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays an individual :model:’stats.Stats’ for editing</p>
+<p><strong>Context</strong>
+‘’stat’‘</p>
+<blockquote>
+<div>An instance of :model:’stats.Stats’</div></blockquote>
+<dl class="docutils">
+<dt>‘’hours’‘</dt>
+<dd>Dict holding hours conversion from :model:’stats.Stats.in_air_sec’
+and :model:’stats.Stats.total_sec’</dd>
+<dt>‘’logform’‘</dt>
+<dd>An instance of forms.LogForm</dd>
+<dt><strong>Template</strong></dt>
+<dd>:template:’stats/log_entry.html’</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="stats.views.pilot_log">
+<code class="descclassname">stats.views.</code><code class="descname">pilot_log</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#stats.views.pilot_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays instances of :model:’stats.Stats’ related to currently logged in user</p>
+<p><strong>Context</strong>
+‘’log_filter’‘</p>
+<blockquote>
+<div>An instance of forms.LogFilter</div></blockquote>
+<dl class="docutils">
+<dt>‘’logs’‘</dt>
+<dd>A queryset of :model:’stats.Stats’ from query.new_stats</dd>
+<dt><strong>Template</strong></dt>
+<dd>:template:’stats/pilot_log.html’</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="stats.views.pilot_stats">
+<code class="descclassname">stats.views.</code><code class="descname">pilot_stats</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#stats.views.pilot_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the Leaderboard page</p>
+<p><strong>Context</strong></p>
+<dl class="docutils">
+<dt>form</dt>
+<dd>An instance of forms.StatsOptions</dd>
+<dt>stats</dt>
+<dd>dict from query.execute on :model:’stats.Stats’</dd>
+<dt>start_date</dt>
+<dd>The currently selected start_date in form</dd>
+<dt>end_date</dt>
+<dd>The currently selected end_date in form</dd>
+<dt>Template</dt>
+<dd>stats/leaderboard.html</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">DCStats</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about-21st.html">About the 21st</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Views</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#stats-views">stats.views</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="about-21st.html" title="previous chapter">About the 21st</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Walter "Roach" Haynie.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../_sources/modules/views.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
