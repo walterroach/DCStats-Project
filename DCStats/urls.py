@@ -22,12 +22,15 @@ from django.contrib.auth import views as auth_views
 from django.views.i18n import JavaScriptCatalog
 import home.views
 import stats.views
+import chiefs.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home.views.home, name='home'),
     # path('stats/', stats.views.pilot_stats, name='stats'),
     # path('stats/pilot_log', stats.views.pilot_log, name='stats'),
+    path('chiefs/pilot_log', chiefs.views.chiefs_log, name='chiefs_log'),
+    path('chiefs/log_entry', chiefs.views.chiefs_log_entry, name='chiefs_log_entry'),
     path('stats/log_entry', stats.views.log_entry, name='logstats'),
     path('stats/pilot_stats', stats.views.pilot_stats, name='pilot_stats'),
     path('stats/pilot_log', stats.views.pilot_log, name='pilot_log'),
