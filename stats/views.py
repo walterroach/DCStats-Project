@@ -164,7 +164,7 @@ def pilot_log(request):
         if log_filter.is_valid():
             clean = log_filter.cleaned_data
             print(f'CLEAN: {clean}')
-            logs = query.new_stats(pilot, clean)
+            logs = query.new_stats(clean)
             return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'logs':logs})
     start_date = timezone.localtime()
     start_date = query.before_start(start_date)
