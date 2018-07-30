@@ -8,15 +8,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from stats import query
-<<<<<<< HEAD
-# from home.decorators import user_tz
-from .models import Pilot, Stats
-from .forms import StatsOptions, LogForm, LogFilter
-=======
 from home.decorators import user_tz, user_must_own_stat
 from .models import Pilot, Stats, Mission
 from .forms import StatsOptions, LogForm, LogFilter, MisForm, NewLogForm
->>>>>>> master
 
 # @user_tz
 @login_required
