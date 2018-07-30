@@ -40,12 +40,21 @@ class LogFilter(forms.Form):
     start = timezone.localtime() - datetime.timedelta(days=7)
     start_date = forms.DateTimeField(widget=forms.TextInput(attrs={'id':'start_date'}))
     end_date = forms.DateTimeField(widget=forms.TextInput(attrs={'id':'end_date'}))
+    unlogged_only = forms.BooleanField(required=False, initial=False)
 
     def clean_end_date(self):
         end_date = self.cleaned_data['end_date']
         end_date = end_date.replace(hour=23, minute=59, second=59)
         return end_date
 
+    def clean_unlogged_only(self):
+        unlogged_only = self.cleaned_data['unlogged_only']
+        if unlogged_only:
+            unlogged_only = 1
+        else:
+            unlogged_only = 0
+        return unlogged_only
+        
 class LogForm(ModelForm):
     '''
     Django model form.  Inherits from django.forms.ModelForm

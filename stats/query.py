@@ -11,6 +11,12 @@ def last_week(date):
     start_date = start_date + datetime.timedelta(days=-7)
     return start_date
 
+def before_start(date):
+    '''Take datetime object and return datetime object with time set to 23 59 59 0'''
+    start_date = date.replace(day=1, month=1, year=2017)
+    return start_date
+
+
 def end_day(date):
     '''Take datetime object and return datetime object with time set to 23 59 59 0'''
     end_date = date.replace(hour=23, minute=59, second=59, microsecond=0)
@@ -66,10 +72,9 @@ def new_stats(user, options):
         {'start_date':datetime, 'end_date':datetime}
 
     '''
-    print(f"NEW STATS {options['start_date']}\n{options['end_date']}")
-    stats = Stats.objects.filter(
-        pilot=user,
-        mission__date__range=(options['start_date'],
+    print(f"NEW STATS {options}")
+    qset = Stats.objects.filter(pilot=user)
+    stats = qset.filter(new__gte=options['unlogged_only'], mission__date__range=(options['start_date'],
                               options['end_date'])) \
                          .annotate(
                              in_air_hours=Sum('in_air_sec') / 3600,

@@ -163,17 +163,17 @@ def pilot_log(request):
         log_filter = LogFilter(request.POST)
         if log_filter.is_valid():
             clean = log_filter.cleaned_data
-            # clean['start_date'] = log_filter.
+            print(f'CLEAN: {clean}')
             logs = query.new_stats(pilot, clean)
             return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'logs':logs})
     start_date = timezone.localtime()
-    start_date = query.last_week(start_date)
+    start_date = query.before_start(start_date)
     end_date = timezone.localtime().replace(hour=0, minute=0, second=0, microsecond=0)
     date = end_date
     end_date = query.end_day(end_date)
-    log_filter = LogFilter(initial={'start_date':start_date.date, 'end_date':end_date.date})
+    log_filter = LogFilter(initial={'start_date':start_date.date, 'end_date':end_date.date, 'unlogged_only':False})
     mis_form = MisForm(initial={'date':date.date})
-    options = {'new_only':1, 'start_date':start_date, 'end_date':end_date}
+    options = {'unlogged_only':0, 'start_date':start_date, 'end_date':end_date}
     logs = query.new_stats(pilot, options)
     return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'mis_form':mis_form, 'logs':logs})
 
