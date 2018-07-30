@@ -5,9 +5,8 @@ import datetime
 import pytz
 from django import forms
 from django.forms import ModelForm
-# from django.utils.translation import gettext_lazy as _
+from stats.models import Stats, Pilot, Aircraft, Mission
 from django.utils import timezone
-from stats.models import Stats, Pilot, Aircraft
 
 class StatsOptions(forms.Form):
     '''
@@ -56,3 +55,31 @@ class LogForm(ModelForm):
         fields = ['landings', 'traps', 'aar', 'aircraft_kills',
                   'ground_kills', 'losses']
         labels = {'aar':'AAR'}
+
+class NewLogForm(ModelForm):
+	total_minutes = forms.IntegerField(min_value=0)
+
+	class Meta:
+		model = Stats
+		fields = ['landings', 'traps', 'aar', 'aircraft_kills',
+				  'ground_kills', 'losses',]
+		labels = {'aar':'AAR'}
+
+
+class MisForm(ModelForm):
+	aircraft = forms.ModelChoiceField(queryset=Aircraft.objects.all().order_by('aircraft'), required=True)
+	class Meta:
+		model = Mission
+		fields = ['name', 'date', 'file', 'in_process']
+		labels = {'name':'Entry Type'}
+		widgets = {
+			'date': forms.TextInput(attrs={'id':'mis_date'}),
+			'file': forms.HiddenInput(attrs={'value':'external_entry'}),
+			'in_process':forms.HiddenInput(attrs={'value':0}),
+			'name': forms.Select(choices=[('Other', 'Other'),
+										  ('Blue Flag', 'Blue Flag'),
+										  ('Dynamic DCS', 'Dynamic DCS'),
+										  ('Other Server', 'Other Server'),
+										  ('21st Server Error', '21st Server Error'),])
+		}
+		

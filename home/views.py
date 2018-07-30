@@ -45,6 +45,9 @@ def signup(request):
         profileform = UserProfileForm()
     return render(request, 'home/signup.html', {'form': form, 'profileform':profileform})
 
+def unauthorized(request):
+    return render(request, 'home/unauthorized.html')
+
 @user_tz
 @login_required
 def profile(request):

@@ -8,9 +8,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from stats import query
+<<<<<<< HEAD
 # from home.decorators import user_tz
 from .models import Pilot, Stats
 from .forms import StatsOptions, LogForm, LogFilter
+=======
+from home.decorators import user_tz, user_must_own_stat
+from .models import Pilot, Stats, Mission
+from .forms import StatsOptions, LogForm, LogFilter, MisForm, NewLogForm
+>>>>>>> master
 
 # @user_tz
 @login_required
@@ -83,6 +89,7 @@ def pilot_stats(request):
     except ObjectDoesNotExist:
         return redirect('inactive')
 
+@user_must_own_stat
 @login_required
 # @user_tz
 def log_entry(request):
@@ -105,17 +112,30 @@ def log_entry(request):
     '''
     if request.method == 'POST':
         stat = Stats.objects.get(pk=request.POST['statid'])
-        logform = LogForm(request.POST, instance=stat)
+        if 'total_minutes' in request.POST:
+            logform = NewLogForm(request.POST, instance=stat)
+            print(logform)
+        else:
+            logform = LogForm(request.POST, instance=stat)
         if logform.is_valid():
             stat = logform.save(commit=False)
             stat.new = 0
+
+            try:
+                stat.total_sec = logform.cleaned_data['total_minutes'] * 60
+                stat.in_air_sec = (logform.cleaned_data['total_minutes'] * .8) * 60
+            except KeyError:
+                pass
             stat.save()
     else:
         stat = Stats.objects.get(pk=request.GET['stat'])
-        logform = LogForm(instance=stat)
-        hours = {}
-        hours['in_air'] = stat.in_air_sec / 3600
-        hours['on_server'] = stat.total_sec / 3600
+        if stat.mission.name in ['Blue Flag', 'Dynamic DCS', 'Other Server', '21st Server Error', 'Other']:
+            logform = NewLogForm(instance=stat)
+        else:
+            logform = LogForm(instance=stat)
+    hours = {}
+    hours['in_air'] = stat.in_air_sec / 3600
+    hours['on_server'] = stat.total_sec / 3600
     return render(request,
                   f'stats/log_entry.html',
                   {
@@ -155,8 +175,46 @@ def pilot_log(request):
     start_date = timezone.localtime()
     start_date = query.last_week(start_date)
     end_date = timezone.localtime().replace(hour=0, minute=0, second=0, microsecond=0)
+    date = end_date
     end_date = query.end_day(end_date)
     log_filter = LogFilter(initial={'start_date':start_date.date, 'end_date':end_date.date})
+    mis_form = MisForm(initial={'date':date.date})
     options = {'new_only':1, 'start_date':start_date, 'end_date':end_date}
     logs = query.new_stats(pilot, options)
-    return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'logs':logs})
+    return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'mis_form':mis_form, 'logs':logs})
+
+@login_required
+@user_tz
+def new_log(request):
+  if request.method == 'POST':
+        mis_form = MisForm(request.POST)
+        if mis_form.is_valid():
+            mis = Mission.objects.get_or_create(name=mis_form.cleaned_data['name'], date=mis_form.cleaned_data['date'], file=mis_form.cleaned_data['file'])
+            new_mis = mis[0]
+            new_mis.in_process = 0
+            new_mis.save()
+        pilot = Pilot.objects.get(user=request.user)
+        stat = Stats.objects.create(mission=new_mis, pilot=pilot, aircraft=mis_form.cleaned_data['aircraft'])
+        return redirect(f'/stats/log_entry?stat={stat.pk}')
+
+
+
+    #     logform = LogForm(request.POST, instance=stat)
+    #     if logform.is_valid():
+    #         stat = logform.save(commit=False)
+    #         stat.new = 0
+    #         stat.save()
+    # else:
+    #     stat = Stats.objects.get(pk=request.GET['stat'])
+    #     logform = LogForm(instance=stat)
+    #     hours = {}
+    #     hours['in_air'] = stat.in_air_sec / 3600
+    #     hours['on_server'] = stat.total_sec / 3600
+    # return render(request,
+    #               f'stats/log_entry.html',
+    #               {
+    #                   'stat':stat,
+    #                   'hours':hours,
+    #                   'logform':logform
+    #               }
+    #              )
