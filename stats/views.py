@@ -163,7 +163,7 @@ def pilot_log(request):
         log_filter = LogFilter(request.POST)
         if log_filter.is_valid():
             clean = log_filter.cleaned_data
-            print(f'CLEAN: {clean}')
+            clean['pilot'] = pilot
             logs = query.new_stats(clean)
             return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'logs':logs})
     start_date = timezone.localtime()
