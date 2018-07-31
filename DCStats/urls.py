@@ -31,6 +31,7 @@ urlpatterns = [
     # path('stats/pilot_log', stats.views.pilot_log, name='stats'),
     path('chiefs/pilot_log', chiefs.views.chiefs_log, name='chiefs_log'),
     path('chiefs/log_entry', chiefs.views.chiefs_log_entry, name='chiefs_log_entry'),
+    path('chiefs/new_log', chiefs.views.new_log, name='chiefs_new_log'),
     path('stats/log_entry', stats.views.log_entry, name='logstats'),
     path('stats/pilot_stats', stats.views.pilot_stats, name='pilot_stats'),
     path('stats/pilot_log', stats.views.pilot_log, name='pilot_log'),

@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from stats import query
 from home.decorators import user_tz, user_must_own_stat
-from stats.models import Pilot, Stats
-from stats.forms import LogForm
+from stats.models import Pilot, Stats, Mission
+from stats.forms import LogForm, NewLogForm
 from .forms import ChiefLogFilter, ChiefMisForm
 
 @staff_member_required
@@ -45,6 +45,19 @@ def chiefs_log(request):
     options = {'unlogged_only':0, 'start_date':start_date, 'end_date':end_date, 'pilot':['']}
     logs = query.new_stats(options)
     return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'mis_form':mis_form, 'logs':logs})
+
+@staff_member_required
+def new_log(request):
+  if request.method == 'POST':
+        mis_form = ChiefMisForm(request.POST)
+        if mis_form.is_valid():
+            pilot=mis_form.cleaned_data['pilot']
+            mis = Mission.objects.get_or_create(name=mis_form.cleaned_data['name'], date=mis_form.cleaned_data['date'], file=mis_form.cleaned_data['file'])
+            new_mis = mis[0]
+            new_mis.in_process = 0
+            new_mis.save()
+        stat = Stats.objects.create(mission=new_mis, pilot=pilot, aircraft=mis_form.cleaned_data['aircraft'])
+        return redirect(f'/chiefs/log_entry?stat={stat.pk}')
 
 @staff_member_required
 @user_tz
