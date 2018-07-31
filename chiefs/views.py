@@ -34,12 +34,15 @@ def chiefs_log(request):
         log_filter = ChiefLogFilter(request.POST)
         if log_filter.is_valid():
             clean = log_filter.cleaned_data
+            if clean['pilot'] == None:
+                clean['pilot'] = ['']
             logs = query.new_stats(clean)
+            print(f'CLEAN: {clean}')
             return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'mis_form':mis_form, 'logs':logs})
     start_date = timezone.localtime()
     start_date = query.before_start(start_date)
     log_filter = ChiefLogFilter(initial={'start_date':start_date.date, 'end_date':end_date.date, 'unlogged_only':False})
-    options = {'unlogged_only':0, 'start_date':start_date, 'end_date':end_date, 'pilot':''}
+    options = {'unlogged_only':0, 'start_date':start_date, 'end_date':end_date, 'pilot':['']}
     logs = query.new_stats(options)
     return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'mis_form':mis_form, 'logs':logs})
 

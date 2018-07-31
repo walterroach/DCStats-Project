@@ -174,7 +174,8 @@ def pilot_log(request):
     start_date = timezone.localtime()
     start_date = query.before_start(start_date)
     log_filter = LogFilter(initial={'start_date':start_date.date, 'end_date':end_date.date, 'unlogged_only':False})
-    options = {'unlogged_only':0, 'start_date':start_date, 'end_date':end_date, 'pilot':pilot}
+    options = {'unlogged_only':0, 'start_date':start_date, 'end_date':end_date, 'pilot':pilot.pk}
+    print(f'OPTIONS: {options}')
     logs = query.new_stats(options)
     return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'mis_form':mis_form, 'logs':logs})
 

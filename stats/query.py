@@ -72,7 +72,7 @@ def new_stats(options):
         {'start_date':datetime, 'end_date':datetime}
 
     '''
-    if options['pilot'] != ['']:
+    if options['pilot'] == ['']:
         qset = Stats.objects.all()
     else:
         qset = Stats.objects.filter(pilot=options['pilot'])
