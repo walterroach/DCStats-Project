@@ -19,7 +19,6 @@
 						{% endif %}
 						{{pilotform.as_table}}
 						{{userprofileform.as_table}}
-						{{change}}
 					</table>
 					<br>
 					<button class="btn btn-dark float-left ml-3" type="submit">Submit User Changes</button>
@@ -28,6 +27,8 @@
 					{% elif user.is_authenticated and backends.associated %}
 					<p class="text-center">Account is linked with Google!</p>
 					{% endif %}
+					<br>
+					{{change}}
 				</form>
 			</div>
 		</div>
