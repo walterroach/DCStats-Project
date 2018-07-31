@@ -12,7 +12,7 @@ from home.decorators import user_tz, user_must_own_stat
 from .models import Pilot, Stats, Mission
 from .forms import StatsOptions, LogForm, LogFilter, MisForm, NewLogForm
 
-# @user_tz
+@user_tz
 @login_required
 def pilot_stats(request):
     '''
@@ -180,7 +180,6 @@ def pilot_log(request):
     return render(request, 'stats/pilot_log.html', {'log_filter':log_filter, 'mis_form':mis_form, 'logs':logs})
 
 @login_required
-@user_tz
 def new_log(request):
   if request.method == 'POST':
         mis_form = MisForm(request.POST)
