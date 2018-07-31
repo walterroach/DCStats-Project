@@ -119,16 +119,18 @@ def stats_update():
         else:
             pilot_list = []
             for client in stats_json:
-                try:
-                    callsign = stats_json[client]['names'][0]
-                except IndexError:
-                    callsign = 'None'
-                try:
-                    pilot_list.append(Pilot.objects.get(clientid=client).clientid)
-                except:
-                    new_pilot = Pilot.objects.create(clientid=client, callsign=callsign)
-                    new_pilot = Pilot.objects.get(clientid=client)
-                    pilot_list.append(new_pilot.clientid)
+                ###TODO This skips admin entries, make configurable for different servers
+                if client != 'd3e5193a19b7b4a5b3468492c7184a63':
+                    try:
+                        callsign = stats_json[client]['names'][0]
+                    except IndexError:
+                        callsign = 'None'
+                    try:
+                        pilot_list.append(Pilot.objects.get(clientid=client).clientid)
+                    except:
+                        new_pilot = Pilot.objects.create(clientid=client, callsign=callsign)
+                        new_pilot = Pilot.objects.get(clientid=client)
+                        pilot_list.append(new_pilot.clientid)
             ## Check if aircraft in json exist in db, create if not.
             print(pilot_list)
             for pilot in pilot_list:
