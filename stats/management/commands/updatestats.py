@@ -86,8 +86,6 @@ def stats_update():
     for mission in finished_missions:
         exclusions.append(mission.file)
     sl_lua_path = Path('slmod/')
-    for exclude in exclusions:
-        log(f"EXCLUDE: {exclude}")
     ## Convert all unprocessed SLMod Mission .luas to JSON
     file_list = list(list_files(sl_lua_path, exclusions))
     print(f'FILE LIST: {len(file_list)}')
