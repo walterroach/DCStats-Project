@@ -104,7 +104,7 @@ class Mission(models.Model):
     in_process = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return(f'{self.name} {self.date}')
+        return(f'{self.file}')
 
 class Stats(models.Model):
     '''
