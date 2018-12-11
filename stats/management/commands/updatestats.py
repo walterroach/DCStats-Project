@@ -65,6 +65,12 @@ def update_models(key,
         new_mission[0].name = mission
         new_mission[0].date = date
         log(f'NEW MISSION : {new_mission[0]}')
+    expire = datetime.datetime.utcnow() - datetime.timedelta(days=1)
+    expire = pytz.utc.localize(expire)
+    if in_process:
+        if date < expire:
+            in_process = 0
+            log(f'IN PROCESS OFF : {new_mission[0]}')
     new_mission[0].in_process = in_process
     new_mission = new_mission[0]
     new_mission.save()
