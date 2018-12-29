@@ -192,7 +192,8 @@ def new_log(request):
         stat = Stats.objects.create(mission=new_mis, pilot=pilot, aircraft=mis_form.cleaned_data['aircraft'])
         return redirect(f'/stats/log_entry?stat={stat.pk}')
 
-
+def privacy(request):
+    return render(request, 'stats/privacy_policy.html',)
 
     #     logform = LogForm(request.POST, instance=stat)
     #     if logform.is_valid():
