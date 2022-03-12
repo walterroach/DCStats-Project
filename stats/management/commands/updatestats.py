@@ -85,6 +85,22 @@ def update_models(key,
     stats = stats[0]
     stats.in_air_sec = stats_json[pilot]['times'][new_aircraft.aircraft]['inAir']
     stats.total_sec = stats_json[pilot]['times'][new_aircraft.aircraft]['total']
+    
+    crash = stats_json[pilot]['losses']['crash']
+    eject = stats_json[pilot]['losses']['eject']
+    death = stats_json[pilot]['losses']['pilotDeath']
+    stats.losses = crash + eject + death
+
+    building_kills = stats_json[pilot]['kills']["Buildings"]["total"]
+    ground_kills = stats_json[pilot]['kills']['Ground Units']['total']
+    
+    stats.ground_kills = ground_kills + building_kills
+    all_aircraft_kills = stats_json[pilot]['kills']['Planes']['total']
+
+    stats.aircraft_kills = all_aircraft_kills
+
+    ship_kills = stats_json[pilot]['kills']['Ships']['total']
+    stats.ship_kills = stats_json[pilot]['kills']['Ships']['total']
     stats.save()
 
 def stats_update():
@@ -171,6 +187,7 @@ def stats_update():
 def delete_mission():
     '''Delete all stats in mission table and clear finishedfiles.txt and processed_slmis.txt'''
     Stats.objects.all().delete()
+    Mission.objects.all().delete()
     with open('stats/finishedfiles.txt', "w") as finishedfiles:
         finishedfiles.close()
     with open('stats/processed_slmis.txt', "w") as processed_slmis:
