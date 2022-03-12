@@ -9,12 +9,12 @@
     {% get_current_timezone as TIME_ZONE %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="21st Virtual Air Group Home Page - a DCS community">
+    <meta name="description" content="21st Virtual Air Warfare Center Home Page - a DCS community">
     <meta name="author" content="Roach">
     <link rel="icon" href="../../../../favicon.ico">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <title>{% block title %}21st Virtual Air Group{% endblock %}</title>
+    <title>{% block title %}21st Virtual Air Warfare Center{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
@@ -49,7 +49,7 @@
 
       {% block navbar %}
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static '21logo.png' %}" width=50> 21st Virtual</a>
+        <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static '21logo.png' %}" width=50> 21st VAWC</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -118,7 +118,7 @@
 }
 </style>
       <footer id="footer" class="footer bg-dark text-white mt-2 text-center" style="width:100%">
-        <p>&copy; 2018 21st Virtual Air Group <br> Current Timezone: {{TIME_ZONE}} <br> <a href='https://www.21stvirtualairgroup.com/privacy'>Privacy Policy</a> </p>
+        <p>&copy; 2018 21st Virtual Air Warfare Center <br> Current Timezone: {{TIME_ZONE}} <br> <a href='https://www.21stvirtualairgroup.com/privacy'>Privacy Policy</a> </p>
       </footer>
 
     
