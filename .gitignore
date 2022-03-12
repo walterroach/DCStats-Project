@@ -2,7 +2,8 @@
 *.pot
 *.pyc
 *.ipynb
-*.lua
+.venv/
+.vscode/
 static/
 slmis/
 slmod/
@@ -15,6 +16,5 @@ willshousesync.bat
 __pycache__/
 local_settings.py
 db.sqlite3
-lua/src/config.lua
 stats/logs/
 notebooks/

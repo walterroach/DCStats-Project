@@ -42,7 +42,11 @@ def log(string):
     '''write string to stats/logs/DATE and print string'''
     today = datetime.date.today()
     today = today.strftime('%b %d %Y')
-    file = open(Path('stats/logs/'+today+'.txt'), "a")
+    try:
+        file = open(Path('stats/logs/'+today+'.txt'), "a")
+    except FileNotFoundError:
+        os.mkdir("stats/logs")
+        file = open(Path('stats/logs/'+today+'.txt'), "a")
     time = datetime.datetime.utcnow().isoformat(' ')
     file.write(f'{time} : ' + string + '\n')
     print(string)
