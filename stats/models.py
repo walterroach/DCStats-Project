@@ -35,9 +35,9 @@ class UserProfile(models.Model):
     '''
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     # pilot = models.OneToOneField(Pilot, on_delete=models.CASCADE, null=True, blank=True)
-    # rank_id = models.ForeignKey('Rank', null=True, blank=True,
-    #                             on_delete=models.SET_NULL,
-    #                             default=7)
+    rank_id = models.ForeignKey('Rank', null=True, blank=True,
+                                on_delete=models.SET_NULL,
+                                default=7)
     tz_choices = list()
     for tz in pytz.common_timezones:
         tz_choices.append((tz, tz))
