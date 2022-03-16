@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
+    # 'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +50,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
     'home.tz_middleware.TimezoneMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 ]
@@ -68,8 +67,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -160,6 +157,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 try:
     from DCStats.local_settings import *
