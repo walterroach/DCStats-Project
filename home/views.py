@@ -1,6 +1,4 @@
 import datetime
-from django.utils import timezone
-import pytz
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth import login as auth_login
@@ -9,7 +7,6 @@ from stats.models import Pilot, UserProfile
 from home.forms import SignUpForm, UserProfileForm, PilotProfileForm, UserForm
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
-import pytz
 from home.decorators import user_tz
 import zoneinfo
 

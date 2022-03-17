@@ -4,8 +4,7 @@ import json
 import datetime
 from pathlib import Path
 import subprocess
-import pytz
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from stats.models import Pilot, Aircraft, Stats, Mission
 
 def load_json(fpath):
@@ -31,8 +30,7 @@ def list_files(dir_path, exclusions):
         for file in files:
             if file not in exclusions:
                 filepath = Path(dir_path / file)
-                mod_date = datetime.datetime.fromtimestamp(os.path.getmtime(filepath),
-                                                           pytz.UTC)
+                mod_date = datetime.datetime.utcfromtimestamp(os.path.getmtime(filepath))
                 file_list.append({'file':file, 'date':mod_date})
             else:
                 pass
@@ -69,8 +67,7 @@ def update_models(key,
         new_mission[0].name = mission
         new_mission[0].date = date
         log(f'NEW MISSION : {new_mission[0]}')
-    expire = datetime.datetime.utcnow() - datetime.timedelta(days=1)
-    expire = pytz.utc.localize(expire)
+    expire = datetime.datetime.now() - datetime.timedelta(days=2)
     if in_process:
         if date < expire:
             in_process = 0

@@ -2,7 +2,6 @@
 stats.forms
 '''
 import datetime
-import pytz
 from django import forms
 from django.forms import ModelForm
 from stats.models import Stats, Pilot, Aircraft, Mission

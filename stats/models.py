@@ -2,13 +2,13 @@
 '''
 Django models for stats app
 '''
+import zoneinfo
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import django.utils
-import datetime
-import pytz
+
 
 class Pilot(models.Model):
     '''
@@ -34,15 +34,12 @@ class UserProfile(models.Model):
     OnetoOne extension of Django User Model
     '''
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    # pilot = models.OneToOneField(Pilot, on_delete=models.CASCADE, null=True, blank=True)
     rank_id = models.ForeignKey('Rank', null=True, blank=True,
                                 on_delete=models.SET_NULL,
                                 default=1)
-    tz_choices = list()
-    for tz in pytz.common_timezones:
-        tz_choices.append((tz, tz))
+    tz_choices = ((tz, tz) for tz in zoneinfo.available_timezones())
     tz_choices = tuple(tz_choices)
-    timezone = models.CharField(max_length=30, default='UTC', choices=tz_choices)
+    timezone = models.CharField(max_length=32, default='UTC', choices=tz_choices)
 
     def __str__(self):
         '''Return string value of Pilot'''
