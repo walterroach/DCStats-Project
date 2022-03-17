@@ -2,7 +2,9 @@
 stats.query
 """
 import datetime
+
 from django.db.models import Sum
+
 from .models import Stats
 
 

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, render
 from django.utils import timezone
+
 from home.decorators import user_must_own_stat, user_tz
 from stats import query
 from stats.forms import LogForm, NewLogForm

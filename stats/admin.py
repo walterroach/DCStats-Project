@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Pilot, Rank, Aircraft, Mission, Stats, UserProfile
+
+from .models import Aircraft, Mission, Pilot, Rank, Stats, UserProfile
 
 
 @admin.register(Mission)

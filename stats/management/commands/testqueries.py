@@ -1,3 +1,3 @@
 # Test Queries
 
-from stats.models import Pilot, Aircraft, Mission
+from stats.models import Aircraft, Mission, Pilot

@@ -2,10 +2,12 @@
 stats.forms
 """
 import datetime
+
 from django import forms
 from django.forms import ModelForm
-from stats.models import Stats, Pilot, Aircraft, Mission
 from django.utils import timezone
+
+from stats.models import Aircraft, Mission, Pilot, Stats
 
 
 class StatsOptions(forms.Form):

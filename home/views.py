@@ -1,14 +1,16 @@
 import datetime
-from django.shortcuts import render, redirect
-from django.contrib.auth import logout, authenticate
+
+from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from stats.models import Pilot, UserProfile
-from home.forms import SignUpForm, UserProfileForm, PilotProfileForm, UserForm
 from django.core.exceptions import ObjectDoesNotExist
-import datetime
-from home.decorators import user_tz
+from django.shortcuts import redirect, render
+
 import zoneinfo
+from home.decorators import user_tz
+from home.forms import PilotProfileForm, SignUpForm, UserForm, UserProfileForm
+from stats.models import Pilot, UserProfile
 
 
 @user_tz

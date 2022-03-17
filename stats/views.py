@@ -3,14 +3,16 @@
 stats.views
 ###########
 """
-from django.utils import timezone
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import redirect, render
+from django.utils import timezone
+
+from home.decorators import user_must_own_stat, user_tz
 from stats import query
-from home.decorators import user_tz, user_must_own_stat
-from .models import Pilot, Stats, Mission
-from .forms import StatsOptions, LogForm, LogFilter, MisForm, NewLogForm
+
+from .forms import LogFilter, LogForm, MisForm, NewLogForm, StatsOptions
+from .models import Mission, Pilot, Stats
 
 
 @user_tz

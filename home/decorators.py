@@ -1,8 +1,9 @@
 # decorators
-from django.utils import timezone
-from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
-from stats.models import Pilot, UserProfile, Stats
+from django.shortcuts import redirect
+from django.utils import timezone
+
+from stats.models import Pilot, Stats, UserProfile
 
 
 def user_tz(function):

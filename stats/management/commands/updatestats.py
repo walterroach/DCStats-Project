@@ -1,11 +1,13 @@
 """Updates Aircraft SQL table with data from most current slmod json.  Takes no arguments"""
-import os
-import json
 import datetime
-from pathlib import Path
+import json
+import os
 import subprocess
+from pathlib import Path
+
 from django.core.management.base import BaseCommand
-from stats.models import Pilot, Aircraft, Stats, Mission
+
+from stats.models import Aircraft, Mission, Pilot, Stats
 
 
 def load_json(fpath):

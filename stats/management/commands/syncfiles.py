@@ -1,5 +1,6 @@
-from django.core.management.base import BaseCommand, CommandError
 import subprocess
+
+from django.core.management.base import BaseCommand, CommandError
 
 
 def sync_stats():
