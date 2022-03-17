@@ -1,5 +1,4 @@
 import datetime
-import pytz
 from django import forms
 from stats.forms import LogFilter, MisForm
 from stats.models import Pilot

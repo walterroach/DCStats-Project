@@ -27,8 +27,6 @@ import chiefs.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home.views.home, name='home'),
-    # path('stats/', stats.views.pilot_stats, name='stats'),
-    # path('stats/pilot_log', stats.views.pilot_log, name='stats'),
     path('chiefs/pilot_log', chiefs.views.chiefs_log, name='chiefs_log'),
     path('chiefs/log_entry', chiefs.views.chiefs_log_entry, name='chiefs_log_entry'),
     path('chiefs/new_log', chiefs.views.new_log, name='chiefs_new_log'),
@@ -44,11 +42,6 @@ urlpatterns = [
     path('accounts/profile', home.views.profile, name='profile'),
     path('accounts/unauthorized', home.views.unauthorized, name='unauthorized'),
     path('privacy', stats.views.privacy, name='privacy'),
-    # re_path(r'^stats/timezone', stats.views.get_timezone, name='set_timezone'),
-    # re_path(r'^login/$', home.views.login, name='login'),
-    # re_path(r'^logout/$', home.views.logout_view, name='logout'),
-    re_path(r'^auth/', include('social_django.urls', namespace='social')),  # <- Here
-    # re_path(r'^$', home.views.home, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

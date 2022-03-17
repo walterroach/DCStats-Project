@@ -15,18 +15,13 @@
 						{% csrf_token %}
 						{{userform.as_table}}
 						{% if pilotform.callsign == None %}
-						<tr><colgroup>Your account is inactive, please contact an officer on Slack.</colgroup></tr>
+						<tr><colgroup>Your account is inactive, please contact an officer on Discord.</colgroup></tr>
 						{% endif %}
 						{{pilotform.as_table}}
 						{{userprofileform.as_table}}
 					</table>
 					<br>
 					<button class="btn btn-dark float-left ml-3" type="submit">Submit User Changes</button>
-					{% if user.is_authenticated and not backends.associated %}
-					<a class="float-right" href="{% url "social:begin" "google-oauth2" %}"><u>Login with Google</u></a><br>
-					{% elif user.is_authenticated and backends.associated %}
-					<p class="text-center">Account is linked with Google!</p>
-					{% endif %}
 					<br>
 					{{change}}
 				</form>
@@ -37,13 +32,3 @@
 
 
 {% endblock %}
-<!-- 
-<form action="{% url 'set_timezone' %}" method="POST">
-    {% csrf_token %}
-    <label for="timezone">Time zone:</label>
-    <select name="timezone">
-        {% for tz in timezones %}
-        <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
-        {% endfor %}
-    </select>
-    <input type="submit" value="Set"> -->
