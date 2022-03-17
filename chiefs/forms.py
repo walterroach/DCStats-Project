@@ -1,5 +1,3 @@
-import datetime
-
 from django import forms
 
 from stats.forms import LogFilter, MisForm

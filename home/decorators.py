@@ -1,7 +1,6 @@
 # decorators
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
-from django.utils import timezone
 
 from stats.models import Pilot, Stats, UserProfile
 
@@ -14,7 +13,7 @@ def user_tz(function):
                 userprofile = UserProfile.objects.get(user=request.user)
                 request.session["django_timezone"] = userprofile.timezone
             except (ObjectDoesNotExist, TypeError) as e:
-                pass
+                print(e)
         return function(request, *args, **kwargs)
 
     return func_wrapper

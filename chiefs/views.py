@@ -1,13 +1,11 @@
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
-from home.decorators import user_must_own_stat, user_tz
+from home.decorators import user_tz
 from stats import query
 from stats.forms import LogForm, NewLogForm
-from stats.models import Mission, Pilot, Stats
+from stats.models import Mission, Stats
 
 from .forms import ChiefLogFilter, ChiefMisForm
 
@@ -36,7 +34,7 @@ def chiefs_log(request):
         log_filter = ChiefLogFilter(request.POST)
         if log_filter.is_valid():
             clean = log_filter.cleaned_data
-            if clean["pilot"] == None:
+            if clean["pilot"] is None:
                 clean["pilot"] = [""]
             logs = query.new_stats(clean)
             print(f"CLEAN: {clean}")
@@ -138,11 +136,9 @@ def chiefs_log_entry(request):
             logform = NewLogForm(instance=stat)
         else:
             logform = LogForm(instance=stat)
-    hours = {}
-    hours["in_air"] = stat.in_air_sec / 3600
-    hours["on_server"] = stat.total_sec / 3600
+    hours = {"in_air": stat.in_air_sec / 3600, "on_server": stat.total_sec / 3600}
     return render(
         request,
-        f"stats/log_entry.html",
+        "stats/log_entry.html",
         {"stat": stat, "hours": hours, "logform": logform, "change": change},
     )

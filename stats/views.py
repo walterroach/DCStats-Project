@@ -146,12 +146,10 @@ def log_entry(request):
             logform = NewLogForm(instance=stat)
         else:
             logform = LogForm(instance=stat)
-    hours = {}
-    hours["in_air"] = stat.in_air_sec / 3600
-    hours["on_server"] = stat.total_sec / 3600
+    hours = {"in_air": stat.in_air_sec / 3600, "on_server": stat.total_sec / 3600}
     return render(
         request,
-        f"stats/log_entry.html",
+        "stats/log_entry.html",
         {
             "stat": stat,
             "hours": hours,
