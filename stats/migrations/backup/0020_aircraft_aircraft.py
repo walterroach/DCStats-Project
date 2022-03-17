@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0019_remove_total_seconds'),
+        ("stats", "0019_remove_total_seconds"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='aircraft',
-            name='aircraft',
-            field=models.CharField(default='L-39C', max_length=50),
+            model_name="aircraft",
+            name="aircraft",
+            field=models.CharField(default="L-39C", max_length=50),
             preserve_default=False,
         ),
     ]

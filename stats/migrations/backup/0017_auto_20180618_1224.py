@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0016_slmod_total_name'),
+        ("stats", "0016_slmod_total_name"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='slmod_total',
-            name='file',
-            field=models.FileField(upload_to='SlmodStats/'),
+            model_name="slmod_total",
+            name="file",
+            field=models.FileField(upload_to="SlmodStats/"),
         ),
     ]

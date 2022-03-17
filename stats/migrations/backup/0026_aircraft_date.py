@@ -7,13 +7,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0025_auto_20180626_1437'),
+        ("stats", "0025_auto_20180626_1437"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='aircraft',
-            name='date',
-            field=models.DateTimeField(default=datetime.datetime(2018, 6, 29, 14, 8, 11, 983337)),
+            model_name="aircraft",
+            name="date",
+            field=models.DateTimeField(
+                default=datetime.datetime(2018, 6, 29, 14, 8, 11, 983337)
+            ),
         ),
     ]

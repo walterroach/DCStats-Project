@@ -8,23 +8,27 @@ from django.utils.timezone import utc
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0031_auto_20180629_2124'),
+        ("stats", "0031_auto_20180629_2124"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='aircraft',
-            name='date',
-            field=models.DateTimeField(default=datetime.datetime(2018, 6, 30, 2, 55, 40, 94843, tzinfo=utc)),
+            model_name="aircraft",
+            name="date",
+            field=models.DateTimeField(
+                default=datetime.datetime(2018, 6, 30, 2, 55, 40, 94843, tzinfo=utc)
+            ),
         ),
         migrations.AlterField(
-            model_name='mission',
-            name='date',
-            field=models.DateTimeField(default=datetime.datetime(2018, 6, 30, 2, 55, 40, 95844, tzinfo=utc)),
+            model_name="mission",
+            name="date",
+            field=models.DateTimeField(
+                default=datetime.datetime(2018, 6, 30, 2, 55, 40, 95844, tzinfo=utc)
+            ),
         ),
         migrations.AlterField(
-            model_name='mission',
-            name='mission',
+            model_name="mission",
+            name="mission",
             field=models.CharField(max_length=100),
         ),
     ]

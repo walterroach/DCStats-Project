@@ -8,24 +8,28 @@ import django.db.models.manager
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0027_auto_20180629_1438'),
+        ("stats", "0027_auto_20180629_1438"),
     ]
 
     operations = [
         migrations.AlterModelManagers(
-            name='mission',
+            name="mission",
             managers=[
-                ('manager', django.db.models.manager.Manager()),
+                ("manager", django.db.models.manager.Manager()),
             ],
         ),
         migrations.AlterField(
-            model_name='aircraft',
-            name='date',
-            field=models.DateTimeField(default=datetime.datetime(2018, 6, 29, 14, 53, 21, 446607)),
+            model_name="aircraft",
+            name="date",
+            field=models.DateTimeField(
+                default=datetime.datetime(2018, 6, 29, 14, 53, 21, 446607)
+            ),
         ),
         migrations.AlterField(
-            model_name='mission',
-            name='date',
-            field=models.DateTimeField(default=datetime.datetime(2018, 6, 29, 14, 53, 21, 446607)),
+            model_name="mission",
+            name="date",
+            field=models.DateTimeField(
+                default=datetime.datetime(2018, 6, 29, 14, 53, 21, 446607)
+            ),
         ),
     ]

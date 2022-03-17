@@ -1,9 +1,11 @@
 from django.contrib import admin
 from .models import Pilot, Rank, Aircraft, Mission, Stats, UserProfile
 
+
 @admin.register(Mission)
 class MissionAdmin(admin.ModelAdmin):
-	list_filter = ('in_process', 'date')
+    list_filter = ("in_process", "date")
+
 
 admin.site.register(Pilot)
 admin.site.register(Rank)

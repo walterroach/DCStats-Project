@@ -6,22 +6,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0024_auto_20180619_1135'),
+        ("stats", "0024_auto_20180619_1135"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='Slmod_Total',
+            name="Slmod_Total",
         ),
         migrations.RemoveField(
-            model_name='total',
-            name='aircraft',
+            model_name="total",
+            name="aircraft",
         ),
         migrations.RemoveField(
-            model_name='total',
-            name='pilot',
+            model_name="total",
+            name="pilot",
         ),
         migrations.DeleteModel(
-            name='Total',
+            name="Total",
         ),
     ]

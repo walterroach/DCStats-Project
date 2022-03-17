@@ -7,52 +7,70 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0017_auto_20180618_1224'),
+        ("stats", "0017_auto_20180618_1224"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Aircraft',
+            name="Aircraft",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('in_air_sec', models.FloatField()),
-                ('total_sec', models.FloatField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("in_air_sec", models.FloatField()),
+                ("total_sec", models.FloatField()),
             ],
         ),
         migrations.RemoveField(
-            model_name='total',
-            name='in_air',
+            model_name="total",
+            name="in_air",
         ),
         migrations.RemoveField(
-            model_name='total',
-            name='total',
+            model_name="total",
+            name="total",
         ),
         migrations.AddField(
-            model_name='total',
-            name='seconds',
+            model_name="total",
+            name="seconds",
             field=models.FloatField(default=0),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='pilot',
-            name='rank_id',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='stats.Rank'),
+            model_name="pilot",
+            name="rank_id",
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="stats.Rank"
+            ),
         ),
         migrations.AlterField(
-            model_name='total',
-            name='pilot',
-            field=models.ForeignKey(default=0, on_delete=django.db.models.deletion.CASCADE, to='stats.Pilot'),
+            model_name="total",
+            name="pilot",
+            field=models.ForeignKey(
+                default=0, on_delete=django.db.models.deletion.CASCADE, to="stats.Pilot"
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='aircraft',
-            name='pilot',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stats.Pilot'),
+            model_name="aircraft",
+            name="pilot",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="stats.Pilot"
+            ),
         ),
         migrations.AddField(
-            model_name='total',
-            name='aircraft',
-            field=models.ForeignKey(default='0', on_delete=django.db.models.deletion.CASCADE, to='stats.Aircraft'),
+            model_name="total",
+            name="aircraft",
+            field=models.ForeignKey(
+                default="0",
+                on_delete=django.db.models.deletion.CASCADE,
+                to="stats.Aircraft",
+            ),
             preserve_default=False,
         ),
     ]

@@ -7,14 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0037_auto_20180630_2123'),
+        ("stats", "0037_auto_20180630_2123"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='mission',
-            name='aircraft',
-            field=models.ForeignKey(default='AV8BNA', on_delete=django.db.models.deletion.CASCADE, to='stats.Aircraft'),
+            model_name="mission",
+            name="aircraft",
+            field=models.ForeignKey(
+                default="AV8BNA",
+                on_delete=django.db.models.deletion.CASCADE,
+                to="stats.Aircraft",
+            ),
             preserve_default=False,
         ),
     ]

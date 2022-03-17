@@ -7,35 +7,45 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0048_auto_20180715_1035'),
+        ("stats", "0048_auto_20180715_1035"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Mission',
+            name="Mission",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=75)),
-                ('date', models.DateTimeField()),
-                ('file', models.CharField(max_length=100)),
-                ('ip_flag', models.IntegerField(null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=75)),
+                ("date", models.DateTimeField()),
+                ("file", models.CharField(max_length=100)),
+                ("ip_flag", models.IntegerField(null=True)),
             ],
         ),
         migrations.RemoveField(
-            model_name='stats',
-            name='date',
+            model_name="stats",
+            name="date",
         ),
         migrations.RemoveField(
-            model_name='stats',
-            name='file',
+            model_name="stats",
+            name="file",
         ),
         migrations.RemoveField(
-            model_name='stats',
-            name='ip_flag',
+            model_name="stats",
+            name="ip_flag",
         ),
         migrations.AlterField(
-            model_name='stats',
-            name='mission',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stats.Mission'),
+            model_name="stats",
+            name="mission",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="stats.Mission"
+            ),
         ),
     ]

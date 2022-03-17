@@ -8,24 +8,44 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0026_aircraft_date'),
+        ("stats", "0026_aircraft_date"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Mission',
+            name="Mission",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('aircraft', models.CharField(max_length=30)),
-                ('in_air_sec', models.FloatField()),
-                ('total_sec', models.FloatField()),
-                ('date', models.DateTimeField(default=datetime.datetime(2018, 6, 29, 14, 38, 17, 27803))),
-                ('pilot', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stats.Pilot')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("aircraft", models.CharField(max_length=30)),
+                ("in_air_sec", models.FloatField()),
+                ("total_sec", models.FloatField()),
+                (
+                    "date",
+                    models.DateTimeField(
+                        default=datetime.datetime(2018, 6, 29, 14, 38, 17, 27803)
+                    ),
+                ),
+                (
+                    "pilot",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="stats.Pilot"
+                    ),
+                ),
             ],
         ),
         migrations.AlterField(
-            model_name='aircraft',
-            name='date',
-            field=models.DateTimeField(default=datetime.datetime(2018, 6, 29, 14, 38, 17, 26787)),
+            model_name="aircraft",
+            name="date",
+            field=models.DateTimeField(
+                default=datetime.datetime(2018, 6, 29, 14, 38, 17, 26787)
+            ),
         ),
     ]

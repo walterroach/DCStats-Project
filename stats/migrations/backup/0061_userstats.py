@@ -7,17 +7,30 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0060_stats'),
+        ("stats", "0060_stats"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='UserStats',
+            name="UserStats",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('losses', models.IntegerField(default=0)),
-                ('aircraft_kills', models.IntegerField(default=0)),
-                ('stats', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stats.Stats')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("losses", models.IntegerField(default=0)),
+                ("aircraft_kills", models.IntegerField(default=0)),
+                (
+                    "stats",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="stats.Stats"
+                    ),
+                ),
             ],
         ),
     ]

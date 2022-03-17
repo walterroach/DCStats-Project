@@ -7,24 +7,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0028_auto_20180629_1453'),
+        ("stats", "0028_auto_20180629_1453"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='mission',
-            name='mission',
-            field=models.CharField(default='unknown', max_length=60),
+            model_name="mission",
+            name="mission",
+            field=models.CharField(default="unknown", max_length=60),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='aircraft',
-            name='date',
+            model_name="aircraft",
+            name="date",
             field=models.DateField(default=datetime.date(2018, 6, 29)),
         ),
         migrations.AlterField(
-            model_name='mission',
-            name='date',
-            field=models.DateTimeField(default=datetime.datetime(2018, 6, 29, 20, 8, 49, 678572)),
+            model_name="mission",
+            name="date",
+            field=models.DateTimeField(
+                default=datetime.datetime(2018, 6, 29, 20, 8, 49, 678572)
+            ),
         ),
     ]

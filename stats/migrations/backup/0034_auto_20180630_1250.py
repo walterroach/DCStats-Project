@@ -7,30 +7,32 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0033_auto_20180629_2158'),
+        ("stats", "0033_auto_20180629_2158"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='aircraft',
-            name='date',
+            model_name="aircraft",
+            name="date",
         ),
         migrations.RemoveField(
-            model_name='aircraft',
-            name='in_air_sec',
+            model_name="aircraft",
+            name="in_air_sec",
         ),
         migrations.RemoveField(
-            model_name='aircraft',
-            name='total_sec',
+            model_name="aircraft",
+            name="total_sec",
         ),
         migrations.AlterField(
-            model_name='mission',
-            name='aircraft',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stats.Aircraft'),
+            model_name="mission",
+            name="aircraft",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="stats.Aircraft"
+            ),
         ),
         migrations.AlterField(
-            model_name='mission',
-            name='date',
+            model_name="mission",
+            name="date",
             field=models.DateTimeField(),
         ),
     ]

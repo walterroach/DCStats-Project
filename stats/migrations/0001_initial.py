@@ -15,64 +15,134 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Aircraft',
+            name="Aircraft",
             fields=[
-                ('aircraft', models.CharField(max_length=30, primary_key=True, serialize=False)),
+                (
+                    "aircraft",
+                    models.CharField(max_length=30, primary_key=True, serialize=False),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Mission',
+            name="Mission",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(blank=True, max_length=250, null=True)),
-                ('date', models.DateTimeField(blank=True, null=True)),
-                ('file', models.CharField(max_length=250)),
-                ('in_process', models.IntegerField(blank=True, null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(blank=True, max_length=250, null=True)),
+                ("date", models.DateTimeField(blank=True, null=True)),
+                ("file", models.CharField(max_length=250)),
+                ("in_process", models.IntegerField(blank=True, null=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Pilot',
+            name="Pilot",
             fields=[
-                ('clientid', models.CharField(max_length=32, primary_key=True, serialize=False)),
-                ('callsign', models.CharField(max_length=30)),
+                (
+                    "clientid",
+                    models.CharField(max_length=32, primary_key=True, serialize=False),
+                ),
+                ("callsign", models.CharField(max_length=30)),
             ],
         ),
         migrations.CreateModel(
-            name='Rank',
+            name="Rank",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('rank', models.CharField(choices=[('O1', 'O-1'), ('O2', 'O-2'), ('O3', 'O-3'), ('O4', 'O-4'), ('O5', 'O-5'), ('O6', 'O-6'), ('Guest', 'Guest')], max_length=5)),
-                ('AF_name', models.CharField(max_length=30)),
-                ('Navy_name', models.CharField(max_length=30)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "rank",
+                    models.CharField(
+                        choices=[
+                            ("O1", "O-1"),
+                            ("O2", "O-2"),
+                            ("O3", "O-3"),
+                            ("O4", "O-4"),
+                            ("O5", "O-5"),
+                            ("O6", "O-6"),
+                            ("Guest", "Guest"),
+                        ],
+                        max_length=5,
+                    ),
+                ),
+                ("AF_name", models.CharField(max_length=30)),
+                ("Navy_name", models.CharField(max_length=30)),
             ],
         ),
         migrations.CreateModel(
-            name='Stats',
+            name="Stats",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('in_air_sec', models.FloatField(default=0)),
-                ('total_sec', models.FloatField(default=0)),
-                ('losses', models.IntegerField(default=0)),
-                ('ground_kills', models.IntegerField(default=0)),
-                ('aircraft_kills', models.IntegerField(default=0)),
-                ('ship_kills', models.IntegerField(default=0)),
-                ('landings', models.IntegerField(default=0)),
-                ('traps', models.IntegerField(default=0)),
-                ('aar', models.IntegerField(default=0)),
-                ('new', models.IntegerField(default=1)),
-                ('aircraft', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stats.Aircraft')),
-                ('mission', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stats.Mission')),
-                ('pilot', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stats.Pilot')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("in_air_sec", models.FloatField(default=0)),
+                ("total_sec", models.FloatField(default=0)),
+                ("losses", models.IntegerField(default=0)),
+                ("ground_kills", models.IntegerField(default=0)),
+                ("aircraft_kills", models.IntegerField(default=0)),
+                ("ship_kills", models.IntegerField(default=0)),
+                ("landings", models.IntegerField(default=0)),
+                ("traps", models.IntegerField(default=0)),
+                ("aar", models.IntegerField(default=0)),
+                ("new", models.IntegerField(default=1)),
+                (
+                    "aircraft",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="stats.Aircraft"
+                    ),
+                ),
+                (
+                    "mission",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="stats.Mission"
+                    ),
+                ),
+                (
+                    "pilot",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="stats.Pilot"
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='pilot',
-            name='rank_id',
-            field=models.ForeignKey(blank=True, default=7, null=True, on_delete=django.db.models.deletion.SET_NULL, to='stats.Rank'),
+            model_name="pilot",
+            name="rank_id",
+            field=models.ForeignKey(
+                blank=True,
+                default=7,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="stats.Rank",
+            ),
         ),
         migrations.AddField(
-            model_name='pilot',
-            name='user',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="pilot",
+            name="user",
+            field=models.OneToOneField(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

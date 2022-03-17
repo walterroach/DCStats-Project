@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0045_auto_20180711_1632'),
+        ("stats", "0045_auto_20180711_1632"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='mission',
-            name='ip_flag',
+            model_name="mission",
+            name="ip_flag",
             field=models.IntegerField(default=0),
         ),
     ]

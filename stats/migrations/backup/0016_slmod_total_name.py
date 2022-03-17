@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stats', '0015_auto_20180617_1949'),
+        ("stats", "0015_auto_20180617_1949"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='slmod_total',
-            name='name',
-            field=models.CharField(default='slmod', max_length=30),
+            model_name="slmod_total",
+            name="name",
+            field=models.CharField(default="slmod", max_length=30),
             preserve_default=False,
         ),
     ]
